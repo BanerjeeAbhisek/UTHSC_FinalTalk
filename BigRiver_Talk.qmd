@@ -1,0 +1,881 @@
+---
+pagetitle: "BigRiverEssence.jl + BigRiverPlots.jl"
+
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    css: styles.css
+    width: 1280
+    height: 720
+    margin: 0.05
+    center: false
+    transition: slide
+    background-transition: fade
+    slide-number: true
+    progress: true
+    controls: true
+    hash: true
+    preview-links: true
+    incremental: false
+    chalkboard: true
+    code-line-numbers: true
+    html-math-method: katex
+    include-in-header:
+      text: |
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+        <style>
+        .reveal .slides section .br-subtitle { font-size: 25px; color: #4D701F; font-weight: 700; margin-top: 8px; }
+        .reveal .slides section .br-kicker { color: #777; font-size: 16px; text-transform: uppercase; letter-spacing: .09em; font-weight: 800; margin-bottom: 4px; }
+        .reveal .slides section .br-small { font-size: 17px; line-height: 1.42; }
+        .reveal .slides section .br-tiny { font-size: 13px; line-height: 1.35; }
+        .reveal .slides section .br-center { text-align: center; }
+        .reveal .slides section .br-pipeline { display:grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap:16px; align-items:center; margin:32px auto 0; max-width:1050px; }
+        .reveal .slides section .br-stage { box-sizing:border-box; border-top:5px solid #E78824; background:rgba(255,255,255,.92); border-radius:14px; padding:18px 16px; min-height:126px; box-shadow:0 7px 22px rgba(0,0,0,.10); }
+        .reveal .slides section .br-stage.green { border-top-color:#4D701F; }
+        .reveal .slides section .br-stage h3 { margin:0 0 8px; font-size:25px !important; }
+        .reveal .slides section .br-stage p { font-size:16px; margin:0; line-height:1.35; }
+        .reveal .slides section .br-arrow { color:#C14C23; font-size:34px; font-weight:900; }
+        .reveal .slides section .br-method-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+        .reveal .slides section .br-method { box-sizing:border-box; padding:12px 14px; border-radius:10px; background:rgba(255,255,255,.9); border-left:5px solid #E78824; font-size:16px; line-height:1.25; }
+        .reveal .slides section .br-method strong { color:#C14C23; }
+        .reveal .slides section .br-code pre { font-size:14px !important; line-height:1.28 !important; }
+        .reveal .slides section .br-code code { max-height:440px; }
+        .reveal .slides section .br-links a { font-size:18px; overflow-wrap:anywhere; }
+        .reveal .slides section .br-notice { background:rgba(77,112,31,.10); border-left:6px solid #4D701F; border-radius:10px; padding:12px 18px; font-size:18px; }
+        .reveal .slides section .br-selector { display:flex; gap:8px; flex-wrap:wrap; margin:4px 0 10px; }
+        .reveal .slides section .br-selector button { font:700 13px inherit; padding:6px 12px; border-radius:20px; border:1.5px solid #ddd; background:#fff; color:#555; cursor:pointer; }
+        .reveal .slides section .br-selector button.on { background:#E78824; border-color:#E78824; color:#fff; }
+        .reveal .slides section table.br-table { font-size:16px; width:100%; }
+        .reveal .slides section table.br-table th { color:#C14C23; border-bottom:2px solid #E78824; }
+        .reveal .slides section table.br-table td, .reveal .slides section table.br-table th { padding:7px 10px; }
+        .reveal .slides section .source-note { font-size:11px; color:#777; }
+        </style>
+    include-after-body:
+      text: |
+        <div class="uthsc-footer-bar">
+          <div class="uthsc-left">
+            <img src="assets/uthsc-logo-horizontal.png" alt="University of Tennessee Health Sciences">
+          </div>
+          <div class="uthsc-right">
+            Department of Preventive Medicine / Biostatistics
+          </div>
+        </div>
+
+        <div class="uthsc-seal-badge">
+          <img src="assets/uthsc-seal.png" alt="UTHSC College of Medicine seal">
+        </div>
+
+        <a class="home-btn" href="#outline" title="Go to outline" aria-label="Go to outline">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
+          </svg>
+        </a>
+resources:
+  - styles.css
+  - assets
+---
+
+## {.titlepage data-background-image="assets/uthsc-building-faded.png" data-background-size="cover" data-background-position="center" data-background-color="#ffffff"}
+
+<div class="titlepage-slide">
+<div class="titlepage-content">
+
+<img class="tp-logo" src="assets/uthsc-logo-centered.png" alt="University of Tennessee Health Sciences">
+
+<p class="tp-title">Extract the signal.<br>Make it visible.</p>
+<p class="tp-author">BigRiverEssence.jl + BigRiverPlots.jl</p>
+<p class="tp-institute">Abhisek Banerjee · UT Health Science Center</p>
+
+</div>
+</div>
+
+::: {.notes}
+- Open with the problem, not the package list: high-dimensional analyses are only useful when structure can be extracted and then understood.
+- Timing: about 1 minute.
+- [Sources] Package scope and names: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl
+:::
+
+## Two packages, one statistical workflow {#opening}
+
+<div class="br-pipeline">
+<div class="br-stage">
+<h3>High-dimensional data</h3>
+<p>Many correlated variables, few samples, multiple assays, or a response to predict.</p>
+</div>
+<div class="br-arrow">→</div>
+<div class="br-stage green">
+<h3>BigRiverEssence</h3>
+<p>Extract low-dimensional, sparse, supervised, or shared structure.</p>
+</div>
+<div class="br-arrow">→</div>
+<div class="br-stage">
+<h3>BigRiverPlots</h3>
+<p>Turn scores, loadings, variance, and predictions into interpretable graphics.</p>
+</div>
+</div>
+
+<br>
+
+<div class="uthsc-green-box br-center">
+The interface between the packages is not a special object—it is the statistical output itself.
+</div>
+
+::: {.notes}
+- Introduce the packages as separable but complementary.
+- BigRiverPlots accepts ordinary arrays, so it is useful beyond BigRiverEssence.
+- Timing: 1.5 minutes.
+- [Sources] https://github.com/senresearch/BigRiverEssence.jl ; https://github.com/senresearch/BigRiverPlots.jl
+:::
+
+## The obstacle is not just size {#problem}
+
+<div class="br-kicker">A familiar omics geometry</div>
+
+::: columns
+::: column
+
+- thousands of variables
+- correlated measurements
+- fewer samples than features
+- multiple data types on the same people
+- signal mixed with noise
+
+<div class="uthsc-orange-box" style="margin-top:18px;">
+The question changes the decomposition: variance, prediction, sparsity, correlation, or integration.
+</div>
+
+:::
+::: column
+
+```{ojs}
+d3 = require("d3@7")
+
+brColors = ({orange:"#E78824", dark:"#C14C23", green:"#4D701F", teal:"#007E5A", ink:"#2a2a2a", pale:"#f5f1eb"})
+
+brRng = function(seed) {
+  let s = seed >>> 0;
+  return () => {
+    s = (s + 0x6d2b79f5) >>> 0;
+    let t = s;
+    t = Math.imul(t ^ (t >>> 15), 1 | t);
+    t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+omicsMatrix = {
+  const rng = brRng(17), rows=18, cols=54, W=560, H=320;
+  const pad={l:58,r:10,t:36,b:24};
+  const cw=(W-pad.l-pad.r)/cols, ch=(H-pad.t-pad.b)/rows;
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${W} ${H}`).style("width","100%");
+  const color=d3.scaleSequential(d3.interpolateRgbBasis(["#007E5A","#f4f1ec","#E78824"])).domain([-1.7,1.7]);
+  for(let i=0;i<rows;i++) for(let j=0;j<cols;j++) {
+    const block=(i<6?1:i<12?-1:.3)*(j>18&&j<35?1:0);
+    const wave=.55*Math.sin(j/5+i/3);
+    const noise=(rng()-.5)*1.25;
+    svg.append("rect").attr("x",pad.l+j*cw).attr("y",pad.t+i*ch)
+      .attr("width",cw-.7).attr("height",ch-.7).attr("rx",.8).attr("fill",color(block+wave+noise));
+  }
+  svg.append("text").attr("x",pad.l).attr("y",22).attr("font-size",14).attr("font-weight",700).attr("fill",brColors.ink).text("variables → thousands");
+  svg.append("text").attr("transform",`translate(17,${H/2}) rotate(-90)`).attr("text-anchor","middle").attr("font-size",14).attr("font-weight",700).attr("fill",brColors.ink).text("samples");
+  return svg.node();
+}
+```
+
+:::
+:::
+
+::: {.notes}
+- Emphasize that the package collection is organized by statistical question, not by one universal algorithm.
+- The heatmap is synthetic and generated in the browser.
+- Timing: 1.5 minutes.
+- [Sources] Package description: https://github.com/senresearch/BigRiverEssence.jl
+:::
+
+## Today: structure → interpretation → communication {#outline}
+
+<div class="toc-card">
+
+1. [Choose the statistical question](#questions)
+2. [Extract the essence](#compression)
+3. [Add supervision, sparsity, or multiple blocks](#supervision)
+4. [Turn outputs into plots](#plots-intro)
+5. [Run the complete workflow](#workflow)
+
+</div>
+
+::: {.notes}
+- This is the roadmap; keep it brief.
+- Timing: 30 seconds.
+:::
+
+## One package, five kinds of questions {#questions}
+
+<p class="br-small">Choose a question to see the corresponding methods.</p>
+
+```{ojs}
+questionFrames = [
+  {label:"Compress", q:"What are the dominant directions?", methods:"PCA", detail:"Dense, ordered components that summarize variance."},
+  {label:"Predict", q:"Which directions track an outcome?", methods:"PLSkern · PLS-DA", detail:"Latent components built around a continuous response or class label."},
+  {label:"Select", q:"Which variables actually carry the signal?", methods:"PMD · SPC · sPLS-DA", detail:"L1-constrained loadings turn a dense direction into a short feature list."},
+  {label:"Relate", q:"What structure is shared by two blocks?", methods:"CCA · SCCA", detail:"Pairs of directions maximize cross-block association, densely or sparsely."},
+  {label:"Integrate", q:"What is shared—and what is assay-specific?", methods:"JIVE", detail:"Separate joint, individual, and residual variation across multiple blocks."}
+]
+
+viewof questionPick = {
+  const wrap=html`<div></div>`, bar=html`<div class="br-selector"></div>`;
+  const buttons=questionFrames.map((d,i)=>{ const b=html`<button>${d.label}</button>`; b.onclick=()=>{wrap.value=i; draw(); wrap.dispatchEvent(new Event("input",{bubbles:true}));}; bar.append(b); return b; });
+  const draw=()=>buttons.forEach((b,i)=>b.classList.toggle("on",i===wrap.value));
+  wrap.value=0; draw(); wrap.append(bar); return wrap;
+}
+```
+
+```{ojs}
+questionCard = {
+  const d=questionFrames[questionPick];
+  const card=html`<div style="border-top:5px solid ${brColors.orange};background:#fff;border-radius:14px;padding:20px 26px;box-shadow:0 8px 24px rgba(0,0,0,.10);min-height:210px"></div>`;
+  card.append(html`<div style="font:800 29px inherit;color:${brColors.dark};margin-bottom:12px">${d.q}</div>`);
+  card.append(html`<div style="font:800 21px inherit;color:${brColors.green};margin-bottom:12px">${d.methods}</div>`);
+  card.append(html`<div style="font:400 18px/1.45 inherit;color:${brColors.ink}">${d.detail}</div>`);
+  return card;
+}
+```
+
+::: {.notes}
+- Click through all five questions.
+- The package currently exposes PCA, PMD, SPC, PLSkern, JIVE, PLSDA, SPLSDA, CCA, and SCCA.
+- Timing: 2 minutes.
+- [Sources] Exported API and method list: https://github.com/senresearch/BigRiverEssence.jl
+:::
+
+## Compression is a controllable trade-off {#compression}
+
+<p class="br-small">Add components automatically or drag the slider. More structure is recovered, but the representation grows.</p>
+
+```{ojs}
+compressionData = {
+  const rng=brRng(41), n=22, p=46, R=7;
+  const U=[],V=[],s=[8.5,6.0,4.2,3.0,2.0,1.3,.8];
+  for(let r=0;r<R;r++){
+    let u=d3.range(n).map(i=>Math.sin((r+1)*Math.PI*i/n+r*.7));
+    let v=d3.range(p).map(j=>Math.cos((r+1)*Math.PI*j/(p/2)+r*.45));
+    const nu=Math.hypot(...u),nv=Math.hypot(...v); U.push(u.map(x=>x/nu));V.push(v.map(x=>x/nv));
+  }
+  const M=d3.range(n).map(i=>d3.range(p).map(j=>d3.sum(d3.range(R),r=>s[r]*U[r][i]*V[r][j])+.025*(rng()-.5)));
+  return {n,p,R,U,V,s,M,max:d3.max(M.flat(),x=>Math.abs(x))};
+}
+
+viewof ncomp = {
+  const max=compressionData.R, wrap=html`<div style="display:flex;align-items:center;gap:14px;font-size:17px;flex-wrap:wrap"></div>`;
+  const range=html`<input type="range" min="1" max="${max}" value="1" step="1" style="width:260px;accent-color:#E78824">`;
+  const val=html`<span style="font-weight:900;color:#C14C23;min-width:20px">1</span>`;
+  const play=html`<button style="padding:6px 14px;border:0;border-radius:8px;background:#007E5A;color:#fff;font-weight:800;cursor:pointer">▶ build</button>`;
+  let timer;
+  const set=v=>{range.value=v;val.textContent=v;wrap.value=+v;wrap.dispatchEvent(new Event("input",{bubbles:true}));};
+  range.oninput=()=>set(range.value);
+  play.onclick=()=>{clearInterval(timer);let k=1;set(k);timer=setInterval(()=>{k++;if(k>max){clearInterval(timer);return;}set(k);},500);};
+  wrap.value=1;wrap.append(html`<b>Components kept:</b>`,range,val,play);return wrap;
+}
+```
+
+```{ojs}
+compressionFig = {
+  const D=compressionData,k=ncomp,W=1040,H=310,cw=6.2,y0=48;
+  const rec=d3.range(D.n).map(i=>d3.range(D.p).map(j=>d3.sum(d3.range(k),r=>D.s[r]*D.U[r][i]*D.V[r][j])));
+  const color=d3.scaleSequential(d3.interpolateRgbBasis([brColors.teal,"#f4f1ec",brColors.orange])).domain([-D.max,D.max]);
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${W} ${H}`).style("width","100%").style("font-family","inherit");
+  const block=(A,x,label)=>{svg.append("text").attr("x",x).attr("y",28).attr("font-size",15).attr("font-weight",800).attr("fill",brColors.ink).text(label);for(let i=0;i<D.n;i++)for(let j=0;j<D.p;j++)svg.append("rect").attr("x",x+j*cw).attr("y",y0+i*cw).attr("width",cw-.5).attr("height",cw-.5).attr("fill",color(A[i][j]));};
+  block(D.M,20,"Original matrix"); block(rec,420,`Rank-${k} reconstruction`);
+  svg.append("text").attr("x",355).attr("y",y0+D.n*cw/2).attr("font-size",32).attr("font-weight",900).attr("fill",brColors.dark).text("≈");
+  const captured=d3.sum(D.s.slice(0,k),x=>x*x)/d3.sum(D.s,x=>x*x);
+  const bx=420,by=230,bw=480;
+  svg.append("rect").attr("x",bx).attr("y",by).attr("width",bw).attr("height",24).attr("rx",6).attr("fill","#e7e7e7");
+  svg.append("rect").attr("x",bx).attr("y",by).attr("width",bw*captured).attr("height",24).attr("rx",6).attr("fill",brColors.orange);
+  svg.append("text").attr("x",bx).attr("y",by-8).attr("font-size",14).attr("font-weight",800).attr("fill",brColors.ink).text("Signal variation recovered");
+  svg.append("text").attr("x",bx+bw+12).attr("y",by+19).attr("font-size",17).attr("font-weight",900).attr("fill",brColors.dark).text(`${(100*captured).toFixed(0)}%`);
+  svg.append("text").attr("x",bx).attr("y",by+52).attr("font-size",13).attr("fill","#666").text(`Store ${k} × (${D.n} + ${D.p}) values instead of ${D.n} × ${D.p}`);
+  return svg.node();
+}
+```
+
+::: {.notes}
+- Connect the animation to PCA and low-rank matrix decomposition.
+- The synthetic matrix has seven ordered latent components.
+- Timing: 2 minutes.
+- [Sources] PCA API and reconstruction functions: https://senresearch.github.io/BigRiverEssence.jl/dev/pca_tutorial/
+:::
+
+## The PCA API keeps the workflow explicit {#pca-api}
+
+::: columns
+::: column
+
+<div class="br-code">
+
+```julia
+using BigRiverEssence
+
+m = pca(X;
+    k = 4,
+    standardize = true
+)
+
+scores = pca_transform(m, X)
+X̂ = pca_invtransform(m, scores)
+
+m.loadings
+m.propOFvar
+```
+
+</div>
+
+:::
+::: column
+
+<div class="br-method-grid" style="grid-template-columns:1fr;">
+<div class="br-method"><strong>Fit</strong><br>Estimate ordered directions from the training matrix.</div>
+<div class="br-method"><strong>Transform</strong><br>Represent observations in component space.</div>
+<div class="br-method"><strong>Invert</strong><br>Map scores back to an approximation of the original variables.</div>
+</div>
+
+<div class="br-notice" style="margin-top:16px;">
+The model stores what downstream graphics need: scores, loadings, and proportion of variance.
+</div>
+
+:::
+:::
+
+::: {.notes}
+- The point is the small, predictable API surface.
+- Mention that observations are rows and variables are columns for the single-matrix methods.
+- Timing: 1.5 minutes.
+- [Sources] https://senresearch.github.io/BigRiverEssence.jl/dev/pca_tutorial/
+:::
+
+## Supervision rotates the question {#supervision}
+
+<p class="br-small">PCA and PLS emphasize different directions. The moving line is horizontal for PCA and vertical for PLS.</p>
+
+```{ojs}
+supervisedData = {
+  const rng=brRng(123), pts=[];
+  const randn=()=>{let u=0,v=0;while(!u)u=rng();while(!v)v=rng();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);};
+  for(let g=0;g<2;g++)for(let i=0;i<90;i++)pts.push({x:(g?1.4:-1.4)+.55*randn(),y:.35*randn(),g});
+  return pts;
+}
+
+viewof directionMode = {
+  const wrap=html`<div class="br-selector"></div>`;
+  const labels=["PCA: most variance","PLS: tracks outcome"];
+  const bs=labels.map((x,i)=>{const b=html`<button>${x}</button>`;b.onclick=()=>set(i);wrap.append(b);return b;});
+  const render=()=>bs.forEach((b,i)=>b.classList.toggle("on",i===wrap.value));
+  const set=v=>{wrap.value=v;render();wrap.dispatchEvent(new Event("input",{bubbles:true}));};
+  wrap.value=0;render();return wrap;
+}
+```
+
+```{ojs}
+supervisedFig = {
+  const data=supervisedData,mode=directionMode,W=1000,H=350,pad=42,duration=850;
+  const oldMode=globalThis.__brDirectionMode ?? mode,oldSep=globalThis.__brDirectionSep ?? 0;
+  const angle=mode===0?Math.PI/2:0,oldAngle=oldMode===0?Math.PI/2:0;
+  const dir={x:Math.cos(angle),y:Math.sin(angle)},oldDir={x:Math.cos(oldAngle),y:Math.sin(oldAngle)};
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${W} ${H}`).style("width","100%").style("font-family","inherit");
+  const x=d3.scaleLinear().domain([-4.4,4.4]).range([pad,620]),y=d3.scaleLinear().domain([-2.85,2.85]).range([H-pad,pad]);
+  const colors=[brColors.orange,brColors.teal],mx=d3.mean(data,d=>d.x),my=d3.mean(data,d=>d.y);
+  const score=(d,v)=>(d.x-mx)*v.x+(d.y-my)*v.y;
+  const projected=data.map((d,i)=>{const t=score(d,dir),ot=score(d,oldDir);return {...d,i,t,ot,px:mx+t*dir.x,py:my+t*dir.y,opx:mx+ot*oldDir.x,opy:my+ot*oldDir.y};});
+  const byGroup=[projected.filter(d=>d.g===0),projected.filter(d=>d.g===1)];
+  const separation=key=>{const a=byGroup[0].map(d=>d[key]),b=byGroup[1].map(d=>d[key]);return Math.abs(d3.mean(a)-d3.mean(b))/Math.sqrt((d3.variance(a)+d3.variance(b))/2);};
+  const sep=separation("t");
+  svg.append("rect").attr("x",pad).attr("y",pad).attr("width",620-pad).attr("height",H-2*pad).attr("rx",12).attr("fill","#fff").attr("stroke","#ddd");
+  const clipId=`supervised-clip-${mode}`;
+  svg.append("defs").append("clipPath").attr("id",clipId).append("rect").attr("x",pad+1).attr("y",pad+1).attr("width",618-pad).attr("height",H-2*pad-2).attr("rx",11);
+  svg.selectAll("circle.raw").data(projected).join("circle").attr("class","raw").attr("clip-path",`url(#${clipId})`).attr("cx",d=>x(d.x)).attr("cy",d=>y(d.y)).attr("r",4.5).attr("fill",d=>colors[d.g]).attr("opacity",.78).attr("stroke","#fff").attr("stroke-width",.7);
+  const boundaryAngle=angle+Math.PI/2,oldBoundaryAngle=oldAngle+Math.PI/2;
+  const axis=svg.append("line").attr("stroke",brColors.ink).attr("stroke-width",3.5).attr("stroke-dasharray","8,5");
+  const axisAttrs=(a,L)=>({x1:x(mx-L*Math.cos(a)),y1:y(my-L*Math.sin(a)),x2:x(mx+L*Math.cos(a)),y2:y(my+L*Math.sin(a))});
+  const a0=axisAttrs(oldBoundaryAngle,oldMode===0?4.05:2.6),a1=axisAttrs(boundaryAngle,mode===0?4.05:2.6);
+  Object.entries(a0).forEach(([k,v])=>axis.attr(k,v));
+  axis.transition().duration(duration).ease(d3.easeCubicInOut).attr("x1",a1.x1).attr("y1",a1.y1).attr("x2",a1.x2).attr("y2",a1.y2);
+  svg.append("text").attr("x",pad+14).attr("y",pad+22).attr("font-size",12).attr("font-weight",800).attr("fill",brColors.dark).text(mode===0?"PCA · horizontal line":"PLS · vertical line");
+  svg.append("text").attr("x",mode===0?x(mx+2.15):x(mx)+12).attr("y",mode===0?y(my)-10:y(my-1.7)).attr("font-size",12).attr("font-weight",800).attr("fill",brColors.ink).text("selected line").attr("opacity",0).transition().delay(duration*.7).duration(220).attr("opacity",1);
+  const bx=680,cy=180,oldTx=d3.scaleLinear().domain(d3.extent(projected,d=>d.ot)).nice().range([bx+12,978]),tx=d3.scaleLinear().domain(d3.extent(projected,d=>d.t)).nice().range([bx+12,978]);
+  svg.append("text").attr("x",bx).attr("y",58).attr("font-size",18).attr("font-weight",900).attr("fill",brColors.dark).text(mode===0?"PCA scores overlap":"PLS scores separate");
+  svg.append("text").attr("x",bx).attr("y",82).attr("font-size",13).attr("fill",brColors.ink).text("Both classes on the same score axis");
+  [{label:"orange",x:bx,color:colors[0]},{label:"teal",x:bx+92,color:colors[1]}].forEach(d=>{
+    svg.append("circle").attr("cx",d.x+6).attr("cy",108).attr("r",5).attr("fill",d.color);
+    svg.append("text").attr("x",d.x+17).attr("y",113).attr("font-size",12).attr("font-weight",800).attr("fill",d.color).text(d.label);
+  });
+  svg.append("line").attr("x1",tx.range()[0]).attr("x2",tx.range()[1]).attr("y1",cy).attr("y2",cy).attr("stroke","#cfcfcf").attr("stroke-width",2);
+  byGroup.forEach((vals,g)=>{
+    const sorted=vals.map(d=>d.t).sort(d3.ascending),q1=d3.quantile(sorted,.25),q3=d3.quantile(sorted,.75),mean=d3.mean(sorted);
+    svg.append("rect").attr("x",tx(q1)).attr("y",cy-18).attr("width",Math.max(2,tx(q3)-tx(q1))).attr("height",36).attr("rx",9).attr("fill",colors[g]).attr("opacity",.16);
+    svg.selectAll(`circle.score-${g}`).data(vals).join("circle").attr("class",`score-${g}`).attr("cx",d=>oldTx(d.ot)).attr("cy",d=>cy+((d.i*17)%29-14)*1.55).attr("r",3).attr("fill",colors[g]).attr("opacity",.58).attr("stroke","#fff").attr("stroke-width",.35).transition().duration(duration).ease(d3.easeCubicInOut).attr("cx",d=>tx(d.t));
+    svg.append("line").attr("x1",tx(mean)).attr("x2",tx(mean)).attr("y1",cy-34).attr("y2",cy+34).attr("stroke",colors[g]).attr("stroke-width",3.5);
+  });
+  svg.append("text").attr("x",bx).attr("y",272).attr("font-size",13).attr("font-weight",700).attr("fill","#666").text("standardized separation");
+  svg.append("text").attr("x",978).attr("y",320).attr("text-anchor","end").attr("font-size",48).attr("font-weight",900).attr("fill",mode===0?brColors.orange:brColors.green).text(oldSep.toFixed(2)).transition().duration(duration).tween("text",function(){const n=d3.interpolateNumber(oldSep,sep);return t=>this.textContent=n(t).toFixed(2);});
+  globalThis.__brDirectionMode=mode;globalThis.__brDirectionSep=sep;
+  return svg.node();
+}
+```
+
+::: {.notes}
+- Click PCA, then PLS: the selected line rotates from horizontal to vertical while the score display and separation statistic update.
+- Explain PLSkern for continuous outcomes and PLS-DA for class labels.
+- Timing: 2 minutes.
+- [Sources] PLS kernel method and API: https://senresearch.github.io/BigRiverEssence.jl/dev/plskern_tutorial/
+:::
+
+## Sparsity changes a direction into a feature list {#sparsity}
+
+<p class="br-small">Move the threshold: dense loadings become a short set of retained variables.</p>
+
+```{ojs}
+sparseWeights = {
+  const rng=brRng(74), p=42;
+  return d3.range(p).map(i=>({name:`gene ${i+1}`,w:(i<9?(1.05-.06*i)*(i%2?-1:1):.22*(rng()-.5))}));
+}
+
+viewof sparseKeep = {
+  const wrap=html`<div style="display:flex;gap:14px;align-items:center;font-size:17px"></div>`;
+  const r=html`<input type="range" min="2" max="25" step="1" value="8" style="width:280px;accent-color:#E78824">`;
+  const v=html`<b style="color:#C14C23">8</b>`;
+  const set=x=>{r.value=x;v.textContent=x;wrap.value=+x;wrap.dispatchEvent(new Event("input",{bubbles:true}));};r.oninput=()=>set(r.value);wrap.value=8;wrap.append(html`<b>Variables retained:</b>`,r,v);return wrap;
+}
+```
+
+```{ojs}
+sparseFig = {
+  const dat=sparseWeights,W=1020,H=330,pad={l:42,r:18,t:34,b:46};
+  const order=d3.range(dat.length).sort((a,b)=>Math.abs(dat[b].w)-Math.abs(dat[a].w)),keep=new Set(order.slice(0,sparseKeep));
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${W} ${H}`).style("width","100%").style("font-family","inherit");
+  const x=d3.scaleBand(d3.range(dat.length),[pad.l,W-pad.r]).padding(.25),m=d3.max(dat,d=>Math.abs(d.w))*1.1,y=d3.scaleLinear().domain([-m,m]).range([H-pad.b,pad.t]);
+  svg.append("line").attr("x1",pad.l).attr("x2",W-pad.r).attr("y1",y(0)).attr("y2",y(0)).attr("stroke","#aaa");
+  svg.selectAll("rect").data(dat).join("rect").attr("x",(_,i)=>x(i)).attr("width",x.bandwidth()).attr("y",d=>Math.min(y(0),y(d.w))).attr("height",d=>Math.abs(y(d.w)-y(0))+.5).attr("fill",(_,i)=>keep.has(i)?brColors.orange:"#d9d9d9");
+  svg.append("text").attr("x",W-pad.r).attr("y",23).attr("text-anchor","end").attr("font-size",17).attr("font-weight",900).attr("fill",brColors.dark).text(`${sparseKeep} of ${dat.length} variables active`);
+  svg.append("text").attr("x",W/2).attr("y",H-10).attr("text-anchor","middle").attr("font-size",13).attr("fill","#666").text("orange = retained · grey = loading set to zero");
+  return svg.node();
+}
+```
+
+<div class="br-notice">Implemented through PMD, sparse PCA, sparse CCA, and sparse PLS-DA.</div>
+
+::: {.notes}
+- Stress interpretability: the result names a small set of variables, not only a score.
+- `keepX` in SPLSDA controls retained variables per component.
+- Timing: 2 minutes.
+- [Sources] Sparse methods and API: https://github.com/senresearch/BigRiverEssence.jl ; https://senresearch.github.io/BigRiverEssence.jl/dev/splsda_tutorial/
+:::
+
+## JIVE separates agreement from individuality {#integration}
+
+<p class="br-small">The same samples are measured by several assays. Increase the shared signal and watch the joint portion grow.</p>
+
+```{ojs}
+viewof jointShare = {
+  const wrap=html`<div style="display:flex;align-items:center;gap:14px;font-size:17px"></div>`;
+  const r=html`<input type="range" min="0.05" max="0.85" step="0.01" value="0.48" style="width:300px;accent-color:#E78824">`,v=html`<b style="color:#C14C23">48%</b>`;
+  const set=x=>{r.value=x;v.textContent=`${Math.round(100*x)}%`;wrap.value=+x;wrap.dispatchEvent(new Event("input",{bubbles:true}));};r.oninput=()=>set(r.value);wrap.value=.48;wrap.append(html`<b>Shared signal:</b>`,r,v);return wrap;
+}
+```
+
+```{ojs}
+jiveFig = {
+  const names=["Transcriptome","Proteome","Metabolome"],W=960,H=330,pad={l:90,r:30,t:40,b:50},svg=d3.create("svg").attr("viewBox",`0 0 ${W} ${H}`).style("width","100%").style("font-family","inherit");
+  const x=d3.scaleBand(names,[pad.l,W-pad.r]).padding(.42),y=d3.scaleLinear().domain([0,1]).range([H-pad.b,pad.t]);
+  const remainder=1-jointShare,indivFraction=[.56,.44,.50];
+  const indiv=indivFraction.map(f=>remainder*f),resid=indiv.map(v=>remainder-v);
+  const segs=[{name:"Residual",vals:resid,color:"#d9d9d9"},{name:"Individual",vals:indiv,color:brColors.green},{name:"Joint",vals:names.map(()=>jointShare),color:brColors.orange}];
+  let base=names.map(()=>0);
+  segs.forEach(s=>{svg.selectAll(`rect.${s.name}`).data(names).join("rect").attr("x",d=>x(d)).attr("width",x.bandwidth()).attr("y",(_,i)=>y(base[i]+s.vals[i])).attr("height",(_,i)=>y(base[i])-y(base[i]+s.vals[i])).attr("fill",s.color);base=base.map((b,i)=>b+s.vals[i]);});
+  svg.append("g").attr("transform",`translate(0,${H-pad.b})`).call(d3.axisBottom(x).tickSizeOuter(0)).selectAll("text").attr("font-size",13).attr("font-weight",700);
+  svg.append("g").attr("transform",`translate(${pad.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".0%"))).selectAll("text").attr("font-size",12);
+  const lg=svg.append("g").attr("transform",`translate(${W-330},18)`);segs.slice().reverse().forEach((s,i)=>{lg.append("rect").attr("x",i*105).attr("width",14).attr("height",14).attr("fill",s.color);lg.append("text").attr("x",i*105+20).attr("y",12).attr("font-size",12).attr("fill",brColors.ink).text(s.name);});
+  return svg.node();
+}
+```
+
+::: {.notes}
+- JIVE expects variables by observations and common columns across blocks.
+- Mention block scaling: center and normalize so a large assay cannot dominate.
+- Timing: 2 minutes.
+- [Sources] JIVE API/tutorial: https://senresearch.github.io/BigRiverEssence.jl/dev/jive_tutorial/ ; original method cited in package README.
+:::
+
+## The Essence API is broad, but regular {#essence-api}
+
+<table class="br-table">
+<thead><tr><th>Question</th><th>Fit</th><th>Primary outputs</th></tr></thead>
+<tbody>
+<tr><td>Variance</td><td><code>pca</code>, <code>spc</code></td><td>scores · loadings · variance</td></tr>
+<tr><td>Prediction</td><td><code>plskern</code></td><td>scores · coefficients · predictions</td></tr>
+<tr><td>Classification</td><td><code>plsda</code>, <code>splsda</code></td><td>scores · loadings · classes · VIP</td></tr>
+<tr><td>Two-block relation</td><td><code>cca</code>, <code>scca</code></td><td>paired projections · correlations</td></tr>
+<tr><td>Multi-block integration</td><td><code>jive</code></td><td>joint · individual · residual structure</td></tr>
+</tbody>
+</table>
+
+<br>
+
+<div class="uthsc-orange-box br-center">
+Different statistical questions; a consistent vocabulary of matrices and components.
+</div>
+
+::: {.notes}
+- This is the transition from modeling to visualization.
+- Timing: 1 minute.
+- [Sources] Exported API: https://github.com/senresearch/BigRiverEssence.jl/blob/main/src/BigRiverEssence.jl
+:::
+
+## The handoff is deliberately simple {#bridge}
+
+```{ojs}
+bridgePulse = Generators.observe(notify => {
+  let i=0; notify(i);
+  const id=setInterval(()=>notify(++i),900);
+  return ()=>clearInterval(id);
+})
+```
+
+```{ojs}
+bridgeFig = {
+  const items=[
+    {x:90,label:"fit",sub:"BigRiverEssence",color:brColors.green},
+    {x:280,label:"scores",sub:"observations",color:brColors.orange},
+    {x:470,label:"loadings",sub:"variables",color:brColors.orange},
+    {x:660,label:"variance / VIP",sub:"importance",color:brColors.orange},
+    {x:900,label:"plot",sub:"BigRiverPlots",color:brColors.green}
+  ], active=bridgePulse%items.length,W=1000,H=270;
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${W} ${H}`).style("width","100%").style("font-family","inherit");
+  items.slice(0,-1).forEach((d,i)=>svg.append("line").attr("x1",d.x+70).attr("x2",items[i+1].x-70).attr("y1",130).attr("y2",130).attr("stroke",i<active?brColors.orange:"#ccc").attr("stroke-width",5));
+  items.forEach((d,i)=>{svg.append("circle").attr("cx",d.x).attr("cy",130).attr("r",i===active?62:52).attr("fill",i===active?d.color:"#fff").attr("stroke",d.color).attr("stroke-width",4);svg.append("text").attr("x",d.x).attr("y",126).attr("text-anchor","middle").attr("font-size",i===active?16:14).attr("font-weight",900).attr("fill",i===active?"#fff":brColors.dark).text(d.label);svg.append("text").attr("x",d.x).attr("y",148).attr("text-anchor","middle").attr("font-size",10.5).attr("fill",i===active?"#fff":"#666").text(d.sub);});
+  return svg.node();
+}
+```
+
+<div class="br-notice br-center">BigRiverPlots works on common outputs—not only on BigRiverEssence model objects.</div>
+
+::: {.notes}
+- This slide advances automatically.
+- Explain why array-level inputs make the plotting package reusable.
+- Timing: 1 minute.
+- [Sources] https://github.com/senresearch/BigRiverPlots.jl
+:::
+
+## Plot recipes keep analysis and styling separate {#plots-intro}
+
+::: columns
+::: column
+
+<div class="br-code">
+
+```julia
+using BigRiverEssence
+using BigRiverPlots
+using Plots
+
+m = pca(X; k=4, standardize=true)
+S = pca_transform(m, X)
+
+plot_scree(m.propOFvar)
+plot_scores(S; group=phenotype)
+plot_biplot(S, m.loadings)
+```
+
+</div>
+
+:::
+::: column
+
+### Why RecipesBase?
+
+- lightweight recipe definitions
+- standard `Plots.jl` attributes still work
+- plotting functions accept familiar arrays
+- consistent validation and defaults
+- both new-plot and mutating `!` forms
+
+<div class="uthsc-green-box" style="font-size:.78em;">
+The package supplies statistical grammar; the backend supplies rendering.
+</div>
+
+:::
+:::
+
+::: {.notes}
+- BigRiverPlots itself depends on RecipesBase, not Plots; users load Plots to render.
+- Timing: 1.5 minutes.
+- [Sources] Package architecture and examples: https://github.com/senresearch/BigRiverPlots.jl
+:::
+
+## Eleven views cover the common statistical outputs {#plot-catalog}
+
+<div class="br-method-grid">
+<div class="br-method"><strong>Structure</strong><br>scree · scores · pairs · biplot</div>
+<div class="br-method"><strong>Variables</strong><br>loadings · heatmap · VIP · sparsity</div>
+<div class="br-method"><strong>Fit & uncertainty</strong><br>predicted/observed · confidence</div>
+<div class="br-method"><strong>Integration</strong><br>JIVE variance</div>
+<div class="br-method"><strong>Counts</strong><br>mosaic</div>
+<div class="br-method"><strong>Composition</strong><br>all support standard plot attributes</div>
+</div>
+
+<br>
+
+<div class="br-notice br-center">The right plot is determined by the output you need to interrogate.</div>
+
+::: {.notes}
+- Do not enumerate every keyword. Show the conceptual coverage.
+- Timing: 1 minute.
+- [Sources] Available plots: https://github.com/senresearch/BigRiverPlots.jl
+:::
+
+## Explore one fit through several views {#plot-explorer}
+
+```{ojs}
+plotChoices = ["Scree","Scores","Loadings","VIP","Sparsity","Prediction","JIVE variance"]
+
+viewof plotPick = {
+  const wrap=html`<div class="br-selector"></div>`;
+  const bs=plotChoices.map((x,i)=>{const b=html`<button>${x}</button>`;b.onclick=()=>{wrap.value=i;draw();wrap.dispatchEvent(new Event("input",{bubbles:true}));};wrap.append(b);return b;});
+  const draw=()=>bs.forEach((b,i)=>b.classList.toggle("on",i===wrap.value));wrap.value=0;draw();return wrap;
+}
+```
+
+```{ojs}
+plotExplorer = {
+  const pick=plotPick,W=1000,H=370,svg=d3.create("svg").attr("viewBox",`0 0 ${W} ${H}`).style("width","100%").style("font-family","inherit"),O=brColors.orange,G=brColors.green,D=brColors.dark;
+  const title=t=>svg.append("text").attr("x",W/2).attr("y",28).attr("text-anchor","middle").attr("font-size",17).attr("font-weight",800).attr("fill",D).text(t);
+  const axes=(x,y,{left,bottom,xLabel,yLabel,xFormat=null,yFormat=null,xTicks=null,yTicks=5})=>{
+    const xa=d3.axisBottom(x).tickSizeOuter(0),ya=d3.axisLeft(y).ticks(yTicks).tickSizeOuter(0);
+    if(xFormat)xa.tickFormat(xFormat);if(yFormat)ya.tickFormat(yFormat);if(xTicks)xa.tickValues(xTicks);
+    const gx=svg.append("g").attr("transform",`translate(0,${bottom})`).call(xa),gy=svg.append("g").attr("transform",`translate(${left},0)`).call(ya);
+    [gx,gy].forEach(g=>{g.selectAll("text").attr("font-size",11).attr("fill","#555");g.selectAll("path,line").attr("stroke","#777");});
+    svg.append("text").attr("x",(left+x.range()[1])/2).attr("y",366).attr("text-anchor","middle").attr("font-size",13).attr("font-weight",700).attr("fill",D).text(xLabel);
+    svg.append("text").attr("transform",`translate(18,${(55+bottom)/2}) rotate(-90)`).attr("text-anchor","middle").attr("font-size",13).attr("font-weight",700).attr("fill",D).text(yLabel);
+  };
+  if(pick===0){
+    title("Variance explained by component"); const vals=[.48,.24,.12,.07,.04,.025,.015,.01],x=d3.scaleBand(d3.range(vals.length),[80,940]).padding(.28),y=d3.scaleLinear().domain([0,.52]).range([320,55]);
+    svg.selectAll("rect").data(vals).join("rect").attr("x",(_,i)=>x(i)).attr("y",d=>y(d)).attr("width",x.bandwidth()).attr("height",d=>320-y(d)).attr("fill",O);svg.append("path").attr("d",d3.line()(vals.map((d,i)=>[x(i)+x.bandwidth()/2,y(d)]))).attr("fill","none").attr("stroke",G).attr("stroke-width",3);axes(x,y,{left:80,bottom:320,xLabel:"component",yLabel:"variance explained",xFormat:i=>`C${i+1}`,yFormat:d3.format(".0%")});
+  } else if(pick===1){
+    title("Observations in component space"); const rng=brRng(9),groups=d3.range(90).map(i=>({x:(i%3-1)*2.2+(rng()-.5)*1.8,y:(i%3-1)*.8+(rng()-.5)*2.1,g:i%3})),x=d3.scaleLinear().domain([-4,4]).range([80,940]),y=d3.scaleLinear().domain([-3,3]).range([325,55]),cs=[O,G,"#5b78b2"];
+    svg.selectAll("circle").data(groups).join("circle").attr("cx",d=>x(d.x)).attr("cy",d=>y(d.y)).attr("r",6).attr("fill",d=>cs[d.g]).attr("opacity",.75);axes(x,y,{left:80,bottom:325,xLabel:"component 1 score",yLabel:"component 2 score"});
+  } else if(pick===2||pick===3){
+    title(pick===2?"Variable contributions to component 1":"Ranked variable importance"); const rng=brRng(21),vals=d3.range(24).map(i=>pick===2?1.1*Math.sin(i*.65)+.25*(rng()-.5):1.75*Math.exp(-i/8)+.12*(rng()-.5));if(pick===3)vals.sort((a,b)=>b-a);const x=d3.scaleBand(d3.range(vals.length),[70,950]).padding(.2),y=d3.scaleLinear().domain([pick===2?-1.5:0,1.9]).range([325,55]),zero=y(0);
+    svg.selectAll("rect").data(vals).join("rect").attr("x",(_,i)=>x(i)).attr("width",x.bandwidth()).attr("y",d=>Math.min(zero,y(d))).attr("height",d=>Math.abs(y(d)-zero)).attr("fill",d=>pick===3&&d<1?"#ccc":O);if(pick===3)svg.append("line").attr("x1",70).attr("x2",950).attr("y1",y(1)).attr("y2",y(1)).attr("stroke",G).attr("stroke-dasharray","6 5").attr("stroke-width",2);axes(x,y,{left:70,bottom:325,xLabel:"variable",yLabel:pick===2?"loading on component 1":"VIP score",xFormat:i=>`V${i+1}`,xTicks:[0,3,7,11,15,19,23]});
+  } else if(pick===4){
+    title("Variables retained on each sparse component"); const vals=[9,12,7,10,6],x=d3.scaleBand(d3.range(5),[140,900]).padding(.35),y=d3.scaleLinear().domain([0,20]).range([320,60]);svg.selectAll("rect").data(vals).join("rect").attr("x",(_,i)=>x(i)).attr("y",d=>y(d)).attr("width",x.bandwidth()).attr("height",d=>320-y(d)).attr("fill",G);svg.selectAll("text.count").data(vals).join("text").attr("class","count").attr("x",(_,i)=>x(i)+x.bandwidth()/2).attr("y",d=>y(d)-9).attr("text-anchor","middle").attr("font-size",17).attr("font-weight",900).attr("fill",D).text(d=>d);axes(x,y,{left:140,bottom:320,xLabel:"sparse component",yLabel:"variables retained",xFormat:i=>`C${i+1}`,yTicks:4});
+  } else if(pick===5){
+    title("Held-out predictions against observations"); const rng=brRng(33),pts=d3.range(65).map(i=>{const x=70+30*rng();return{x,y:x+2.3*(rng()-.5)};}),x=d3.scaleLinear().domain([68,102]).range([90,900]),y=d3.scaleLinear().domain([68,102]).range([325,55]);svg.append("line").attr("x1",x(68)).attr("x2",x(102)).attr("y1",y(68)).attr("y2",y(102)).attr("stroke",D).attr("stroke-dasharray","7 5");svg.selectAll("circle").data(pts).join("circle").attr("cx",d=>x(d.x)).attr("cy",d=>y(d.y)).attr("r",5).attr("fill",O).attr("opacity",.72);axes(x,y,{left:90,bottom:325,xLabel:"observed outcome",yLabel:"predicted outcome",xTicks:null,yTicks:5});
+  } else {
+    title("Joint, individual, and residual variation"); const names=["RNA","Protein","Metabolite"],x=d3.scaleBand(names,[140,900]).padding(.4),y=d3.scaleLinear().domain([0,1]).range([325,55]),joint=[.46,.38,.52],ind=[.31,.42,.24],res=joint.map((d,i)=>1-d-ind[i]);let base=[0,0,0];[[res,"#ddd","residual"],[ind,G,"individual"],[joint,O,"joint"]].forEach(([vals,c,cls])=>{svg.selectAll(`rect.${cls}`).data(names).join("rect").attr("class",cls).attr("x",d=>x(d)).attr("width",x.bandwidth()).attr("y",(_,i)=>y(base[i]+vals[i])).attr("height",(_,i)=>y(base[i])-y(base[i]+vals[i])).attr("fill",c);base=base.map((b,i)=>b+vals[i]);});axes(x,y,{left:140,bottom:325,xLabel:"data block",yLabel:"variance fraction",yFormat:d3.format(".0%")});
+  }
+  return svg.node();
+}
+```
+
+::: {.notes}
+- Click through the views quickly; dwell on scores, VIP, prediction, and JIVE variance.
+- These are browser-generated analogues of the package plot types, not screenshots.
+- Timing: 2.5 minutes.
+- [Sources] Plot semantics and APIs: https://senresearch.github.io/BigRiverPlots.jl/dev/
+:::
+
+## One fit can tell several stories, one view at a time {#automatic}
+
+<p class="br-small">Use Next to move through the analytical questions in a deliberate sequence.</p>
+
+```{ojs}
+viewof autoView = {
+  const wrap=html`<div style="display:flex;gap:10px;align-items:center"></div>`,label=html`<b style="color:#C14C23;min-width:260px"></b>`,btn=html`<button style="padding:6px 16px;border:0;border-radius:8px;background:#007E5A;color:#fff;font-weight:800;cursor:pointer">Next →</button>`;
+  let i=0; const names=["scree: how many?","scores: which samples?","loadings: which variables?","VIP: which matter most?","prediction: does it generalize?"];
+  const push=()=>{label.textContent=names[i];wrap.value=i;wrap.dispatchEvent(new Event("input",{bubbles:true}));};
+  btn.onclick=()=>{i=(i+1)%names.length;push();};
+  wrap.value=0;wrap.append(btn,label);push();return wrap;
+}
+```
+
+```{ojs}
+autoSummary = {
+  const steps=[
+    ["Choose complexity","Keep the components that carry meaningful signal.","48% · 24% · 12%"],
+    ["Inspect observations","See clusters, gradients, and outlying samples.","scores = X × loadings"],
+    ["Interpret components","Trace each axis back to the original variables.","genes · metabolites · features"],
+    ["Prioritize variables","Rank contributions to a supervised model.","VIP > 1"],
+    ["Check generalization","Compare held-out predictions with observations.","distance from y = x"]
+  ],d=steps[autoView],card=html`<div style="margin:26px auto 0;max-width:900px;border-top:6px solid #E78824;background:#fff;border-radius:16px;padding:28px 36px;box-shadow:0 10px 28px rgba(0,0,0,.12);text-align:center;min-height:230px"></div>`;
+  card.append(html`<div style="font:900 32px inherit;color:#C14C23;margin-bottom:18px">${d[0]}</div>`);card.append(html`<div style="font:500 20px/1.45 inherit;color:#2a2a2a;margin-bottom:22px">${d[1]}</div>`);card.append(html`<div style="font:800 18px inherit;color:#4D701F">${d[2]}</div>`);return card;
+}
+```
+
+::: {.notes}
+- Click Next through the five questions and stop wherever discussion is useful.
+- Use it to emphasize that plotting is analysis, not decoration at the end.
+- Timing: 1.5 minutes.
+- [Sources] Plot purposes: https://senresearch.github.io/BigRiverPlots.jl/dev/
+:::
+
+## The complete workflow stays short {#workflow}
+
+<style>
+#workflow .br-code pre { font-size: 12px !important; }
+#workflow .column:nth-child(2) { font-size: 20px; }
+#workflow .column:nth-child(2) h3 { font-size: 28px !important; }
+</style>
+
+::: columns
+::: column
+
+<div class="br-code">
+
+```julia
+using BigRiverEssence
+using BigRiverPlots
+using Plots
+
+# 1. extract structure
+m = splsda(X, class, 3, [20, 15, 10])
+
+# 2. inspect observations
+plot_scores(m.variates_X;
+    group = class)
+
+# 3. inspect variables
+plot_loadings(m.loadings_X;
+    comp = 1,
+    varnames = gene_names)
+
+# 4. report sparsity
+plot_sparsity(m.loadings_X)
+```
+
+</div>
+
+:::
+::: column
+
+### The design principle
+
+1. Fit with a method named for the statistical task.
+2. Read ordinary matrix outputs.
+3. Send those outputs to a plot named for the question.
+4. Customize through familiar `Plots.jl` attributes.
+
+<div class="uthsc-green-box" style="font-size:.78em;margin-top:18px;">
+The workflow is explicit enough to teach, inspect, test, and extend.
+</div>
+
+:::
+:::
+
+::: {.notes}
+- Explain that `keepX` is specified per component.
+- If the audience asks about fields, refer to the SPLSDA docs and exported model struct.
+- Timing: 2 minutes.
+- [Sources] SPLSDA API: https://senresearch.github.io/BigRiverEssence.jl/dev/splsda_tutorial/ ; plotting APIs: https://senresearch.github.io/BigRiverPlots.jl/dev/
+:::
+
+## Install the pieces you need {#install}
+
+::: columns
+::: column
+
+### Registered packages
+
+```julia
+using Pkg
+Pkg.add("BigRiverEssence")
+Pkg.add("BigRiverPlots")
+```
+
+### Load a plotting backend
+
+```julia
+using BigRiverEssence
+using BigRiverPlots
+using Plots
+```
+
+:::
+::: column
+
+### Development versions
+
+```julia
+Pkg.add(url =
+  "https://github.com/senresearch/BigRiverEssence.jl",
+  rev = "main")
+
+Pkg.add(url =
+  "https://github.com/senresearch/BigRiverPlots.jl",
+  rev = "main")
+```
+
+:::
+:::
+
+::: {.notes}
+- Note that the repositories currently report version 0.1.0.
+- Timing: 1 minute.
+- [Sources] Installation instructions: https://github.com/senresearch/BigRiverEssence.jl ; https://github.com/senresearch/BigRiverPlots.jl
+:::
+
+## What I want the ecosystem to make easy {#future}
+
+<div class="br-pipeline" style="grid-template-columns:1fr auto 1fr auto 1fr;">
+<div class="br-stage"><h3>Fit</h3><p>Efficient decompositions for high-dimensional biological data.</p></div>
+<div class="br-arrow">→</div>
+<div class="br-stage green"><h3>Understand</h3><p>Stable outputs that expose the statistical structure directly.</p></div>
+<div class="br-arrow">→</div>
+<div class="br-stage"><h3>Communicate</h3><p>Reusable plots with consistent behavior and familiar customization.</p></div>
+</div>
+
+<br>
+
+<div class="uthsc-orange-box br-center">
+A small, composable foundation for downstream biostatistics packages—not a monolithic framework.
+</div>
+
+::: {.notes}
+- Invite contributions around documentation, performance, testing, new methods, and plot recipes.
+- Timing: 1.5 minutes.
+- [Sources] Contribution and package-design statements: both repository READMEs.
+:::
+
+## Three ideas to leave with {#takeaways}
+
+<div class="br-method-grid" style="margin-top:34px;">
+<div class="br-stage"><h3>1 · Match method to question</h3><p>Variance, prediction, sparsity, correlation, and integration need different decompositions.</p></div>
+<div class="br-stage green"><h3>2 · Keep outputs transparent</h3><p>Scores, loadings, variance, VIP, predictions, and joint/individual structure form the interface.</p></div>
+<div class="br-stage"><h3>3 · Treat plots as analysis</h3><p>Each view asks a specific question of the fitted structure.</p></div>
+</div>
+
+::: {.notes}
+- Resolve the opening promise.
+- Timing: 1 minute.
+:::
+
+## {data-background-image="assets/uthsc-building-faded.png" data-background-size="cover" data-background-position="center" data-background-color="#ffffff"}
+
+<div class="thankyou-slide">
+<div class="thankyou-content" style="font-size:44px;">
+
+Extract the signal. Make it visible.
+
+<div class="br-links" style="margin-top:24px;line-height:1.5;">
+<a href="https://github.com/senresearch/BigRiverEssence.jl">github.com/senresearch/BigRiverEssence.jl</a><br>
+<a href="https://github.com/senresearch/BigRiverPlots.jl">github.com/senresearch/BigRiverPlots.jl</a>
+</div>
+
+</div>
+</div>
+
+::: {.notes}
+- Invite questions and collaborators.
+- Timing: remaining time for discussion.
+- [Sources] Repository links shown on slide.
+:::

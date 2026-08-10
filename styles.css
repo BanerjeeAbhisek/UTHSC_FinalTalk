@@ -1,0 +1,37 @@
+/* =====================================================
+   FADED BUILDING BACKDROP (every content slide)
+   The watercolor building, edges already faded to
+   transparent in the PNG; we just place it low-opacity
+   behind the content. Title/Thank-You slides set the
+   building as their own slide background (stronger),
+   so the backdrop below is disabled there.
+   ===================================================== */
+.reveal .slide-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: url("assets/uthsc-building-faded.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Slide content always above the backdrop */
+.reveal .slide-content { position: relative; z-index: 2; }
+
+/* =====================================================
+   Disable the faint backdrop on slides that already use
+   the building as their full slide background
+   (Title + Thank-You) so it isn't doubled up.
+   ===================================================== */
+.reveal .slide-background[style*="uthsc-building"]::before,
+.reveal .slide-background[data-background-image*="uthsc-building"]::before,
+.reveal .slide-background.present[style*="uthsc-building"]::before,
+.reveal .slide-background.present[data-background-image*="uthsc-building"]::before {
+  display: none !important;
+}
