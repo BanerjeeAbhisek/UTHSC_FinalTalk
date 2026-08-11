@@ -1,5 +1,5 @@
 ---
-pagetitle: "BigRiverEssence.jl + BigRiverPlots.jl"
+pagetitle: "Fast and Lean: Julia Tools for High-Dimensional Omics"
 
 format:
   revealjs:
@@ -167,6 +167,151 @@ format:
         .reveal .slides section.present .memory-bar { animation:gainRise .72s cubic-bezier(.2,.75,.25,1) both; }
         .reveal .slides section .memory-bar span { position:absolute; left:50%; bottom:calc(100% + 4px); transform:translateX(-50%); font-size:10px; font-weight:900; white-space:nowrap; }
         .reveal .slides section .memory-group-name { position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%); color:#174f3d; font-size:10px; font-weight:900; white-space:nowrap; }
+        .reveal .slides section .dataset-layout { display:grid; grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr); gap:22px; align-items:stretch; margin-top:13px; }
+        .reveal .slides section .dataset-map, .reveal .slides section .dataset-figure { box-sizing:border-box; background:rgba(255,255,255,.96); border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .dataset-map { border-top:7px solid #E78824; padding:17px 21px; }
+        .reveal .slides section .dataset-context { color:#555; font-size:14px; line-height:1.35; padding-bottom:10px; border-bottom:2px solid rgba(77,112,31,.13); }
+        .reveal .slides section .xy-row { display:grid; grid-template-columns:52px minmax(0,1fr); gap:12px; align-items:center; padding:13px 0; border-bottom:2px solid rgba(77,112,31,.13); }
+        .reveal .slides section .xy-symbol { color:#C14C23; font-size:39px; font-weight:900; text-align:center; }
+        .reveal .slides section .xy-size { color:#174f3d; font-size:22px; font-weight:900; margin-bottom:3px; }
+        .reveal .slides section .xy-copy { font-size:14px; line-height:1.34; }
+        .reveal .slides section .dataset-why { margin-top:12px; color:#333; font-size:14px; line-height:1.4; font-weight:700; }
+        .reveal .slides section .dataset-figure { border-top:7px solid #4D701F; padding:14px 16px 12px; }
+        .reveal .slides section .dataset-figure-title { color:#C14C23; font-size:20px; font-weight:900; margin-bottom:3px; }
+        .reveal .slides section .dataset-figure-sub { color:#666; font-size:13px; margin-bottom:5px; }
+        .reveal .slides section .dataset-figure img { display:block; width:100%; height:300px; object-fit:contain; object-position:center; }
+        .reveal .slides section .dataset-caption { font-size:13px; line-height:1.35; color:#555; margin-top:3px; }
+        .reveal .slides section .code-compare { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:13px; }
+        .reveal .slides section .language-panel { box-sizing:border-box; min-width:0; background:#172019; color:#f5f4ec; border-radius:16px; padding:0 19px 16px; box-shadow:0 8px 24px rgba(0,0,0,.13); overflow:hidden; }
+        .reveal .slides section .language-panel.r { border-top:7px solid #E78824; }
+        .reveal .slides section .language-panel.julia { border-top:7px solid #4D701F; }
+        .reveal .slides section .language-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:12px 2px 9px; border-bottom:1px solid rgba(255,255,255,.18); }
+        .reveal .slides section .language-name { color:#fff; font-size:22px; font-weight:900; }
+        .reveal .slides section .language-role { color:#cfd5ce; font-size:12px; }
+        .reveal .slides section pre.slide-code { width:100%; margin:10px 0 0; padding:0; background:transparent; box-shadow:none; overflow:visible; }
+        .reveal .slides section pre.slide-code code { display:block; padding:0; background:transparent; color:#f4f2e9; font:600 13.5px/1.43 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; white-space:pre-wrap; tab-size:2; }
+        .reveal .slides section .code-fn { color:#f4a24e; }
+        .reveal .slides section .code-arg { color:#a7d46f; }
+        .reveal .slides section .code-str { color:#efc981; }
+        .reveal .slides section .code-comment { color:#99a49a; font-style:italic; }
+        .reveal .slides section .benchmark-scope { margin-top:12px; color:#555; font-size:13px; font-weight:700; text-align:center; }
+        .reveal .slides section .result-layout { display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:24px; align-items:stretch; margin-top:16px; }
+        .reveal .slides section .match-panel, .reveal .slides section .runtime-panel { box-sizing:border-box; background:rgba(255,255,255,.96); border-radius:16px; padding:18px 22px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .match-panel { border-top:7px solid #4D701F; }
+        .reveal .slides section .runtime-panel { border-top:7px solid #E78824; }
+        .reveal .slides section .result-panel-title { color:#C14C23; font-size:23px; font-weight:900; margin-bottom:11px; }
+        .reveal .slides section .match-row { display:grid; grid-template-columns:150px minmax(0,1fr); gap:14px; padding:12px 0; border-bottom:2px solid rgba(77,112,31,.13); }
+        .reveal .slides section .match-row:last-of-type { border-bottom:0; }
+        .reveal .slides section .match-label { color:#174f3d; font-size:15px; font-weight:900; }
+        .reveal .slides section .match-value { font-size:15px; line-height:1.35; }
+        .reveal .slides section .match-value code { font-size:13px; color:#333; }
+        .reveal .slides section .match-confirm { margin-top:12px; padding:10px 13px; background:rgba(77,112,31,.10); border-left:5px solid #4D701F; border-radius:8px; color:#174f3d; font-size:15px; line-height:1.3; font-weight:900; }
+        .reveal .slides section .runtime-row { display:grid; grid-template-columns:58px minmax(0,1fr) 86px; gap:10px; align-items:center; margin:17px 0; }
+        .reveal .slides section .runtime-name { color:#174f3d; font-size:18px; font-weight:900; text-align:right; }
+        .reveal .slides section .runtime-track { height:31px; background:rgba(23,79,61,.09); border-radius:5px; overflow:hidden; }
+        .reveal .slides section .runtime-bar { height:100%; border-radius:5px; transform-origin:left center; }
+        .reveal .slides section.present .runtime-bar { animation:gainGrow .8s cubic-bezier(.2,.75,.25,1) both; }
+        .reveal .slides section .runtime-bar.r { width:100%; background:#E78824; }
+        .reveal .slides section .runtime-bar.julia { width:15.82%; background:#075d42; animation-delay:.16s; }
+        .reveal .slides section .runtime-value { font-size:17px; font-weight:900; }
+        .reveal .slides section .speedup-main { margin:23px 0 8px; text-align:center; color:#4D701F; font-size:58px; line-height:1; font-weight:900; }
+        .reveal .slides section .speedup-copy { text-align:center; color:#333; font-size:19px; font-weight:800; }
+        .reveal .slides section .julia-memory { margin-top:19px; padding-top:13px; border-top:2px solid rgba(77,112,31,.14); color:#555; font-size:13px; text-align:center; }
+        .reveal .slides section .result-footnote { margin-top:13px; color:#666; font-size:12px; text-align:center; }
+        .reveal .slides section .recipe-layout { display:grid; grid-template-columns:minmax(0,.91fr) minmax(0,1.09fr); gap:24px; align-items:stretch; margin-top:15px; }
+        .reveal .slides section .recipe-code-panel { box-sizing:border-box; background:#172019; color:#f5f4ec; border-top:7px solid #E78824; border-radius:16px; padding:18px 21px; box-shadow:0 8px 24px rgba(0,0,0,.14); }
+        .reveal .slides section .recipe-code-title { color:#fff; font-size:22px; font-weight:900; margin-bottom:4px; }
+        .reveal .slides section .recipe-code-sub { color:#bfc9bf; font-size:13px; line-height:1.35; margin-bottom:14px; }
+        .reveal .slides section .recipe-code-panel pre { margin:0; padding:14px 15px !important; background:rgba(255,255,255,.055) !important; border-radius:10px; box-shadow:none !important; }
+        .reveal .slides section .recipe-code-panel pre code { display:block; padding:0 !important; background:transparent !important; color:#f4f2e9 !important; font:600 14px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; white-space:pre-wrap; }
+        .reveal .slides section .recipe-code-note { margin-top:14px; color:#dfe4dc; font-size:14px; line-height:1.4; }
+        .reveal .slides section .recipe-code-note strong { color:#a7d46f; }
+        .reveal .slides section .recipe-explainer { box-sizing:border-box; background:rgba(255,255,255,.96); border-top:7px solid #4D701F; border-radius:16px; padding:18px 21px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .recipe-definition-title { color:#C14C23; font-size:23px; font-weight:900; margin-bottom:5px; }
+        .reveal .slides section .recipe-definition { font-size:16px; line-height:1.42; margin-bottom:15px; }
+        .reveal .slides section .recipe-pipeline { display:grid; grid-template-columns:minmax(0,.9fr) 26px minmax(0,1.12fr) 26px minmax(0,.9fr); gap:7px; align-items:center; margin:13px 0 17px; }
+        .reveal .slides section .recipe-stage { box-sizing:border-box; min-height:86px; display:flex; flex-direction:column; justify-content:center; text-align:center; background:rgba(77,112,31,.08); border:2px solid rgba(77,112,31,.20); border-radius:11px; padding:9px 8px; }
+        .reveal .slides section .recipe-stage strong { color:#174f3d; font-size:15px; line-height:1.2; }
+        .reveal .slides section .recipe-stage span { color:#555; font-size:11.5px; line-height:1.25; margin-top:5px; }
+        .reveal .slides section .recipe-pipeline-arrow { color:#E78824; font-size:28px; font-weight:900; text-align:center; }
+        .reveal .slides section .recipe-benefit { display:grid; grid-template-columns:164px minmax(0,1fr); gap:13px; padding:9px 0; border-top:2px solid rgba(77,112,31,.12); }
+        .reveal .slides section .recipe-benefit strong { color:#C14C23; font-size:15px; }
+        .reveal .slides section .recipe-benefit span { font-size:14px; line-height:1.34; }
+        .reveal .slides section .plot-gallery { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px 14px; margin-top:12px; }
+        .reveal .slides section .plot-gallery-item { box-sizing:border-box; min-width:0; background:rgba(255,255,255,.97); border-radius:12px; padding:8px 10px 9px; box-shadow:0 6px 18px rgba(0,0,0,.10); overflow:hidden; }
+        .reveal .slides section .plot-gallery-item:nth-child(3n+1) { border-top:5px solid #E78824; }
+        .reveal .slides section .plot-gallery-item:nth-child(3n+2) { border-top:5px solid #4D701F; }
+        .reveal .slides section .plot-gallery-item:nth-child(3n) { border-top:5px solid #C14C23; }
+        .reveal .slides section .plot-gallery-label { color:#174f3d; font-size:15px; line-height:1.1; font-weight:900; margin-bottom:4px; }
+        .reveal .slides section .plot-gallery-item img { display:block; width:100%; height:160px; object-fit:contain; object-position:center; margin:0; }
+        .reveal .slides section .plot-gallery-more { margin-top:10px; color:#555; font-size:13px; line-height:1.3; text-align:center; font-weight:700; }
+        .reveal .slides section .plot-gallery-more strong { color:#C14C23; }
+        .reveal .slides section .splsda-view-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; margin-top:13px; }
+        .reveal .slides section .splsda-view { box-sizing:border-box; min-width:0; background:rgba(255,255,255,.97); border-radius:14px; padding:10px 11px 11px; box-shadow:0 7px 20px rgba(0,0,0,.11); }
+        .reveal .slides section .splsda-view.samples { border-top:6px solid #E78824; }
+        .reveal .slides section .splsda-view.genes { border-top:6px solid #4D701F; }
+        .reveal .slides section .splsda-view.link { border-top:6px solid #C14C23; }
+        .reveal .slides section .splsda-view-label { color:#C14C23; font-size:18px; line-height:1.1; font-weight:900; margin-bottom:4px; }
+        .reveal .slides section .splsda-view img { display:block; width:100%; height:260px; object-fit:contain; object-position:center; margin:0; }
+        .reveal .slides section .splsda-view-caption { min-height:38px; color:#444; font-size:13px; line-height:1.34; margin-top:3px; }
+        .reveal .slides section .splsda-view-caption strong { color:#174f3d; }
+        .reveal .slides section .splsda-plot-selector { display:flex; gap:10px; margin:7px 0 11px; }
+        .reveal .slides section .splsda-plot-selector button { font:800 14px Montserrat,sans-serif; padding:8px 15px; border-radius:20px; border:2px solid rgba(193,76,35,.24); background:#fff; color:#555; cursor:pointer; transition:background .18s ease,color .18s ease,border-color .18s ease; }
+        .reveal .slides section .splsda-plot-selector button.on { background:#E78824; border-color:#E78824; color:#fff; }
+        .reveal .slides section .splsda-interactive { display:grid; grid-template-columns:minmax(0,1.22fr) minmax(0,.78fr); gap:18px; align-items:stretch; }
+        .reveal .slides section .splsda-interactive-visual { box-sizing:border-box; min-width:0; background:rgba(255,255,255,.97); border-top:6px solid #4D701F; border-radius:14px; padding:10px 13px 12px; box-shadow:0 7px 20px rgba(0,0,0,.11); }
+        .reveal .slides section .splsda-interactive-label { color:#C14C23; font-size:20px; line-height:1.1; font-weight:900; margin-bottom:4px; }
+        .reveal .slides section .splsda-interactive-visual img { display:block; width:100%; height:319px; object-fit:contain; object-position:center; margin:0; }
+        .reveal .slides section .splsda-interactive-caption { color:#444; font-size:14px; line-height:1.35; margin-top:4px; }
+        .reveal .slides section .splsda-interactive-caption strong { color:#174f3d; }
+        .reveal .slides section .splsda-interactive-code { box-sizing:border-box; min-width:0; background:#172019; color:#f5f4ec; border-top:6px solid #E78824; border-radius:14px; padding:16px 18px; box-shadow:0 7px 20px rgba(0,0,0,.14); }
+        .reveal .slides section .splsda-code-title { color:#fff; font-size:20px; font-weight:900; margin-bottom:5px; }
+        .reveal .slides section .splsda-code-sub { color:#bdc8bd; font-size:12px; line-height:1.35; margin-bottom:12px; }
+        .reveal .slides section .splsda-interactive-code pre { margin:0; padding:13px 14px !important; background:rgba(255,255,255,.055) !important; border-radius:10px; box-shadow:none !important; }
+        .reveal .slides section .splsda-interactive-code pre code { display:block; padding:0 !important; background:transparent !important; color:#f4f2e9 !important; font:600 13.5px/1.48 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; white-space:pre-wrap; overflow-wrap:anywhere; }
+        .reveal .slides section .splsda-code-note { margin-top:13px; color:#dfe4dc; font-size:13px; line-height:1.38; }
+        .reveal .slides section .bridge-layout { display:grid; grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr); gap:22px; align-items:start; margin-top:9px; }
+        .reveal .slides section .bridge-code { box-sizing:border-box; min-width:0; background:#172019; color:#f5f4ec; border-top:7px solid #E78824; border-radius:16px; padding:13px 18px 14px; box-shadow:0 8px 24px rgba(0,0,0,.14); }
+        .reveal .slides section .bridge-code-title { color:#fff; font-size:21px; font-weight:900; margin-bottom:2px; }
+        .reveal .slides section .bridge-code-sub { color:#bdc8bd; font-size:12.5px; line-height:1.35; margin-bottom:11px; }
+        .reveal .slides section .bridge-code pre { margin:0; padding:11px 13px !important; background:rgba(255,255,255,.055) !important; border-radius:10px; box-shadow:none !important; }
+        .reveal .slides section .bridge-code pre code { display:block; padding:0 !important; background:transparent !important; color:#f4f2e9 !important; font:600 12.5px/1.3 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; white-space:pre-wrap; }
+        .reveal .slides section .bridge-story { box-sizing:border-box; background:rgba(255,255,255,.96); border-top:7px solid #4D701F; border-radius:16px; padding:13px 19px 14px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .bridge-story-title { color:#C14C23; font-size:21px; font-weight:900; margin-bottom:4px; }
+        .reveal .slides section .bridge-step { display:grid; grid-template-columns:45px minmax(0,1fr); gap:11px; align-items:center; padding:7px 0; border-bottom:2px solid rgba(77,112,31,.13); }
+        .reveal .slides section .bridge-step:last-of-type { border-bottom:0; }
+        .reveal .slides section .bridge-lang { display:flex; align-items:center; justify-content:center; width:39px; height:39px; border-radius:50%; color:#fff; font-size:13px; font-weight:900; }
+        .reveal .slides section .bridge-lang.r { background:#E78824; }
+        .reveal .slides section .bridge-lang.julia { background:#4D701F; }
+        .reveal .slides section .bridge-step strong { display:block; color:#174f3d; font-size:15px; margin-bottom:2px; }
+        .reveal .slides section .bridge-step-copy span { display:block; color:#444; font-size:12.5px; line-height:1.27; }
+        .reveal .slides section .bridge-takeaway { margin-top:8px; padding:8px 11px; background:rgba(231,136,36,.12); border-left:5px solid #E78824; border-radius:8px; color:#333; font-size:13px; line-height:1.3; font-weight:800; }
+        .reveal .slides section .bridge-caveat { margin-top:6px; color:#666; font-size:10.5px; line-height:1.25; }
+        .reveal .slides section .conclusion-hero { display:grid; grid-template-columns:205px minmax(0,1fr); gap:28px; align-items:center; margin-top:17px; }
+        .reveal .slides section .conclusion-count { text-align:center; padding-right:26px; border-right:3px solid rgba(77,112,31,.22); }
+        .reveal .slides section .conclusion-number { color:#E78824; font-size:116px; line-height:.88; font-weight:900; }
+        .reveal .slides section .conclusion-number-label { color:#174f3d; font-size:17px; line-height:1.25; font-weight:900; margin-top:12px; }
+        .reveal .slides section .conclusion-packages { display:grid; gap:15px; }
+        .reveal .slides section .conclusion-package { display:grid; grid-template-columns:285px minmax(0,1fr); gap:16px; align-items:center; padding:14px 0; border-bottom:2px solid rgba(77,112,31,.14); }
+        .reveal .slides section .conclusion-package:last-child { border-bottom:0; }
+        .reveal .slides section .conclusion-package-name { color:#C14C23; font-size:23px; line-height:1.12; font-weight:900; white-space:nowrap; }
+        .reveal .slides section .conclusion-package-copy { color:#333; font-size:16px; line-height:1.35; }
+        .reveal .slides section .conclusion-routes { display:grid; grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr); gap:15px; align-items:center; margin-top:22px; padding:15px 20px; background:rgba(255,255,255,.94); border-top:6px solid #4D701F; border-radius:14px; box-shadow:0 7px 20px rgba(0,0,0,.10); }
+        .reveal .slides section .conclusion-route strong { display:block; color:#C14C23; font-size:19px; margin-bottom:4px; }
+        .reveal .slides section .conclusion-route span { display:block; color:#444; font-size:14px; line-height:1.32; }
+        .reveal .slides section .conclusion-or { color:#E78824; font-size:17px; font-weight:900; text-align:center; text-transform:uppercase; }
+        .reveal .slides section .conclusion-close { margin-top:17px; color:#174f3d; font-size:21px; line-height:1.35; font-weight:900; text-align:center; }
+        .reveal .slides section .next-roadmap { display:grid; grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr) 42px minmax(0,1fr); gap:10px; align-items:center; margin-top:25px; }
+        .reveal .slides section .next-step { box-sizing:border-box; min-width:0; min-height:265px; background:rgba(255,255,255,.96); border-radius:16px; padding:19px 21px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .next-step.publish { border-top:7px solid #E78824; }
+        .reveal .slides section .next-step.essence { border-top:7px solid #C14C23; }
+        .reveal .slides section .next-step.plots { border-top:7px solid #4D701F; }
+        .reveal .slides section .next-num { color:#E78824; font-size:18px; line-height:1; font-weight:900; letter-spacing:.08em; margin-bottom:12px; }
+        .reveal .slides section .next-step h3 { color:#C14C23; font-size:23px !important; line-height:1.15; margin:0 0 11px; }
+        .reveal .slides section .next-step p { color:#333; font-size:15px; line-height:1.4; margin:0; }
+        .reveal .slides section .next-step strong { color:#174f3d; }
+        .reveal .slides section .next-arrow { color:#E78824; font-size:34px; font-weight:900; text-align:center; }
+        .reveal .slides section .next-close { margin-top:22px; padding:13px 18px; background:rgba(77,112,31,.10); border-left:6px solid #4D701F; border-radius:10px; color:#174f3d; font-size:19px; line-height:1.32; font-weight:900; text-align:center; }
         @keyframes gainGrow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
         @keyframes gainRise { from { transform:scaleY(0); } to { transform:scaleY(1); } }
         @keyframes dotIn { from { opacity:0; transform:translate(-50%,-50%) scale(.3); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
@@ -192,15 +337,15 @@ resources:
 
 <img class="tp-logo" src="assets/uthsc-logo-centered.png" alt="University of Tennessee Health Sciences">
 
-<p class="tp-title">Extract the signal.<br>Make it visible.</p>
-<p class="tp-author">BigRiverEssence.jl + BigRiverPlots.jl</p>
-<p class="tp-institute">Abhisek Banerjee · UT Health Science Center</p>
+<p class="tp-title">Fast and Lean:<br>Julia Tools for<br>High-Dimensional Omics</p>
+<p class="tp-author">BigRiverEssence + BigRiverPlots</p>
+<p class="tp-institute">Abhisek Banerjee · University of Tennessee Health Sciences</p>
 
 </div>
 </div>
 
 ::: {.notes}
-- Open with the problem, not the package list: high-dimensional analyses are only useful when structure can be extracted and then understood.
+- Open with the central promise: fast, lean Julia tools for high-dimensional omics, with the two package names directly beneath the title.
 - [Sources] Package scope and names: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl
 :::
 
@@ -558,4 +703,471 @@ essenceMethodCard = {
 - Avoid saying that every method used dramatically less memory: the memory panel contains the selected Julia-to-Julia comparisons reported in the benchmark figure.
 - Benchmark values depend on the matrices, package versions, hardware, and benchmark protocol used for this experiment.
 - [Sources] Benchmark values and reference comparisons: presenter-supplied screenshot `Screenshot 2026-08-10 at 21.34.35.png` and accompanying optimization notes in `pasted-text.txt`.
+:::
+
+## The example starts with 64 livers and 3,116 genes
+
+<p class="story-kicker">The liver-toxicity dataset</p>
+<p class="story-lead" style="margin-bottom:8px;">In a controlled acetaminophen study, 64 rats received four doses, and liver mRNA expression was measured at 6, 18, 24, or 48 hours.</p>
+
+<div class="dataset-layout">
+<div class="dataset-map">
+<div class="dataset-context"><strong>The complete study</strong> contains 3,116 gene-expression measurements and 10 clinical chemistry markers for every animal.</div>
+
+<div class="xy-row">
+<div class="xy-symbol">X</div>
+<div><div class="xy-size">64 × 3,116</div><div class="xy-copy">Rows are animals; columns are gene-expression measurements.</div></div>
+</div>
+
+<div class="xy-row">
+<div class="xy-symbol">y</div>
+<div><div class="xy-size">4 dose groups</div><div class="xy-copy">50, 150, 1500, or 2000 mg/kg—with 16 animals in each group.</div></div>
+</div>
+
+<div class="dataset-why"><strong>X</strong> contains 3,116 gene-expression values for each rat. <strong>y</strong> records the dose group assigned to that animal.</div>
+</div>
+
+<div class="dataset-figure">
+<div class="dataset-figure-title">A balanced dose × time study</div>
+<div class="dataset-figure-sub">R exploration: each dot represents one rat.</div>
+<img src="assets/liver-toxicity-design.png" alt="Study-design plot showing four rats at every combination of acetaminophen dose and collection time">
+<div class="dataset-caption">Four doses × four collection times × four rats per combination = 64 samples.</div>
+</div>
+</div>
+
+::: {.notes}
+- Explain the experimental unit first: each row is one rat, not one gene.
+- The full dataset also contains 10 clinical measurements, but this example deliberately uses one gene-expression block and one dose label so the R and Julia fits are directly comparable.
+- The four dose groups are balanced with 16 animals each.
+- Every dose-time combination contains four animals, giving 4 × 4 × 4 = 64 samples.
+- [Sources] Dataset description: https://www.bioconductor.org/packages/release/bioc/manuals/mixOmics/man/mixOmics.pdf ; study-design plot generated from `mixOmics::liver.toxicity` using the presenter’s R script `make_liver_toxicity_design.R`.
+:::
+
+## One sPLS-DA task, expressed in R and Julia
+
+<p class="story-kicker">Same data · same model settings</p>
+<p class="story-lead" style="margin-bottom:7px;">Both fits use the 64 × 3,116 expression matrix, two components, 50 selected genes per component, standardized predictors, and the same four dose classes.</p>
+
+<div class="code-compare">
+<div class="language-panel r">
+<div class="language-heading"><span class="language-name">R</span><span class="language-role">mixOmics + microbenchmark</span></div>
+<pre class="slide-code"><code><span class="code-fn">library</span>(mixOmics)
+<span class="code-fn">library</span>(microbenchmark)
+<span class="code-fn">data</span>(<span class="code-str">"liver.toxicity"</span>, package = <span class="code-str">"mixOmics"</span>)
+
+X &lt;- <span class="code-fn">data.matrix</span>(liver.toxicity$gene)
+y &lt;- <span class="code-fn">factor</span>(liver.toxicity$treatment$Dose.Group)
+
+fit_R &lt;- <span class="code-fn">splsda</span>(X, y, ncomp = <span class="code-arg">2</span>,
+  keepX = <span class="code-fn">c</span>(<span class="code-arg">50</span>, <span class="code-arg">50</span>), scale = <span class="code-arg">TRUE</span>)
+
+bench_R &lt;- <span class="code-fn">microbenchmark</span>(
+  <span class="code-fn">splsda</span>(X, y, ncomp = <span class="code-arg">2</span>,
+    keepX = <span class="code-fn">c</span>(<span class="code-arg">50</span>, <span class="code-arg">50</span>), scale = <span class="code-arg">TRUE</span>),
+  times = <span class="code-arg">50L</span>)
+<span class="code-fn">min</span>(bench_R$time) / <span class="code-arg">1e6</span></code></pre>
+</div>
+
+<div class="language-panel julia">
+<div class="language-heading"><span class="language-name">Julia</span><span class="language-role">BigRiverEssence + BenchmarkTools</span></div>
+<pre class="slide-code"><code><span class="code-fn">using</span> RCall, BigRiverEssence, BenchmarkTools
+
+R<span class="code-str">"""
+data("liver.toxicity", package = "mixOmics")
+X_R &lt;- data.matrix(liver.toxicity[["gene"]])
+y_R &lt;- as.character(liver.toxicity[["treatment"]][["Dose.Group"]])
+"""</span>
+<span class="code-fn">@rget</span> X_R y_R
+X, y = Matrix{Float64}(X_R), String.(y_R)
+
+ncomp, keepX = <span class="code-arg">2</span>, [<span class="code-arg">50</span>, <span class="code-arg">50</span>]
+levels = [<span class="code-str">"50"</span>, <span class="code-str">"150"</span>, <span class="code-str">"1500"</span>, <span class="code-str">"2000"</span>]
+fit_J = <span class="code-fn">splsda</span>(X, y, ncomp, keepX;
+  scale = <span class="code-arg">true</span>, levels = levels)
+
+<span class="code-fn">@btime</span> <span class="code-fn">splsda</span>($X, $y, $ncomp, $keepX;
+  scale = <span class="code-arg">true</span>, levels = $levels)</code></pre>
+</div>
+</div>
+
+<div class="benchmark-scope">Only model fitting is timed; data loading and transfer occur before each benchmark.</div>
+
+::: {.notes}
+- The important point is not line count; it is that the statistical task and tuning parameters are matched.
+- R obtains the dataset from `mixOmics`. Julia uses `RCall` only to import that same matrix and labels, then fits with `BigRiverEssence`.
+- Both benchmark expressions reuse the already loaded `X` and `y`, so the timings measure model fitting rather than data import.
+- [Sources] Presenter-supplied R and Julia scripts: `liver_toxicity_splsda_reference.R` and `liver_toxicity_splsda_julia.jl`.
+:::
+
+## The Julia fit matched R and ran 6.3× faster
+
+<p class="story-kicker">Same answer · lower runtime</p>
+<p class="story-lead" style="margin-bottom:7px;">Both implementations selected the same number of genes and identified the same strongest gene on each component.</p>
+
+<div class="result-layout">
+<div class="match-panel">
+<div class="result-panel-title">Outputs agree</div>
+<div class="match-row"><div class="match-label">Data size</div><div class="match-value">R: 64 × 3,116<br>Julia: 64 × 3,116</div></div>
+<div class="match-row"><div class="match-label">Selected genes</div><div class="match-value">R: 50, 50<br>Julia: 50, 50</div></div>
+<div class="match-row"><div class="match-label">Strongest genes</div><div class="match-value"><code>A_43_P20438</code><br><code>A_42_P730438</code></div></div>
+<div class="match-confirm">The selected-feature summary is identical for both fits.</div>
+</div>
+
+<div class="runtime-panel">
+<div class="result-panel-title">Minimum observed fit time</div>
+<div class="runtime-row"><div class="runtime-name">R</div><div class="runtime-track"><div class="runtime-bar r"></div></div><div class="runtime-value">16.90 ms</div></div>
+<div class="runtime-row"><div class="runtime-name">Julia</div><div class="runtime-track"><div class="runtime-bar julia"></div></div><div class="runtime-value">2.674 ms</div></div>
+<div class="speedup-main">6.3×</div>
+<div class="speedup-copy">faster on this benchmark</div>
+<div class="julia-memory">Julia benchmark: 212 allocations · 7.34 MiB</div>
+</div>
+</div>
+
+<div class="result-footnote">Runtime ratio: 16.90258 ÷ 2.674 = 6.32. Benchmark values depend on hardware, package versions, and benchmark conditions.</div>
+
+::: {.notes}
+- Start with agreement: both fits used the same 64 × 3,116 matrix and returned 50 selected genes on each component.
+- The strongest genes also matched component by component: `A_43_P20438` and `A_42_P730438`.
+- The R minimum was 16.90258 ms; the Julia `@btime` result was 2.674 ms, a ratio of 6.32.
+- The 212 allocations and 7.34 MiB figure describes the Julia run only. Do not present it as an R-versus-Julia memory comparison because an R memory result was not measured here.
+- [Sources] Presenter-supplied benchmark outputs from R `microbenchmark` and Julia `BenchmarkTools.@btime`.
+:::
+
+## BigRiverPlots encodes statistical plots as reusable recipes
+
+<p class="story-kicker">Introducing BigRiverPlots.jl</p>
+<p class="story-lead" style="margin-bottom:7px;">The package turns common statistical outputs—scores, loadings, explained variance, predictions, and tables—into consistent plots without requiring a particular model or analysis package.</p>
+
+<div class="recipe-layout">
+<div class="recipe-code-panel">
+<div class="recipe-code-title">The user supplies meaning, not drawing instructions</div>
+<div class="recipe-code-sub">A scores plot needs a score matrix and, optionally, one group label per observation.</div>
+<pre><code><span class="code-fn">using</span> BigRiverPlots, Plots
+
+<span class="code-fn">plot_scores</span>(fit.variates_X;
+  group = y,
+  comps = (<span class="code-arg">1</span>, <span class="code-arg">2</span>),
+  title = <span class="code-str">"sPLS-DA scores"</span>)</code></pre>
+<div class="recipe-code-note"><strong>BigRiverPlots</strong> extracts coordinates and invokes the recipe. <strong>Plots.jl</strong> renders the resulting series with the selected backend.</div>
+</div>
+
+<div class="recipe-explainer">
+<div class="recipe-definition-title">What is a Julia plotting recipe?</div>
+<div class="recipe-definition">A recipe is a dispatchable rule that translates a statistical object or set of inputs into plot series, geometry, labels, and sensible defaults.</div>
+
+<div class="recipe-pipeline">
+<div class="recipe-stage"><strong>Statistical output</strong><span>scores, loadings, groups</span></div>
+<div class="recipe-pipeline-arrow">→</div>
+<div class="recipe-stage"><strong>RecipesBase rule</strong><span>validate, transform, define series</span></div>
+<div class="recipe-pipeline-arrow">→</div>
+<div class="recipe-stage"><strong>Rendered plot</strong><span>Plots.jl + chosen backend</span></div>
+</div>
+
+<div class="recipe-benefit"><strong>Lightweight</strong><span>The package records recipes through <code>RecipesBase</code>; the plotting backend is loaded only by the user when a figure is rendered.</span></div>
+<div class="recipe-benefit"><strong>Reusable</strong><span>The same recipe works with outputs from BigRiverEssence or any method that provides the required vectors, matrices, or tables.</span></div>
+<div class="recipe-benefit"><strong>Consistent, yet editable</strong><span>The recipe owns statistical structure and defaults, while normal <code>Plots</code> attributes still control titles, colors, markers, fonts, and size.</span></div>
+</div>
+</div>
+
+::: {.notes}
+- Formally, BigRiverPlots defines user recipes with `RecipesBase.@userplot` and `@recipe`.
+- A recipe does not draw pixels itself. It validates and transforms the inputs, sets plot attributes, and emits one or more series; Plots.jl and its backend perform the rendering.
+- In the scores recipe, group levels become separate scatter series, component labels are supplied as defaults, and horizontal and vertical origin lines are added once in the recipe.
+- Defaults set with `-->` yield to user-supplied Plots attributes; attributes set with `:=` are enforced when the recipe needs them for correctness.
+- BigRiverPlots depends on `RecipesBase`, not directly on `Plots`. Users load `Plots` when they want to display the recipe.
+- [Sources] BigRiverPlots package design and source: local repository `BigRiverPlots.jl/README.md`, `Project.toml`, `src/scores/scores_recipe.jl`, and `src/scores/plot_scores.jl`; RecipesBase recipe syntax: https://docs.juliaplots.org/dev/recipes/
+:::
+
+## BigRiverPlots covers the core statistical views
+
+<p class="story-kicker">Authentic package output</p>
+<p class="story-lead" style="margin-bottom:6px;">The same lightweight recipe layer supports exploration, feature interpretation, multi-block summaries, categorical structure, and model checking.</p>
+
+<div class="plot-gallery">
+<div class="plot-gallery-item"><div class="plot-gallery-label">Scores</div><img src="assets/brp-scores.png" alt="Scores plot generated by BigRiverPlots"></div>
+<div class="plot-gallery-item"><div class="plot-gallery-label">Loadings heatmap</div><img src="assets/brp-loadings-heatmap.png" alt="Loadings heatmap generated by BigRiverPlots"></div>
+<div class="plot-gallery-item"><div class="plot-gallery-label">Variable importance</div><img src="assets/brp-vip.png" alt="VIP plot generated by BigRiverPlots"></div>
+<div class="plot-gallery-item"><div class="plot-gallery-label">JIVE variance</div><img src="assets/brp-jive-variance.png" alt="JIVE variance plot generated by BigRiverPlots"></div>
+<div class="plot-gallery-item"><div class="plot-gallery-label">Mosaic</div><img src="assets/brp-mosaic.png" alt="Mosaic plot generated by BigRiverPlots"></div>
+<div class="plot-gallery-item"><div class="plot-gallery-label">Predicted vs observed</div><img src="assets/brp-predicted-observed.png" alt="Predicted versus observed plot generated by BigRiverPlots"></div>
+</div>
+
+<div class="plot-gallery-more"><strong>Also available:</strong> confidence · biplot · scree · loadings · pairs · sparsity · grouped correlation</div>
+
+::: {.notes}
+- These are authentic reference figures generated by the package test suite, not recreated illustrations.
+- Use the gallery to emphasize breadth rather than explain every plot in detail.
+- Scores and loadings heatmaps support latent-space exploration and interpretation; VIP summarizes variable importance; JIVE variance summarizes joint, individual, and residual variation; mosaic plots show contingency tables; predicted-versus-observed plots assess model fit.
+- The package also provides confidence, biplot, scree, loadings, pairs, sparsity, and grouped-correlation recipes.
+- [Sources] Authentic figures: local BigRiverPlots repository `test/ref/scores_ref.png`, `loadings_heatmap_ref.png`, `vip_ref.png`, `jive_variance_ref.png`, `mosaic_ref.png`, and `predict_observations_ref.png`; plot inventory: local `README.md` and `src/BigRiverPlots.jl`.
+:::
+
+## The sPLS-DA fit becomes three interpretable views
+
+<p class="story-kicker">BigRiverEssence → BigRiverPlots</p>
+<p class="story-lead" style="margin-bottom:4px;">Choose a view to place the authentic package output beside the Julia recipe call that generated it.</p>
+
+```{ojs}
+splsdaPlotFrames = [
+  {
+    button: "Scores plot",
+    label: "Samples",
+    image: "assets/liver-toxicity-splsda-scores.png",
+    alt: "BigRiverPlots scores plot for the liver-toxicity sPLS-DA fit",
+    captionLead: "Scores plot:",
+    caption: "the two supervised components organize animals by dose.",
+    note: "Uses the fitted sample-score matrix and the original dose labels.",
+    code: `p_scores = plot_scores(
+    fit.variates_X;
+    group = y,
+    xlabel = "sPLS-DA component 1",
+    ylabel = "sPLS-DA component 2",
+    palette = dose_palette,
+)
+savefig(p_scores, "liver_toxicity_scores.png")`
+  },
+  {
+    button: "Loadings heatmap",
+    label: "Genes",
+    image: "assets/liver-toxicity-splsda-loadings.png",
+    alt: "BigRiverPlots loadings heatmap for the liver-toxicity sPLS-DA fit",
+    captionLead: "Loadings heatmap:",
+    caption: "signed contributions show which genes define each component.",
+    note: "The 18 strongest loading rows are retained across components 1 and 2.",
+    code: `p_heatmap = plot_loadings_heatmap(
+    fit.loadings_X;
+    comps = [1, 2],
+    varnames = gene_names,
+    compnames = ["Component 1", "Component 2"],
+    ntop = 18,
+)
+savefig(p_heatmap, "liver_toxicity_loadings_heatmap.png")`
+  },
+  {
+    button: "Biplot",
+    label: "Samples + genes",
+    image: "assets/liver-toxicity-splsda-biplot.png",
+    alt: "BigRiverPlots biplot for the liver-toxicity sPLS-DA fit",
+    captionLead: "Biplot:",
+    caption: "contrasting gene directions are placed back onto the sample map.",
+    note: "Balanced selection: both signs from both components.",
+    code: `arrow_idx = unique(vcat(
+    argmax.(eachcol(fit.loadings_X)),
+    argmin.(eachcol(fit.loadings_X)),
+))
+
+p_biplot = plot_biplot(
+    fit.variates_X,
+    fit.loadings_X[arrow_idx, :];
+    group = y,
+    varnames = gene_names[arrow_idx],
+    arrowlabels = true,
+    palette = dose_palette,
+)
+savefig(p_biplot, "liver_toxicity_biplot.png")`
+  }
+]
+
+viewof splsdaPlotPick = {
+  const wrap = html`<div class="splsda-plot-selector"></div>`;
+  const buttons = splsdaPlotFrames.map((d, i) => {
+    const b = html`<button>${d.button}</button>`;
+    b.onclick = () => set(i);
+    wrap.append(b);
+    return b;
+  });
+  const render = () => buttons.forEach((b, i) => b.classList.toggle("on", i === wrap.value));
+  const set = i => {
+    wrap.value = i;
+    render();
+    wrap.dispatchEvent(new Event("input", {bubbles:true}));
+  };
+  wrap.value = 0;
+  render();
+  return wrap;
+}
+```
+
+```{ojs}
+splsdaPlotDisplay = {
+  const d = splsdaPlotFrames[splsdaPlotPick];
+  const shell = html`<div class="splsda-interactive"></div>`;
+
+  const visual = html`<div class="splsda-interactive-visual"></div>`;
+  const image = document.createElement("img");
+  image.src = d.image;
+  image.alt = d.alt;
+  visual.append(
+    html`<div class="splsda-interactive-label">${d.label}</div>`,
+    image,
+    html`<div class="splsda-interactive-caption"><strong>${d.captionLead}</strong> ${d.caption}</div>`
+  );
+
+  const codePanel = html`<div class="splsda-interactive-code"></div>`;
+  const pre = document.createElement("pre");
+  const code = document.createElement("code");
+  code.textContent = d.code;
+  pre.append(code);
+  codePanel.append(
+    html`<div class="splsda-code-title">Julia recipe call</div>`,
+    html`<div class="splsda-code-sub">The same fitted <code>fit</code> object drives every view.</div>`,
+    pre,
+    html`<div class="splsda-code-note">${d.note}</div>`
+  );
+
+  shell.append(visual, codePanel);
+  return shell;
+}
+```
+
+::: {.notes}
+- All three figures were generated from the exact sPLS-DA fit used in the R-versus-Julia benchmark.
+- Click the three buttons rather than trying to discuss all views at once.
+- The scores plot uses `fit.variates_X` and colors the 64 animals by dose.
+- The loadings heatmap uses `fit.loadings_X` and shows the 18 genes with the largest absolute loading across the two components.
+- A global top-four ranking is avoided because, for this sparse fit, it selects four component-2 genes whose arrows overlap vertically.
+- The biplot instead shows the strongest positive and negative loading on each component. This is a balanced, explicitly stated display choice; the fitted model is unchanged.
+- Emphasize that these are three views of one fitted object, not three separate analyses.
+- [Sources] Figures generated with the presenter’s reproducible script `liver_toxicity_splsda_plots.jl` using local BigRiverEssence and BigRiverPlots packages and `mixOmics::liver.toxicity`.
+:::
+
+## Julia speed does not require leaving R
+
+<div class="story-lead"><strong>BigRiverEssence is written in Julia, but people who are comfortable working in R can still use it directly.</strong> JuliaCall connects the two languages while the familiar R workflow stays in place.</div>
+
+<div class="bridge-layout">
+<div class="bridge-code">
+<div class="bridge-code-title">R calls BigRiverEssence</div>
+<div class="bridge-code-sub">The same liver-toxicity sPLS-DA fit, launched from an R session.</div>
+<pre><code><span class="code-fn">library</span>(JuliaCall)
+julia_setup(install = <span class="code-arg">FALSE</span>)
+julia_library(<span class="code-str">"BigRiverEssence"</span>)
+
+fit &lt;- julia_call(
+  <span class="code-str">"BigRiverEssence.splsda"</span>,
+  X, as.character(y),
+  2L, c(50L, 50L),
+  scale = <span class="code-arg">TRUE</span>, levels = levels(y),
+  need_return = <span class="code-str">"Julia"</span>
+)
+
+L &lt;- julia_call(<span class="code-str">"getproperty"</span>, fit,
+  julia_eval(<span class="code-str">":loadings_X"</span>),
+  need_return = <span class="code-str">"R"</span>)
+colSums(L != 0)  <span class="code-comment"># 50  50</span></code></pre>
+</div>
+
+<div class="bridge-story">
+<div class="bridge-story-title">What crosses the bridge</div>
+
+<div class="bridge-step">
+<div class="bridge-lang r">R</div>
+<div class="bridge-step-copy"><strong>Prepare the analysis</strong><span>Wrangle the data, define <code>X</code> and <code>y</code>, and keep the surrounding workflow familiar.</span></div>
+</div>
+
+<div class="bridge-step">
+<div class="bridge-lang julia">JL</div>
+<div class="bridge-step-copy"><strong>Run the numerical kernel</strong><span><code>splsda</code> executes inside BigRiverEssence; the fitted object can stay in Julia.</span></div>
+</div>
+
+<div class="bridge-step">
+<div class="bridge-lang r">R</div>
+<div class="bridge-step-copy"><strong>Return only what R needs</strong><span>Bring back loadings, scores, or predictions for reporting and downstream analysis.</span></div>
+</div>
+
+<div class="bridge-takeaway">Keep R for the workflow; move the expensive matrix computation to Julia.</div>
+<div class="bridge-caveat">Initialize once and reuse the Julia session. The first call may include Julia compilation, so compare warmed-up repeated calls.</div>
+</div>
+</div>
+
+::: {.notes}
+- This is not a rewrite of the R workflow. JuliaCall starts Julia inside the R session and performs automatic conversion for common objects.
+- `need_return = "Julia"` keeps the large fitted object on the Julia side instead of converting it immediately.
+- The second call requests only `loadings_X` as an R matrix; the example returns 50 selected genes on each component.
+- Emphasize the warm-up caveat: Julia's first call can compile code, so the speed comparison should use a reused session and repeated calls.
+- The code on the slide was executed locally against the installed BigRiverEssence package and returned a `3116 × 2` loading matrix with 50 nonzero entries per component.
+- [Sources] JuliaCall documentation: https://juliainterop.github.io/JuliaCall/ and https://juliainterop.github.io/JuliaCall/reference/call.html
+:::
+
+## Two registered packages—and an open invitation
+
+<div class="story-lead">During this internship, we developed and registered two focused packages in Julia’s General registry.</div>
+
+<div class="conclusion-hero">
+<div class="conclusion-count">
+<div class="conclusion-number">2</div>
+<div class="conclusion-number-label">packages developed<br>and registered</div>
+</div>
+
+<div class="conclusion-packages">
+<div class="conclusion-package">
+<div class="conclusion-package-name">BigRiverEssence.jl</div>
+<div class="conclusion-package-copy">Fast, memory-conscious multivariate methods for high-dimensional data.</div>
+</div>
+<div class="conclusion-package">
+<div class="conclusion-package-name">BigRiverPlots.jl</div>
+<div class="conclusion-package-copy">Lightweight plotting recipes that turn fitted objects into interpretable statistical views.</div>
+</div>
+</div>
+</div>
+
+<div class="conclusion-routes">
+<div class="conclusion-route">
+<strong>Already using Julia?</strong>
+<span>Install the packages directly and use them in a native Julia analysis.</span>
+</div>
+<div class="conclusion-or">or</div>
+<div class="conclusion-route">
+<strong>Prefer to stay in R?</strong>
+<span>Use JuliaCall to reach the same Julia implementation and bring the results back into R.</span>
+</div>
+</div>
+
+<div class="conclusion-close">I hope these tools serve both the Julia community and researchers who prefer other languages—because gaining speed should not require abandoning a trusted workflow.</div>
+
+::: {.notes}
+- This internship produced two complete packages: BigRiverEssence.jl and BigRiverPlots.jl.
+- Both packages are registered in Julia's General registry, so Julia users can install them through the normal package workflow.
+- The audience does not need to adopt Julia wholesale. R users can call BigRiverEssence through JuliaCall and keep data preparation, reporting, and downstream work in R.
+- Close on accessibility: the packages are intended for both current Julia users and researchers who want Julia performance behind another language.
+- [Sources] Registration verified in the local Julia General registry: BigRiverEssence UUID `2768b56d-1570-4417-9919-1aa303d8c95e`; BigRiverPlots UUID `1cf0ff84-1201-497f-a0c3-5c0b838ccaa6`. Package repositories: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl
+:::
+
+## Registration was the milestone; growth is next
+
+<div class="story-lead">The packages are usable today. The next phase is publication, broader statistical coverage, and a growing recipe ecosystem.</div>
+
+<div class="next-roadmap">
+<div class="next-step publish">
+<div class="next-num">01 · PUBLISH</div>
+<h3>Prepare a JOSS paper</h3>
+<p>Document the scientific motivation, implementation, validation, benchmarks, and reproducible examples for the two packages.</p>
+</div>
+
+<div class="next-arrow">→</div>
+
+<div class="next-step essence">
+<div class="next-num">02 · EXTEND</div>
+<h3>Grow BigRiverEssence</h3>
+<p>Add further multivariate methods while preserving the same priorities: <strong>speed, low allocation, and lightweight dependencies.</strong></p>
+</div>
+
+<div class="next-arrow">→</div>
+
+<div class="next-step plots">
+<div class="next-num">03 · GENERALIZE</div>
+<h3>Expand BigRiverPlots</h3>
+<p>The package is not limited to its current recipes. Add more statistical views and support for additional packages, fitted objects, matrices, and DataFrames.</p>
+</div>
+</div>
+
+<div class="next-close">The goal is not a closed catalogue—it is a growing, interoperable toolkit shaped by real analysis needs.</div>
+
+::: {.notes}
+- The first next step is scholarly communication: prepare a JOSS paper describing the packages, their motivation, validation, benchmarks, and reproducible use.
+- BigRiverEssence is designed to grow. Additional methods should retain the same engineering constraints rather than increasing dependency weight or allocation unnecessarily.
+- BigRiverPlots is generic by design. Its present recipes are the starting set, not the boundary of the package.
+- Future plotting work can add more statistical views and adapters for outputs from other packages, fitted objects, matrices, and DataFrames.
+- Close by inviting use cases and contributions from the audience; practical analysis needs should guide the roadmap.
+- [Sources] Roadmap supplied by the presenter for BigRiverEssence.jl and BigRiverPlots.jl.
 :::

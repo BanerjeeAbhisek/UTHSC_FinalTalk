@@ -9,7 +9,7 @@
 <link href="BigRiver_Talk_3slides_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
-  <title>BigRiverEssence.jl + BigRiverPlots.jl</title>
+  <title>Fast and Lean: Julia Tools for High-Dimensional Omics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -339,6 +339,151 @@
   .reveal .slides section.present .memory-bar { animation:gainRise .72s cubic-bezier(.2,.75,.25,1) both; }
   .reveal .slides section .memory-bar span { position:absolute; left:50%; bottom:calc(100% + 4px); transform:translateX(-50%); font-size:10px; font-weight:900; white-space:nowrap; }
   .reveal .slides section .memory-group-name { position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%); color:#174f3d; font-size:10px; font-weight:900; white-space:nowrap; }
+  .reveal .slides section .dataset-layout { display:grid; grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr); gap:22px; align-items:stretch; margin-top:13px; }
+  .reveal .slides section .dataset-map, .reveal .slides section .dataset-figure { box-sizing:border-box; background:rgba(255,255,255,.96); border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+  .reveal .slides section .dataset-map { border-top:7px solid #E78824; padding:17px 21px; }
+  .reveal .slides section .dataset-context { color:#555; font-size:14px; line-height:1.35; padding-bottom:10px; border-bottom:2px solid rgba(77,112,31,.13); }
+  .reveal .slides section .xy-row { display:grid; grid-template-columns:52px minmax(0,1fr); gap:12px; align-items:center; padding:13px 0; border-bottom:2px solid rgba(77,112,31,.13); }
+  .reveal .slides section .xy-symbol { color:#C14C23; font-size:39px; font-weight:900; text-align:center; }
+  .reveal .slides section .xy-size { color:#174f3d; font-size:22px; font-weight:900; margin-bottom:3px; }
+  .reveal .slides section .xy-copy { font-size:14px; line-height:1.34; }
+  .reveal .slides section .dataset-why { margin-top:12px; color:#333; font-size:14px; line-height:1.4; font-weight:700; }
+  .reveal .slides section .dataset-figure { border-top:7px solid #4D701F; padding:14px 16px 12px; }
+  .reveal .slides section .dataset-figure-title { color:#C14C23; font-size:20px; font-weight:900; margin-bottom:3px; }
+  .reveal .slides section .dataset-figure-sub { color:#666; font-size:13px; margin-bottom:5px; }
+  .reveal .slides section .dataset-figure img { display:block; width:100%; height:300px; object-fit:contain; object-position:center; }
+  .reveal .slides section .dataset-caption { font-size:13px; line-height:1.35; color:#555; margin-top:3px; }
+  .reveal .slides section .code-compare { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:13px; }
+  .reveal .slides section .language-panel { box-sizing:border-box; min-width:0; background:#172019; color:#f5f4ec; border-radius:16px; padding:0 19px 16px; box-shadow:0 8px 24px rgba(0,0,0,.13); overflow:hidden; }
+  .reveal .slides section .language-panel.r { border-top:7px solid #E78824; }
+  .reveal .slides section .language-panel.julia { border-top:7px solid #4D701F; }
+  .reveal .slides section .language-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:12px 2px 9px; border-bottom:1px solid rgba(255,255,255,.18); }
+  .reveal .slides section .language-name { color:#fff; font-size:22px; font-weight:900; }
+  .reveal .slides section .language-role { color:#cfd5ce; font-size:12px; }
+  .reveal .slides section pre.slide-code { width:100%; margin:10px 0 0; padding:0; background:transparent; box-shadow:none; overflow:visible; }
+  .reveal .slides section pre.slide-code code { display:block; padding:0; background:transparent; color:#f4f2e9; font:600 13.5px/1.43 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; white-space:pre-wrap; tab-size:2; }
+  .reveal .slides section .code-fn { color:#f4a24e; }
+  .reveal .slides section .code-arg { color:#a7d46f; }
+  .reveal .slides section .code-str { color:#efc981; }
+  .reveal .slides section .code-comment { color:#99a49a; font-style:italic; }
+  .reveal .slides section .benchmark-scope { margin-top:12px; color:#555; font-size:13px; font-weight:700; text-align:center; }
+  .reveal .slides section .result-layout { display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:24px; align-items:stretch; margin-top:16px; }
+  .reveal .slides section .match-panel, .reveal .slides section .runtime-panel { box-sizing:border-box; background:rgba(255,255,255,.96); border-radius:16px; padding:18px 22px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+  .reveal .slides section .match-panel { border-top:7px solid #4D701F; }
+  .reveal .slides section .runtime-panel { border-top:7px solid #E78824; }
+  .reveal .slides section .result-panel-title { color:#C14C23; font-size:23px; font-weight:900; margin-bottom:11px; }
+  .reveal .slides section .match-row { display:grid; grid-template-columns:150px minmax(0,1fr); gap:14px; padding:12px 0; border-bottom:2px solid rgba(77,112,31,.13); }
+  .reveal .slides section .match-row:last-of-type { border-bottom:0; }
+  .reveal .slides section .match-label { color:#174f3d; font-size:15px; font-weight:900; }
+  .reveal .slides section .match-value { font-size:15px; line-height:1.35; }
+  .reveal .slides section .match-value code { font-size:13px; color:#333; }
+  .reveal .slides section .match-confirm { margin-top:12px; padding:10px 13px; background:rgba(77,112,31,.10); border-left:5px solid #4D701F; border-radius:8px; color:#174f3d; font-size:15px; line-height:1.3; font-weight:900; }
+  .reveal .slides section .runtime-row { display:grid; grid-template-columns:58px minmax(0,1fr) 86px; gap:10px; align-items:center; margin:17px 0; }
+  .reveal .slides section .runtime-name { color:#174f3d; font-size:18px; font-weight:900; text-align:right; }
+  .reveal .slides section .runtime-track { height:31px; background:rgba(23,79,61,.09); border-radius:5px; overflow:hidden; }
+  .reveal .slides section .runtime-bar { height:100%; border-radius:5px; transform-origin:left center; }
+  .reveal .slides section.present .runtime-bar { animation:gainGrow .8s cubic-bezier(.2,.75,.25,1) both; }
+  .reveal .slides section .runtime-bar.r { width:100%; background:#E78824; }
+  .reveal .slides section .runtime-bar.julia { width:15.82%; background:#075d42; animation-delay:.16s; }
+  .reveal .slides section .runtime-value { font-size:17px; font-weight:900; }
+  .reveal .slides section .speedup-main { margin:23px 0 8px; text-align:center; color:#4D701F; font-size:58px; line-height:1; font-weight:900; }
+  .reveal .slides section .speedup-copy { text-align:center; color:#333; font-size:19px; font-weight:800; }
+  .reveal .slides section .julia-memory { margin-top:19px; padding-top:13px; border-top:2px solid rgba(77,112,31,.14); color:#555; font-size:13px; text-align:center; }
+  .reveal .slides section .result-footnote { margin-top:13px; color:#666; font-size:12px; text-align:center; }
+  .reveal .slides section .recipe-layout { display:grid; grid-template-columns:minmax(0,.91fr) minmax(0,1.09fr); gap:24px; align-items:stretch; margin-top:15px; }
+  .reveal .slides section .recipe-code-panel { box-sizing:border-box; background:#172019; color:#f5f4ec; border-top:7px solid #E78824; border-radius:16px; padding:18px 21px; box-shadow:0 8px 24px rgba(0,0,0,.14); }
+  .reveal .slides section .recipe-code-title { color:#fff; font-size:22px; font-weight:900; margin-bottom:4px; }
+  .reveal .slides section .recipe-code-sub { color:#bfc9bf; font-size:13px; line-height:1.35; margin-bottom:14px; }
+  .reveal .slides section .recipe-code-panel pre { margin:0; padding:14px 15px !important; background:rgba(255,255,255,.055) !important; border-radius:10px; box-shadow:none !important; }
+  .reveal .slides section .recipe-code-panel pre code { display:block; padding:0 !important; background:transparent !important; color:#f4f2e9 !important; font:600 14px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; white-space:pre-wrap; }
+  .reveal .slides section .recipe-code-note { margin-top:14px; color:#dfe4dc; font-size:14px; line-height:1.4; }
+  .reveal .slides section .recipe-code-note strong { color:#a7d46f; }
+  .reveal .slides section .recipe-explainer { box-sizing:border-box; background:rgba(255,255,255,.96); border-top:7px solid #4D701F; border-radius:16px; padding:18px 21px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+  .reveal .slides section .recipe-definition-title { color:#C14C23; font-size:23px; font-weight:900; margin-bottom:5px; }
+  .reveal .slides section .recipe-definition { font-size:16px; line-height:1.42; margin-bottom:15px; }
+  .reveal .slides section .recipe-pipeline { display:grid; grid-template-columns:minmax(0,.9fr) 26px minmax(0,1.12fr) 26px minmax(0,.9fr); gap:7px; align-items:center; margin:13px 0 17px; }
+  .reveal .slides section .recipe-stage { box-sizing:border-box; min-height:86px; display:flex; flex-direction:column; justify-content:center; text-align:center; background:rgba(77,112,31,.08); border:2px solid rgba(77,112,31,.20); border-radius:11px; padding:9px 8px; }
+  .reveal .slides section .recipe-stage strong { color:#174f3d; font-size:15px; line-height:1.2; }
+  .reveal .slides section .recipe-stage span { color:#555; font-size:11.5px; line-height:1.25; margin-top:5px; }
+  .reveal .slides section .recipe-pipeline-arrow { color:#E78824; font-size:28px; font-weight:900; text-align:center; }
+  .reveal .slides section .recipe-benefit { display:grid; grid-template-columns:164px minmax(0,1fr); gap:13px; padding:9px 0; border-top:2px solid rgba(77,112,31,.12); }
+  .reveal .slides section .recipe-benefit strong { color:#C14C23; font-size:15px; }
+  .reveal .slides section .recipe-benefit span { font-size:14px; line-height:1.34; }
+  .reveal .slides section .plot-gallery { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px 14px; margin-top:12px; }
+  .reveal .slides section .plot-gallery-item { box-sizing:border-box; min-width:0; background:rgba(255,255,255,.97); border-radius:12px; padding:8px 10px 9px; box-shadow:0 6px 18px rgba(0,0,0,.10); overflow:hidden; }
+  .reveal .slides section .plot-gallery-item:nth-child(3n+1) { border-top:5px solid #E78824; }
+  .reveal .slides section .plot-gallery-item:nth-child(3n+2) { border-top:5px solid #4D701F; }
+  .reveal .slides section .plot-gallery-item:nth-child(3n) { border-top:5px solid #C14C23; }
+  .reveal .slides section .plot-gallery-label { color:#174f3d; font-size:15px; line-height:1.1; font-weight:900; margin-bottom:4px; }
+  .reveal .slides section .plot-gallery-item img { display:block; width:100%; height:160px; object-fit:contain; object-position:center; margin:0; }
+  .reveal .slides section .plot-gallery-more { margin-top:10px; color:#555; font-size:13px; line-height:1.3; text-align:center; font-weight:700; }
+  .reveal .slides section .plot-gallery-more strong { color:#C14C23; }
+  .reveal .slides section .splsda-view-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; margin-top:13px; }
+  .reveal .slides section .splsda-view { box-sizing:border-box; min-width:0; background:rgba(255,255,255,.97); border-radius:14px; padding:10px 11px 11px; box-shadow:0 7px 20px rgba(0,0,0,.11); }
+  .reveal .slides section .splsda-view.samples { border-top:6px solid #E78824; }
+  .reveal .slides section .splsda-view.genes { border-top:6px solid #4D701F; }
+  .reveal .slides section .splsda-view.link { border-top:6px solid #C14C23; }
+  .reveal .slides section .splsda-view-label { color:#C14C23; font-size:18px; line-height:1.1; font-weight:900; margin-bottom:4px; }
+  .reveal .slides section .splsda-view img { display:block; width:100%; height:260px; object-fit:contain; object-position:center; margin:0; }
+  .reveal .slides section .splsda-view-caption { min-height:38px; color:#444; font-size:13px; line-height:1.34; margin-top:3px; }
+  .reveal .slides section .splsda-view-caption strong { color:#174f3d; }
+  .reveal .slides section .splsda-plot-selector { display:flex; gap:10px; margin:7px 0 11px; }
+  .reveal .slides section .splsda-plot-selector button { font:800 14px Montserrat,sans-serif; padding:8px 15px; border-radius:20px; border:2px solid rgba(193,76,35,.24); background:#fff; color:#555; cursor:pointer; transition:background .18s ease,color .18s ease,border-color .18s ease; }
+  .reveal .slides section .splsda-plot-selector button.on { background:#E78824; border-color:#E78824; color:#fff; }
+  .reveal .slides section .splsda-interactive { display:grid; grid-template-columns:minmax(0,1.22fr) minmax(0,.78fr); gap:18px; align-items:stretch; }
+  .reveal .slides section .splsda-interactive-visual { box-sizing:border-box; min-width:0; background:rgba(255,255,255,.97); border-top:6px solid #4D701F; border-radius:14px; padding:10px 13px 12px; box-shadow:0 7px 20px rgba(0,0,0,.11); }
+  .reveal .slides section .splsda-interactive-label { color:#C14C23; font-size:20px; line-height:1.1; font-weight:900; margin-bottom:4px; }
+  .reveal .slides section .splsda-interactive-visual img { display:block; width:100%; height:319px; object-fit:contain; object-position:center; margin:0; }
+  .reveal .slides section .splsda-interactive-caption { color:#444; font-size:14px; line-height:1.35; margin-top:4px; }
+  .reveal .slides section .splsda-interactive-caption strong { color:#174f3d; }
+  .reveal .slides section .splsda-interactive-code { box-sizing:border-box; min-width:0; background:#172019; color:#f5f4ec; border-top:6px solid #E78824; border-radius:14px; padding:16px 18px; box-shadow:0 7px 20px rgba(0,0,0,.14); }
+  .reveal .slides section .splsda-code-title { color:#fff; font-size:20px; font-weight:900; margin-bottom:5px; }
+  .reveal .slides section .splsda-code-sub { color:#bdc8bd; font-size:12px; line-height:1.35; margin-bottom:12px; }
+  .reveal .slides section .splsda-interactive-code pre { margin:0; padding:13px 14px !important; background:rgba(255,255,255,.055) !important; border-radius:10px; box-shadow:none !important; }
+  .reveal .slides section .splsda-interactive-code pre code { display:block; padding:0 !important; background:transparent !important; color:#f4f2e9 !important; font:600 13.5px/1.48 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .reveal .slides section .splsda-code-note { margin-top:13px; color:#dfe4dc; font-size:13px; line-height:1.38; }
+  .reveal .slides section .bridge-layout { display:grid; grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr); gap:22px; align-items:start; margin-top:9px; }
+  .reveal .slides section .bridge-code { box-sizing:border-box; min-width:0; background:#172019; color:#f5f4ec; border-top:7px solid #E78824; border-radius:16px; padding:13px 18px 14px; box-shadow:0 8px 24px rgba(0,0,0,.14); }
+  .reveal .slides section .bridge-code-title { color:#fff; font-size:21px; font-weight:900; margin-bottom:2px; }
+  .reveal .slides section .bridge-code-sub { color:#bdc8bd; font-size:12.5px; line-height:1.35; margin-bottom:11px; }
+  .reveal .slides section .bridge-code pre { margin:0; padding:11px 13px !important; background:rgba(255,255,255,.055) !important; border-radius:10px; box-shadow:none !important; }
+  .reveal .slides section .bridge-code pre code { display:block; padding:0 !important; background:transparent !important; color:#f4f2e9 !important; font:600 12.5px/1.3 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; white-space:pre-wrap; }
+  .reveal .slides section .bridge-story { box-sizing:border-box; background:rgba(255,255,255,.96); border-top:7px solid #4D701F; border-radius:16px; padding:13px 19px 14px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+  .reveal .slides section .bridge-story-title { color:#C14C23; font-size:21px; font-weight:900; margin-bottom:4px; }
+  .reveal .slides section .bridge-step { display:grid; grid-template-columns:45px minmax(0,1fr); gap:11px; align-items:center; padding:7px 0; border-bottom:2px solid rgba(77,112,31,.13); }
+  .reveal .slides section .bridge-step:last-of-type { border-bottom:0; }
+  .reveal .slides section .bridge-lang { display:flex; align-items:center; justify-content:center; width:39px; height:39px; border-radius:50%; color:#fff; font-size:13px; font-weight:900; }
+  .reveal .slides section .bridge-lang.r { background:#E78824; }
+  .reveal .slides section .bridge-lang.julia { background:#4D701F; }
+  .reveal .slides section .bridge-step strong { display:block; color:#174f3d; font-size:15px; margin-bottom:2px; }
+  .reveal .slides section .bridge-step-copy span { display:block; color:#444; font-size:12.5px; line-height:1.27; }
+  .reveal .slides section .bridge-takeaway { margin-top:8px; padding:8px 11px; background:rgba(231,136,36,.12); border-left:5px solid #E78824; border-radius:8px; color:#333; font-size:13px; line-height:1.3; font-weight:800; }
+  .reveal .slides section .bridge-caveat { margin-top:6px; color:#666; font-size:10.5px; line-height:1.25; }
+  .reveal .slides section .conclusion-hero { display:grid; grid-template-columns:205px minmax(0,1fr); gap:28px; align-items:center; margin-top:17px; }
+  .reveal .slides section .conclusion-count { text-align:center; padding-right:26px; border-right:3px solid rgba(77,112,31,.22); }
+  .reveal .slides section .conclusion-number { color:#E78824; font-size:116px; line-height:.88; font-weight:900; }
+  .reveal .slides section .conclusion-number-label { color:#174f3d; font-size:17px; line-height:1.25; font-weight:900; margin-top:12px; }
+  .reveal .slides section .conclusion-packages { display:grid; gap:15px; }
+  .reveal .slides section .conclusion-package { display:grid; grid-template-columns:285px minmax(0,1fr); gap:16px; align-items:center; padding:14px 0; border-bottom:2px solid rgba(77,112,31,.14); }
+  .reveal .slides section .conclusion-package:last-child { border-bottom:0; }
+  .reveal .slides section .conclusion-package-name { color:#C14C23; font-size:23px; line-height:1.12; font-weight:900; white-space:nowrap; }
+  .reveal .slides section .conclusion-package-copy { color:#333; font-size:16px; line-height:1.35; }
+  .reveal .slides section .conclusion-routes { display:grid; grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr); gap:15px; align-items:center; margin-top:22px; padding:15px 20px; background:rgba(255,255,255,.94); border-top:6px solid #4D701F; border-radius:14px; box-shadow:0 7px 20px rgba(0,0,0,.10); }
+  .reveal .slides section .conclusion-route strong { display:block; color:#C14C23; font-size:19px; margin-bottom:4px; }
+  .reveal .slides section .conclusion-route span { display:block; color:#444; font-size:14px; line-height:1.32; }
+  .reveal .slides section .conclusion-or { color:#E78824; font-size:17px; font-weight:900; text-align:center; text-transform:uppercase; }
+  .reveal .slides section .conclusion-close { margin-top:17px; color:#174f3d; font-size:21px; line-height:1.35; font-weight:900; text-align:center; }
+  .reveal .slides section .next-roadmap { display:grid; grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr) 42px minmax(0,1fr); gap:10px; align-items:center; margin-top:25px; }
+  .reveal .slides section .next-step { box-sizing:border-box; min-width:0; min-height:265px; background:rgba(255,255,255,.96); border-radius:16px; padding:19px 21px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+  .reveal .slides section .next-step.publish { border-top:7px solid #E78824; }
+  .reveal .slides section .next-step.essence { border-top:7px solid #C14C23; }
+  .reveal .slides section .next-step.plots { border-top:7px solid #4D701F; }
+  .reveal .slides section .next-num { color:#E78824; font-size:18px; line-height:1; font-weight:900; letter-spacing:.08em; margin-bottom:12px; }
+  .reveal .slides section .next-step h3 { color:#C14C23; font-size:23px !important; line-height:1.15; margin:0 0 11px; }
+  .reveal .slides section .next-step p { color:#333; font-size:15px; line-height:1.4; margin:0; }
+  .reveal .slides section .next-step strong { color:#174f3d; }
+  .reveal .slides section .next-arrow { color:#E78824; font-size:34px; font-weight:900; text-align:center; }
+  .reveal .slides section .next-close { margin-top:22px; padding:13px 18px; background:rgba(77,112,31,.10); border-left:6px solid #4D701F; border-radius:10px; color:#174f3d; font-size:19px; line-height:1.32; font-weight:900; text-align:center; }
   @keyframes gainGrow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
   @keyframes gainRise { from { transform:scaleY(0); } to { transform:scaleY(1); } }
   @keyframes dotIn { from { opacity:0; transform:translate(-50%,-50%) scale(.3); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
@@ -356,19 +501,19 @@
 <div class="titlepage-content">
 <p><img class="tp-logo" src="assets/uthsc-logo-centered.png" alt="University of Tennessee Health Sciences"></p>
 <p class="tp-title">
-Extract the signal.<br>Make it visible.
+Fast and Lean:<br>Julia Tools for<br>High-Dimensional Omics
 </p>
 <p class="tp-author">
-BigRiverEssence.jl + BigRiverPlots.jl
+BigRiverEssence + BigRiverPlots
 </p>
 <p class="tp-institute">
-Abhisek Banerjee · UT Health Science Center
+Abhisek Banerjee · University of Tennessee Health Sciences
 </p>
 </div>
 </div>
 <aside class="notes">
 <ul>
-<li>Open with the problem, not the package list: high-dimensional analyses are only useful when structure can be extracted and then understood.</li>
+<li>Open with the central promise: fast, lean Julia tools for high-dimensional omics, with the two package names directly beneath the title.</li>
 <li>[Sources] Package scope and names: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl</li>
 </ul>
 <style type="text/css">
@@ -657,36 +802,36 @@ A compact tour of the implemented methods
 Select a method to see the question it answers. Every button corresponds to a method currently implemented in <strong>BigRiverEssence.jl</strong>.
 </p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="340" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 339;"><span id="cb1-340"><a href=""></a>essenceMethodFrames <span class="op">=</span> [</span>
-<span id="cb1-341"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Principal Component Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Compress"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds ordered directions that capture the greatest variation in one data matrix."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for unsupervised exploration, visualization, and low-rank representation."</span>}<span class="op">,</span></span>
-<span id="cb1-342"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"SPCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Principal Component Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Compress + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Builds PCA-like components whose loadings use only a subset of variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when interpretation and feature selection matter as much as compression."</span>}<span class="op">,</span></span>
-<span id="cb1-343"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PMD"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Penalized Matrix Decomposition"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Decompose sparsely"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Constructs a low-rank matrix decomposition while constraining the component vectors to be sparse."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it as a flexible sparse decomposition and as a foundation for sparse latent methods."</span>}<span class="op">,</span></span>
-<span id="cb1-344"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PLS-DA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Partial Least Squares Discriminant Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Classify"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds latent directions in the predictors that are associated with known class labels."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for supervised dimension reduction and classification."</span>}<span class="op">,</span></span>
-<span id="cb1-345"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"sPLS-DA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Partial Least Squares Discriminant Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Classify + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Combines supervised PLS components with sparse loadings that retain selected variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when classification and a concise biomarker set are both goals."</span>}<span class="op">,</span></span>
-<span id="cb1-346"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PLSkern"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Partial Least Squares Kernel Regression"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Predict"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Builds latent variables that connect a predictor matrix to continuous or multivariate outcomes."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for efficient PLS regression, transformation, and prediction."</span>}<span class="op">,</span></span>
-<span id="cb1-347"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"CCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Canonical Correlation Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Relate two blocks"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds paired directions that maximize association between two data matrices measured on the same samples."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it to study shared cross-block structure."</span>}<span class="op">,</span></span>
-<span id="cb1-348"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"SCCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Canonical Correlation Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Relate + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Adds sparse loadings to CCA so the cross-block relationship depends on fewer variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it to identify interpretable features connecting two data sources."</span>}<span class="op">,</span></span>
-<span id="cb1-349"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"JIVE"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Joint and Individual Variation Explained"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Integrate blocks"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Separates multiple matched data blocks into joint, block-specific, and residual structure."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when several omics assays describe the same samples."</span>}</span>
-<span id="cb1-350"><a href=""></a>]</span>
-<span id="cb1-351"><a href=""></a></span>
-<span id="cb1-352"><a href=""></a>viewof essenceMethodPick <span class="op">=</span> {</span>
-<span id="cb1-353"><a href=""></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="bre-method-selector"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb1-354"><a href=""></a>  <span class="kw">const</span> buttons <span class="op">=</span> essenceMethodFrames<span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
-<span id="cb1-355"><a href=""></a>    <span class="kw">const</span> b <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;button&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">short</span><span class="sc">}</span><span class="vs">&lt;/button&gt;`</span><span class="op">;</span></span>
-<span id="cb1-356"><a href=""></a>    b<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="kw">set</span>(i)<span class="op">;</span></span>
-<span id="cb1-357"><a href=""></a>    wrap<span class="op">.</span><span class="fu">append</span>(b)<span class="op">;</span></span>
-<span id="cb1-358"><a href=""></a>    <span class="cf">return</span> b<span class="op">;</span></span>
-<span id="cb1-359"><a href=""></a>  })<span class="op">;</span></span>
-<span id="cb1-360"><a href=""></a>  <span class="kw">const</span> render <span class="op">=</span> () <span class="kw">=&gt;</span> buttons<span class="op">.</span><span class="fu">forEach</span>((b<span class="op">,</span> i) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">toggle</span>(<span class="st">"on"</span><span class="op">,</span> i <span class="op">===</span> wrap<span class="op">.</span><span class="at">value</span>))<span class="op">;</span></span>
-<span id="cb1-361"><a href=""></a>  <span class="kw">const</span> <span class="kw">set</span> <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
-<span id="cb1-362"><a href=""></a>    wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb1-363"><a href=""></a>    <span class="fu">render</span>()<span class="op">;</span></span>
-<span id="cb1-364"><a href=""></a>    wrap<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">"input"</span><span class="op">,</span> {<span class="dt">bubbles</span><span class="op">:</span><span class="kw">true</span>}))<span class="op">;</span></span>
-<span id="cb1-365"><a href=""></a>  }<span class="op">;</span></span>
-<span id="cb1-366"><a href=""></a>  wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-367"><a href=""></a>  <span class="fu">render</span>()<span class="op">;</span></span>
-<span id="cb1-368"><a href=""></a>  <span class="cf">return</span> wrap<span class="op">;</span></span>
-<span id="cb1-369"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="485" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 484;"><span id="cb1-485"><a href=""></a>essenceMethodFrames <span class="op">=</span> [</span>
+<span id="cb1-486"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Principal Component Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Compress"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds ordered directions that capture the greatest variation in one data matrix."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for unsupervised exploration, visualization, and low-rank representation."</span>}<span class="op">,</span></span>
+<span id="cb1-487"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"SPCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Principal Component Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Compress + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Builds PCA-like components whose loadings use only a subset of variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when interpretation and feature selection matter as much as compression."</span>}<span class="op">,</span></span>
+<span id="cb1-488"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PMD"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Penalized Matrix Decomposition"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Decompose sparsely"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Constructs a low-rank matrix decomposition while constraining the component vectors to be sparse."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it as a flexible sparse decomposition and as a foundation for sparse latent methods."</span>}<span class="op">,</span></span>
+<span id="cb1-489"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PLS-DA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Partial Least Squares Discriminant Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Classify"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds latent directions in the predictors that are associated with known class labels."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for supervised dimension reduction and classification."</span>}<span class="op">,</span></span>
+<span id="cb1-490"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"sPLS-DA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Partial Least Squares Discriminant Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Classify + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Combines supervised PLS components with sparse loadings that retain selected variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when classification and a concise biomarker set are both goals."</span>}<span class="op">,</span></span>
+<span id="cb1-491"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PLSkern"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Partial Least Squares Kernel Regression"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Predict"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Builds latent variables that connect a predictor matrix to continuous or multivariate outcomes."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for efficient PLS regression, transformation, and prediction."</span>}<span class="op">,</span></span>
+<span id="cb1-492"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"CCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Canonical Correlation Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Relate two blocks"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds paired directions that maximize association between two data matrices measured on the same samples."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it to study shared cross-block structure."</span>}<span class="op">,</span></span>
+<span id="cb1-493"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"SCCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Canonical Correlation Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Relate + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Adds sparse loadings to CCA so the cross-block relationship depends on fewer variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it to identify interpretable features connecting two data sources."</span>}<span class="op">,</span></span>
+<span id="cb1-494"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"JIVE"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Joint and Individual Variation Explained"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Integrate blocks"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Separates multiple matched data blocks into joint, block-specific, and residual structure."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when several omics assays describe the same samples."</span>}</span>
+<span id="cb1-495"><a href=""></a>]</span>
+<span id="cb1-496"><a href=""></a></span>
+<span id="cb1-497"><a href=""></a>viewof essenceMethodPick <span class="op">=</span> {</span>
+<span id="cb1-498"><a href=""></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="bre-method-selector"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb1-499"><a href=""></a>  <span class="kw">const</span> buttons <span class="op">=</span> essenceMethodFrames<span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-500"><a href=""></a>    <span class="kw">const</span> b <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;button&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">short</span><span class="sc">}</span><span class="vs">&lt;/button&gt;`</span><span class="op">;</span></span>
+<span id="cb1-501"><a href=""></a>    b<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="kw">set</span>(i)<span class="op">;</span></span>
+<span id="cb1-502"><a href=""></a>    wrap<span class="op">.</span><span class="fu">append</span>(b)<span class="op">;</span></span>
+<span id="cb1-503"><a href=""></a>    <span class="cf">return</span> b<span class="op">;</span></span>
+<span id="cb1-504"><a href=""></a>  })<span class="op">;</span></span>
+<span id="cb1-505"><a href=""></a>  <span class="kw">const</span> render <span class="op">=</span> () <span class="kw">=&gt;</span> buttons<span class="op">.</span><span class="fu">forEach</span>((b<span class="op">,</span> i) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">toggle</span>(<span class="st">"on"</span><span class="op">,</span> i <span class="op">===</span> wrap<span class="op">.</span><span class="at">value</span>))<span class="op">;</span></span>
+<span id="cb1-506"><a href=""></a>  <span class="kw">const</span> <span class="kw">set</span> <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
+<span id="cb1-507"><a href=""></a>    wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb1-508"><a href=""></a>    <span class="fu">render</span>()<span class="op">;</span></span>
+<span id="cb1-509"><a href=""></a>    wrap<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">"input"</span><span class="op">,</span> {<span class="dt">bubbles</span><span class="op">:</span><span class="kw">true</span>}))<span class="op">;</span></span>
+<span id="cb1-510"><a href=""></a>  }<span class="op">;</span></span>
+<span id="cb1-511"><a href=""></a>  wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-512"><a href=""></a>  <span class="fu">render</span>()<span class="op">;</span></span>
+<span id="cb1-513"><a href=""></a>  <span class="cf">return</span> wrap<span class="op">;</span></span>
+<span id="cb1-514"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -703,23 +848,23 @@ Select a method to see the question it answers. Every button corresponds to a me
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="372" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 371;"><span id="cb2-372"><a href=""></a>essenceMethodCard <span class="op">=</span> {</span>
-<span id="cb2-373"><a href=""></a>  <span class="kw">const</span> d <span class="op">=</span> essenceMethodFrames[essenceMethodPick]<span class="op">;</span></span>
-<span id="cb2-374"><a href=""></a>  <span class="kw">const</span> card <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="bre-method-card"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb2-375"><a href=""></a>  <span class="kw">const</span> top <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="method-top"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb2-376"><a href=""></a>  <span class="kw">const</span> identity <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb2-377"><a href=""></a>  identity<span class="op">.</span><span class="fu">append</span>(</span>
-<span id="cb2-378"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-name"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">short</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
-<span id="cb2-379"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-full"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
-<span id="cb2-380"><a href=""></a>  )<span class="op">;</span></span>
-<span id="cb2-381"><a href=""></a>  top<span class="op">.</span><span class="fu">append</span>(identity<span class="op">,</span> <span class="fu">html</span><span class="vs">`&lt;div class="method-question"&gt;Question: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">question</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span>)<span class="op">;</span></span>
-<span id="cb2-382"><a href=""></a>  card<span class="op">.</span><span class="fu">append</span>(</span>
-<span id="cb2-383"><a href=""></a>    top<span class="op">,</span></span>
-<span id="cb2-384"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-detail"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">detail</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
-<span id="cb2-385"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-use"&gt;&lt;strong&gt;When to use it:&lt;/strong&gt; </span><span class="sc">${</span>d<span class="op">.</span><span class="at">use</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
-<span id="cb2-386"><a href=""></a>  )<span class="op">;</span></span>
-<span id="cb2-387"><a href=""></a>  <span class="cf">return</span> card<span class="op">;</span></span>
-<span id="cb2-388"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="517" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 516;"><span id="cb2-517"><a href=""></a>essenceMethodCard <span class="op">=</span> {</span>
+<span id="cb2-518"><a href=""></a>  <span class="kw">const</span> d <span class="op">=</span> essenceMethodFrames[essenceMethodPick]<span class="op">;</span></span>
+<span id="cb2-519"><a href=""></a>  <span class="kw">const</span> card <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="bre-method-card"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb2-520"><a href=""></a>  <span class="kw">const</span> top <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="method-top"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb2-521"><a href=""></a>  <span class="kw">const</span> identity <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb2-522"><a href=""></a>  identity<span class="op">.</span><span class="fu">append</span>(</span>
+<span id="cb2-523"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-name"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">short</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb2-524"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-full"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
+<span id="cb2-525"><a href=""></a>  )<span class="op">;</span></span>
+<span id="cb2-526"><a href=""></a>  top<span class="op">.</span><span class="fu">append</span>(identity<span class="op">,</span> <span class="fu">html</span><span class="vs">`&lt;div class="method-question"&gt;Question: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">question</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span>)<span class="op">;</span></span>
+<span id="cb2-527"><a href=""></a>  card<span class="op">.</span><span class="fu">append</span>(</span>
+<span id="cb2-528"><a href=""></a>    top<span class="op">,</span></span>
+<span id="cb2-529"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-detail"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">detail</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb2-530"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-use"&gt;&lt;strong&gt;When to use it:&lt;/strong&gt; </span><span class="sc">${</span>d<span class="op">.</span><span class="at">use</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
+<span id="cb2-531"><a href=""></a>  )<span class="op">;</span></span>
+<span id="cb2-532"><a href=""></a>  <span class="cf">return</span> card<span class="op">;</span></span>
+<span id="cb2-533"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -1208,6 +1353,797 @@ Faster execution preserved numerical agreement while shrinking major allocation 
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section id="the-example-starts-with-64-livers-and-3116-genes" class="slide level2">
+<h2>The example starts with 64 livers and 3,116 genes</h2>
+<p class="story-kicker">
+The liver-toxicity dataset
+</p>
+<p class="story-lead" style="margin-bottom:8px;">
+In a controlled acetaminophen study, 64 rats received four doses, and liver mRNA expression was measured at 6, 18, 24, or 48 hours.
+</p>
+<div class="dataset-layout">
+<div class="dataset-map">
+<div class="dataset-context">
+<strong>The complete study</strong> contains 3,116 gene-expression measurements and 10 clinical chemistry markers for every animal.
+</div>
+<div class="xy-row">
+<div class="xy-symbol">
+X
+</div>
+<div>
+<div class="xy-size">
+64 × 3,116
+</div>
+<div class="xy-copy">
+Rows are animals; columns are gene-expression measurements.
+</div>
+</div>
+</div>
+<div class="xy-row">
+<div class="xy-symbol">
+y
+</div>
+<div>
+<div class="xy-size">
+4 dose groups
+</div>
+<div class="xy-copy">
+50, 150, 1500, or 2000 mg/kg—with 16 animals in each group.
+</div>
+</div>
+</div>
+<div class="dataset-why">
+<strong>X</strong> contains 3,116 gene-expression values for each rat. <strong>y</strong> records the dose group assigned to that animal.
+</div>
+</div>
+<div class="dataset-figure">
+<div class="dataset-figure-title">
+A balanced dose × time study
+</div>
+<div class="dataset-figure-sub">
+R exploration: each dot represents one rat.
+</div>
+<img src="assets/liver-toxicity-design.png" alt="Study-design plot showing four rats at every combination of acetaminophen dose and collection time">
+<div class="dataset-caption">
+Four doses × four collection times × four rats per combination = 64 samples.
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Explain the experimental unit first: each row is one rat, not one gene.</li>
+<li>The full dataset also contains 10 clinical measurements, but this example deliberately uses one gene-expression block and one dose label so the R and Julia fits are directly comparable.</li>
+<li>The four dose groups are balanced with 16 animals each.</li>
+<li>Every dose-time combination contains four animals, giving 4 × 4 × 4 = 64 samples.</li>
+<li>[Sources] Dataset description: https://www.bioconductor.org/packages/release/bioc/manuals/mixOmics/man/mixOmics.pdf ; study-design plot generated from <code>mixOmics::liver.toxicity</code> using the presenter’s R script <code>make_liver_toxicity_design.R</code>.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="one-spls-da-task-expressed-in-r-and-julia" class="slide level2">
+<h2>One sPLS-DA task, expressed in R and Julia</h2>
+<p class="story-kicker">
+Same data · same model settings
+</p>
+<p class="story-lead" style="margin-bottom:7px;">
+Both fits use the 64 × 3,116 expression matrix, two components, 50 selected genes per component, standardized predictors, and the same four dose classes.
+</p>
+<div class="code-compare">
+<div class="language-panel r">
+<div class="language-heading">
+<span class="language-name">R</span><span class="language-role">mixOmics + microbenchmark</span>
+</div>
+<pre class="slide-code"><code><span class="code-fn">library</span>(mixOmics)
+<span class="code-fn">library</span>(microbenchmark)
+<span class="code-fn">data</span>(<span class="code-str">"liver.toxicity"</span>, package = <span class="code-str">"mixOmics"</span>)
+
+X &lt;- <span class="code-fn">data.matrix</span>(liver.toxicity$gene)
+y &lt;- <span class="code-fn">factor</span>(liver.toxicity$treatment$Dose.Group)
+
+fit_R &lt;- <span class="code-fn">splsda</span>(X, y, ncomp = <span class="code-arg">2</span>,
+  keepX = <span class="code-fn">c</span>(<span class="code-arg">50</span>, <span class="code-arg">50</span>), scale = <span class="code-arg">TRUE</span>)
+
+bench_R &lt;- <span class="code-fn">microbenchmark</span>(
+  <span class="code-fn">splsda</span>(X, y, ncomp = <span class="code-arg">2</span>,
+    keepX = <span class="code-fn">c</span>(<span class="code-arg">50</span>, <span class="code-arg">50</span>), scale = <span class="code-arg">TRUE</span>),
+  times = <span class="code-arg">50L</span>)
+<span class="code-fn">min</span>(bench_R$time) / <span class="code-arg">1e6</span></code></pre>
+</div>
+<div class="language-panel julia">
+<div class="language-heading">
+<span class="language-name">Julia</span><span class="language-role">BigRiverEssence + BenchmarkTools</span>
+</div>
+<pre class="slide-code"><code><span class="code-fn">using</span> RCall, BigRiverEssence, BenchmarkTools
+
+R<span class="code-str">"""
+data("liver.toxicity", package = "mixOmics")
+X_R &lt;- data.matrix(liver.toxicity[["gene"]])
+y_R &lt;- as.character(liver.toxicity[["treatment"]][["Dose.Group"]])
+"""</span>
+<span class="code-fn">@rget</span> X_R y_R
+X, y = Matrix{Float64}(X_R), String.(y_R)
+
+ncomp, keepX = <span class="code-arg">2</span>, [<span class="code-arg">50</span>, <span class="code-arg">50</span>]
+levels = [<span class="code-str">"50"</span>, <span class="code-str">"150"</span>, <span class="code-str">"1500"</span>, <span class="code-str">"2000"</span>]
+fit_J = <span class="code-fn">splsda</span>(X, y, ncomp, keepX;
+  scale = <span class="code-arg">true</span>, levels = levels)
+
+<span class="code-fn">@btime</span> <span class="code-fn">splsda</span>($X, $y, $ncomp, $keepX;
+  scale = <span class="code-arg">true</span>, levels = $levels)</code></pre>
+</div>
+</div>
+<div class="benchmark-scope">
+Only model fitting is timed; data loading and transfer occur before each benchmark.
+</div>
+<aside class="notes">
+<ul>
+<li>The important point is not line count; it is that the statistical task and tuning parameters are matched.</li>
+<li>R obtains the dataset from <code>mixOmics</code>. Julia uses <code>RCall</code> only to import that same matrix and labels, then fits with <code>BigRiverEssence</code>.</li>
+<li>Both benchmark expressions reuse the already loaded <code>X</code> and <code>y</code>, so the timings measure model fitting rather than data import.</li>
+<li>[Sources] Presenter-supplied R and Julia scripts: <code>liver_toxicity_splsda_reference.R</code> and <code>liver_toxicity_splsda_julia.jl</code>.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-julia-fit-matched-r-and-ran-6.3-faster" class="slide level2">
+<h2>The Julia fit matched R and ran 6.3× faster</h2>
+<p class="story-kicker">
+Same answer · lower runtime
+</p>
+<p class="story-lead" style="margin-bottom:7px;">
+Both implementations selected the same number of genes and identified the same strongest gene on each component.
+</p>
+<div class="result-layout">
+<div class="match-panel">
+<div class="result-panel-title">
+Outputs agree
+</div>
+<div class="match-row">
+<div class="match-label">
+Data size
+</div>
+<div class="match-value">
+R: 64 × 3,116<br>Julia: 64 × 3,116
+</div>
+</div>
+<div class="match-row">
+<div class="match-label">
+Selected genes
+</div>
+<div class="match-value">
+R: 50, 50<br>Julia: 50, 50
+</div>
+</div>
+<div class="match-row">
+<div class="match-label">
+Strongest genes
+</div>
+<div class="match-value">
+<code>A_43_P20438</code><br><code>A_42_P730438</code>
+</div>
+</div>
+<div class="match-confirm">
+The selected-feature summary is identical for both fits.
+</div>
+</div>
+<div class="runtime-panel">
+<div class="result-panel-title">
+Minimum observed fit time
+</div>
+<div class="runtime-row">
+<div class="runtime-name">
+R
+</div>
+<div class="runtime-track">
+<div class="runtime-bar r">
+
+</div>
+</div>
+<div class="runtime-value">
+16.90 ms
+</div>
+</div>
+<div class="runtime-row">
+<div class="runtime-name">
+Julia
+</div>
+<div class="runtime-track">
+<div class="runtime-bar julia">
+
+</div>
+</div>
+<div class="runtime-value">
+2.674 ms
+</div>
+</div>
+<div class="speedup-main">
+6.3×
+</div>
+<div class="speedup-copy">
+faster on this benchmark
+</div>
+<div class="julia-memory">
+Julia benchmark: 212 allocations · 7.34 MiB
+</div>
+</div>
+</div>
+<div class="result-footnote">
+Runtime ratio: 16.90258 ÷ 2.674 = 6.32. Benchmark values depend on hardware, package versions, and benchmark conditions.
+</div>
+<aside class="notes">
+<ul>
+<li>Start with agreement: both fits used the same 64 × 3,116 matrix and returned 50 selected genes on each component.</li>
+<li>The strongest genes also matched component by component: <code>A_43_P20438</code> and <code>A_42_P730438</code>.</li>
+<li>The R minimum was 16.90258 ms; the Julia <code>@btime</code> result was 2.674 ms, a ratio of 6.32.</li>
+<li>The 212 allocations and 7.34 MiB figure describes the Julia run only. Do not present it as an R-versus-Julia memory comparison because an R memory result was not measured here.</li>
+<li>[Sources] Presenter-supplied benchmark outputs from R <code>microbenchmark</code> and Julia <code>BenchmarkTools.@btime</code>.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bigriverplots-encodes-statistical-plots-as-reusable-recipes" class="slide level2">
+<h2>BigRiverPlots encodes statistical plots as reusable recipes</h2>
+<p class="story-kicker">
+Introducing BigRiverPlots.jl
+</p>
+<p class="story-lead" style="margin-bottom:7px;">
+The package turns common statistical outputs—scores, loadings, explained variance, predictions, and tables—into consistent plots without requiring a particular model or analysis package.
+</p>
+<div class="recipe-layout">
+<div class="recipe-code-panel">
+<div class="recipe-code-title">
+The user supplies meaning, not drawing instructions
+</div>
+<div class="recipe-code-sub">
+A scores plot needs a score matrix and, optionally, one group label per observation.
+</div>
+<pre><code><span class="code-fn">using</span> BigRiverPlots, Plots
+
+<span class="code-fn">plot_scores</span>(fit.variates_X;
+  group = y,
+  comps = (<span class="code-arg">1</span>, <span class="code-arg">2</span>),
+  title = <span class="code-str">"sPLS-DA scores"</span>)</code></pre>
+<div class="recipe-code-note">
+<strong>BigRiverPlots</strong> extracts coordinates and invokes the recipe. <strong>Plots.jl</strong> renders the resulting series with the selected backend.
+</div>
+</div>
+<div class="recipe-explainer">
+<div class="recipe-definition-title">
+What is a Julia plotting recipe?
+</div>
+<div class="recipe-definition">
+A recipe is a dispatchable rule that translates a statistical object or set of inputs into plot series, geometry, labels, and sensible defaults.
+</div>
+<div class="recipe-pipeline">
+<div class="recipe-stage">
+<strong>Statistical output</strong><span>scores, loadings, groups</span>
+</div>
+<div class="recipe-pipeline-arrow">
+→
+</div>
+<div class="recipe-stage">
+<strong>RecipesBase rule</strong><span>validate, transform, define series</span>
+</div>
+<div class="recipe-pipeline-arrow">
+→
+</div>
+<div class="recipe-stage">
+<strong>Rendered plot</strong><span>Plots.jl + chosen backend</span>
+</div>
+</div>
+<div class="recipe-benefit">
+<strong>Lightweight</strong><span>The package records recipes through <code>RecipesBase</code>; the plotting backend is loaded only by the user when a figure is rendered.</span>
+</div>
+<div class="recipe-benefit">
+<strong>Reusable</strong><span>The same recipe works with outputs from BigRiverEssence or any method that provides the required vectors, matrices, or tables.</span>
+</div>
+<div class="recipe-benefit">
+<strong>Consistent, yet editable</strong><span>The recipe owns statistical structure and defaults, while normal <code>Plots</code> attributes still control titles, colors, markers, fonts, and size.</span>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Formally, BigRiverPlots defines user recipes with <code>RecipesBase.@userplot</code> and <code>@recipe</code>.</li>
+<li>A recipe does not draw pixels itself. It validates and transforms the inputs, sets plot attributes, and emits one or more series; Plots.jl and its backend perform the rendering.</li>
+<li>In the scores recipe, group levels become separate scatter series, component labels are supplied as defaults, and horizontal and vertical origin lines are added once in the recipe.</li>
+<li>Defaults set with <code>--&gt;</code> yield to user-supplied Plots attributes; attributes set with <code>:=</code> are enforced when the recipe needs them for correctness.</li>
+<li>BigRiverPlots depends on <code>RecipesBase</code>, not directly on <code>Plots</code>. Users load <code>Plots</code> when they want to display the recipe.</li>
+<li>[Sources] BigRiverPlots package design and source: local repository <code>BigRiverPlots.jl/README.md</code>, <code>Project.toml</code>, <code>src/scores/scores_recipe.jl</code>, and <code>src/scores/plot_scores.jl</code>; RecipesBase recipe syntax: https://docs.juliaplots.org/dev/recipes/</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bigriverplots-covers-the-core-statistical-views" class="slide level2">
+<h2>BigRiverPlots covers the core statistical views</h2>
+<p class="story-kicker">
+Authentic package output
+</p>
+<p class="story-lead" style="margin-bottom:6px;">
+The same lightweight recipe layer supports exploration, feature interpretation, multi-block summaries, categorical structure, and model checking.
+</p>
+<div class="plot-gallery">
+<div class="plot-gallery-item">
+<div class="plot-gallery-label">
+Scores
+</div>
+<img src="assets/brp-scores.png" alt="Scores plot generated by BigRiverPlots">
+</div>
+<div class="plot-gallery-item">
+<div class="plot-gallery-label">
+Loadings heatmap
+</div>
+<img src="assets/brp-loadings-heatmap.png" alt="Loadings heatmap generated by BigRiverPlots">
+</div>
+<div class="plot-gallery-item">
+<div class="plot-gallery-label">
+Variable importance
+</div>
+<img src="assets/brp-vip.png" alt="VIP plot generated by BigRiverPlots">
+</div>
+<div class="plot-gallery-item">
+<div class="plot-gallery-label">
+JIVE variance
+</div>
+<img src="assets/brp-jive-variance.png" alt="JIVE variance plot generated by BigRiverPlots">
+</div>
+<div class="plot-gallery-item">
+<div class="plot-gallery-label">
+Mosaic
+</div>
+<img src="assets/brp-mosaic.png" alt="Mosaic plot generated by BigRiverPlots">
+</div>
+<div class="plot-gallery-item">
+<div class="plot-gallery-label">
+Predicted vs observed
+</div>
+<img src="assets/brp-predicted-observed.png" alt="Predicted versus observed plot generated by BigRiverPlots">
+</div>
+</div>
+<div class="plot-gallery-more">
+<strong>Also available:</strong> confidence · biplot · scree · loadings · pairs · sparsity · grouped correlation
+</div>
+<aside class="notes">
+<ul>
+<li>These are authentic reference figures generated by the package test suite, not recreated illustrations.</li>
+<li>Use the gallery to emphasize breadth rather than explain every plot in detail.</li>
+<li>Scores and loadings heatmaps support latent-space exploration and interpretation; VIP summarizes variable importance; JIVE variance summarizes joint, individual, and residual variation; mosaic plots show contingency tables; predicted-versus-observed plots assess model fit.</li>
+<li>The package also provides confidence, biplot, scree, loadings, pairs, sparsity, and grouped-correlation recipes.</li>
+<li>[Sources] Authentic figures: local BigRiverPlots repository <code>test/ref/scores_ref.png</code>, <code>loadings_heatmap_ref.png</code>, <code>vip_ref.png</code>, <code>jive_variance_ref.png</code>, <code>mosaic_ref.png</code>, and <code>predict_observations_ref.png</code>; plot inventory: local <code>README.md</code> and <code>src/BigRiverPlots.jl</code>.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-spls-da-fit-becomes-three-interpretable-views" class="slide level2">
+<h2>The sPLS-DA fit becomes three interpretable views</h2>
+<p class="story-kicker">
+BigRiverEssence → BigRiverPlots
+</p>
+<p class="story-lead" style="margin-bottom:4px;">
+Choose a view to place the authentic package output beside the Julia recipe call that generated it.
+</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="911" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 910;"><span id="cb3-911"><a href=""></a>splsdaPlotFrames <span class="op">=</span> [</span>
+<span id="cb3-912"><a href=""></a>  {</span>
+<span id="cb3-913"><a href=""></a>    <span class="dt">button</span><span class="op">:</span> <span class="st">"Scores plot"</span><span class="op">,</span></span>
+<span id="cb3-914"><a href=""></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Samples"</span><span class="op">,</span></span>
+<span id="cb3-915"><a href=""></a>    <span class="dt">image</span><span class="op">:</span> <span class="st">"assets/liver-toxicity-splsda-scores.png"</span><span class="op">,</span></span>
+<span id="cb3-916"><a href=""></a>    <span class="dt">alt</span><span class="op">:</span> <span class="st">"BigRiverPlots scores plot for the liver-toxicity sPLS-DA fit"</span><span class="op">,</span></span>
+<span id="cb3-917"><a href=""></a>    <span class="dt">captionLead</span><span class="op">:</span> <span class="st">"Scores plot:"</span><span class="op">,</span></span>
+<span id="cb3-918"><a href=""></a>    <span class="dt">caption</span><span class="op">:</span> <span class="st">"the two supervised components organize animals by dose."</span><span class="op">,</span></span>
+<span id="cb3-919"><a href=""></a>    <span class="dt">note</span><span class="op">:</span> <span class="st">"Uses the fitted sample-score matrix and the original dose labels."</span><span class="op">,</span></span>
+<span id="cb3-920"><a href=""></a>    <span class="dt">code</span><span class="op">:</span> <span class="vs">`p_scores = plot_scores(</span></span>
+<span id="cb3-921"><a href=""></a><span class="vs">    fit.variates_X;</span></span>
+<span id="cb3-922"><a href=""></a><span class="vs">    group = y,</span></span>
+<span id="cb3-923"><a href=""></a><span class="vs">    xlabel = "sPLS-DA component 1",</span></span>
+<span id="cb3-924"><a href=""></a><span class="vs">    ylabel = "sPLS-DA component 2",</span></span>
+<span id="cb3-925"><a href=""></a><span class="vs">    palette = dose_palette,</span></span>
+<span id="cb3-926"><a href=""></a><span class="vs">)</span></span>
+<span id="cb3-927"><a href=""></a><span class="vs">savefig(p_scores, "liver_toxicity_scores.png")`</span></span>
+<span id="cb3-928"><a href=""></a>  }<span class="op">,</span></span>
+<span id="cb3-929"><a href=""></a>  {</span>
+<span id="cb3-930"><a href=""></a>    <span class="dt">button</span><span class="op">:</span> <span class="st">"Loadings heatmap"</span><span class="op">,</span></span>
+<span id="cb3-931"><a href=""></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Genes"</span><span class="op">,</span></span>
+<span id="cb3-932"><a href=""></a>    <span class="dt">image</span><span class="op">:</span> <span class="st">"assets/liver-toxicity-splsda-loadings.png"</span><span class="op">,</span></span>
+<span id="cb3-933"><a href=""></a>    <span class="dt">alt</span><span class="op">:</span> <span class="st">"BigRiverPlots loadings heatmap for the liver-toxicity sPLS-DA fit"</span><span class="op">,</span></span>
+<span id="cb3-934"><a href=""></a>    <span class="dt">captionLead</span><span class="op">:</span> <span class="st">"Loadings heatmap:"</span><span class="op">,</span></span>
+<span id="cb3-935"><a href=""></a>    <span class="dt">caption</span><span class="op">:</span> <span class="st">"signed contributions show which genes define each component."</span><span class="op">,</span></span>
+<span id="cb3-936"><a href=""></a>    <span class="dt">note</span><span class="op">:</span> <span class="st">"The 18 strongest loading rows are retained across components 1 and 2."</span><span class="op">,</span></span>
+<span id="cb3-937"><a href=""></a>    <span class="dt">code</span><span class="op">:</span> <span class="vs">`p_heatmap = plot_loadings_heatmap(</span></span>
+<span id="cb3-938"><a href=""></a><span class="vs">    fit.loadings_X;</span></span>
+<span id="cb3-939"><a href=""></a><span class="vs">    comps = [1, 2],</span></span>
+<span id="cb3-940"><a href=""></a><span class="vs">    varnames = gene_names,</span></span>
+<span id="cb3-941"><a href=""></a><span class="vs">    compnames = ["Component 1", "Component 2"],</span></span>
+<span id="cb3-942"><a href=""></a><span class="vs">    ntop = 18,</span></span>
+<span id="cb3-943"><a href=""></a><span class="vs">)</span></span>
+<span id="cb3-944"><a href=""></a><span class="vs">savefig(p_heatmap, "liver_toxicity_loadings_heatmap.png")`</span></span>
+<span id="cb3-945"><a href=""></a>  }<span class="op">,</span></span>
+<span id="cb3-946"><a href=""></a>  {</span>
+<span id="cb3-947"><a href=""></a>    <span class="dt">button</span><span class="op">:</span> <span class="st">"Biplot"</span><span class="op">,</span></span>
+<span id="cb3-948"><a href=""></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Samples + genes"</span><span class="op">,</span></span>
+<span id="cb3-949"><a href=""></a>    <span class="dt">image</span><span class="op">:</span> <span class="st">"assets/liver-toxicity-splsda-biplot.png"</span><span class="op">,</span></span>
+<span id="cb3-950"><a href=""></a>    <span class="dt">alt</span><span class="op">:</span> <span class="st">"BigRiverPlots biplot for the liver-toxicity sPLS-DA fit"</span><span class="op">,</span></span>
+<span id="cb3-951"><a href=""></a>    <span class="dt">captionLead</span><span class="op">:</span> <span class="st">"Biplot:"</span><span class="op">,</span></span>
+<span id="cb3-952"><a href=""></a>    <span class="dt">caption</span><span class="op">:</span> <span class="st">"contrasting gene directions are placed back onto the sample map."</span><span class="op">,</span></span>
+<span id="cb3-953"><a href=""></a>    <span class="dt">note</span><span class="op">:</span> <span class="st">"Balanced selection: both signs from both components."</span><span class="op">,</span></span>
+<span id="cb3-954"><a href=""></a>    <span class="dt">code</span><span class="op">:</span> <span class="vs">`arrow_idx = unique(vcat(</span></span>
+<span id="cb3-955"><a href=""></a><span class="vs">    argmax.(eachcol(fit.loadings_X)),</span></span>
+<span id="cb3-956"><a href=""></a><span class="vs">    argmin.(eachcol(fit.loadings_X)),</span></span>
+<span id="cb3-957"><a href=""></a><span class="vs">))</span></span>
+<span id="cb3-958"><a href=""></a></span>
+<span id="cb3-959"><a href=""></a><span class="vs">p_biplot = plot_biplot(</span></span>
+<span id="cb3-960"><a href=""></a><span class="vs">    fit.variates_X,</span></span>
+<span id="cb3-961"><a href=""></a><span class="vs">    fit.loadings_X[arrow_idx, :];</span></span>
+<span id="cb3-962"><a href=""></a><span class="vs">    group = y,</span></span>
+<span id="cb3-963"><a href=""></a><span class="vs">    varnames = gene_names[arrow_idx],</span></span>
+<span id="cb3-964"><a href=""></a><span class="vs">    arrowlabels = true,</span></span>
+<span id="cb3-965"><a href=""></a><span class="vs">    palette = dose_palette,</span></span>
+<span id="cb3-966"><a href=""></a><span class="vs">)</span></span>
+<span id="cb3-967"><a href=""></a><span class="vs">savefig(p_biplot, "liver_toxicity_biplot.png")`</span></span>
+<span id="cb3-968"><a href=""></a>  }</span>
+<span id="cb3-969"><a href=""></a>]</span>
+<span id="cb3-970"><a href=""></a></span>
+<span id="cb3-971"><a href=""></a>viewof splsdaPlotPick <span class="op">=</span> {</span>
+<span id="cb3-972"><a href=""></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-plot-selector"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb3-973"><a href=""></a>  <span class="kw">const</span> buttons <span class="op">=</span> splsdaPlotFrames<span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-974"><a href=""></a>    <span class="kw">const</span> b <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;button&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">button</span><span class="sc">}</span><span class="vs">&lt;/button&gt;`</span><span class="op">;</span></span>
+<span id="cb3-975"><a href=""></a>    b<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="kw">set</span>(i)<span class="op">;</span></span>
+<span id="cb3-976"><a href=""></a>    wrap<span class="op">.</span><span class="fu">append</span>(b)<span class="op">;</span></span>
+<span id="cb3-977"><a href=""></a>    <span class="cf">return</span> b<span class="op">;</span></span>
+<span id="cb3-978"><a href=""></a>  })<span class="op">;</span></span>
+<span id="cb3-979"><a href=""></a>  <span class="kw">const</span> render <span class="op">=</span> () <span class="kw">=&gt;</span> buttons<span class="op">.</span><span class="fu">forEach</span>((b<span class="op">,</span> i) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">toggle</span>(<span class="st">"on"</span><span class="op">,</span> i <span class="op">===</span> wrap<span class="op">.</span><span class="at">value</span>))<span class="op">;</span></span>
+<span id="cb3-980"><a href=""></a>  <span class="kw">const</span> <span class="kw">set</span> <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
+<span id="cb3-981"><a href=""></a>    wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb3-982"><a href=""></a>    <span class="fu">render</span>()<span class="op">;</span></span>
+<span id="cb3-983"><a href=""></a>    wrap<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">"input"</span><span class="op">,</span> {<span class="dt">bubbles</span><span class="op">:</span><span class="kw">true</span>}))<span class="op">;</span></span>
+<span id="cb3-984"><a href=""></a>  }<span class="op">;</span></span>
+<span id="cb3-985"><a href=""></a>  wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-986"><a href=""></a>  <span class="fu">render</span>()<span class="op">;</span></span>
+<span id="cb3-987"><a href=""></a>  <span class="cf">return</span> wrap<span class="op">;</span></span>
+<span id="cb3-988"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="991" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 990;"><span id="cb4-991"><a href=""></a>splsdaPlotDisplay <span class="op">=</span> {</span>
+<span id="cb4-992"><a href=""></a>  <span class="kw">const</span> d <span class="op">=</span> splsdaPlotFrames[splsdaPlotPick]<span class="op">;</span></span>
+<span id="cb4-993"><a href=""></a>  <span class="kw">const</span> shell <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb4-994"><a href=""></a></span>
+<span id="cb4-995"><a href=""></a>  <span class="kw">const</span> visual <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-visual"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb4-996"><a href=""></a>  <span class="kw">const</span> image <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">"img"</span>)<span class="op">;</span></span>
+<span id="cb4-997"><a href=""></a>  image<span class="op">.</span><span class="at">src</span> <span class="op">=</span> d<span class="op">.</span><span class="at">image</span><span class="op">;</span></span>
+<span id="cb4-998"><a href=""></a>  image<span class="op">.</span><span class="at">alt</span> <span class="op">=</span> d<span class="op">.</span><span class="at">alt</span><span class="op">;</span></span>
+<span id="cb4-999"><a href=""></a>  visual<span class="op">.</span><span class="fu">append</span>(</span>
+<span id="cb4-1000"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-label"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">label</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb4-1001"><a href=""></a>    image<span class="op">,</span></span>
+<span id="cb4-1002"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-caption"&gt;&lt;strong&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">captionLead</span><span class="sc">}</span><span class="vs">&lt;/strong&gt; </span><span class="sc">${</span>d<span class="op">.</span><span class="at">caption</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
+<span id="cb4-1003"><a href=""></a>  )<span class="op">;</span></span>
+<span id="cb4-1004"><a href=""></a></span>
+<span id="cb4-1005"><a href=""></a>  <span class="kw">const</span> codePanel <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-code"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb4-1006"><a href=""></a>  <span class="kw">const</span> pre <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">"pre"</span>)<span class="op">;</span></span>
+<span id="cb4-1007"><a href=""></a>  <span class="kw">const</span> code <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">"code"</span>)<span class="op">;</span></span>
+<span id="cb4-1008"><a href=""></a>  code<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> d<span class="op">.</span><span class="at">code</span><span class="op">;</span></span>
+<span id="cb4-1009"><a href=""></a>  pre<span class="op">.</span><span class="fu">append</span>(code)<span class="op">;</span></span>
+<span id="cb4-1010"><a href=""></a>  codePanel<span class="op">.</span><span class="fu">append</span>(</span>
+<span id="cb4-1011"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-code-title"&gt;Julia recipe call&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb4-1012"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-code-sub"&gt;The same fitted &lt;code&gt;fit&lt;/code&gt; object drives every view.&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb4-1013"><a href=""></a>    pre<span class="op">,</span></span>
+<span id="cb4-1014"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-code-note"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">note</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
+<span id="cb4-1015"><a href=""></a>  )<span class="op">;</span></span>
+<span id="cb4-1016"><a href=""></a></span>
+<span id="cb4-1017"><a href=""></a>  shell<span class="op">.</span><span class="fu">append</span>(visual<span class="op">,</span> codePanel)<span class="op">;</span></span>
+<span id="cb4-1018"><a href=""></a>  <span class="cf">return</span> shell<span class="op">;</span></span>
+<span id="cb4-1019"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>All three figures were generated from the exact sPLS-DA fit used in the R-versus-Julia benchmark.</li>
+<li>Click the three buttons rather than trying to discuss all views at once.</li>
+<li>The scores plot uses <code>fit.variates_X</code> and colors the 64 animals by dose.</li>
+<li>The loadings heatmap uses <code>fit.loadings_X</code> and shows the 18 genes with the largest absolute loading across the two components.</li>
+<li>A global top-four ranking is avoided because, for this sparse fit, it selects four component-2 genes whose arrows overlap vertically.</li>
+<li>The biplot instead shows the strongest positive and negative loading on each component. This is a balanced, explicitly stated display choice; the fitted model is unchanged.</li>
+<li>Emphasize that these are three views of one fitted object, not three separate analyses.</li>
+<li>[Sources] Figures generated with the presenter’s reproducible script <code>liver_toxicity_splsda_plots.jl</code> using local BigRiverEssence and BigRiverPlots packages and <code>mixOmics::liver.toxicity</code>.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="julia-speed-does-not-require-leaving-r" class="slide level2">
+<h2>Julia speed does not require leaving R</h2>
+<div class="story-lead">
+<strong>BigRiverEssence is written in Julia, but people who are comfortable working in R can still use it directly.</strong> JuliaCall connects the two languages while the familiar R workflow stays in place.
+</div>
+<div class="bridge-layout">
+<div class="bridge-code">
+<div class="bridge-code-title">
+R calls BigRiverEssence
+</div>
+<div class="bridge-code-sub">
+The same liver-toxicity sPLS-DA fit, launched from an R session.
+</div>
+<pre><code><span class="code-fn">library</span>(JuliaCall)
+julia_setup(install = <span class="code-arg">FALSE</span>)
+julia_library(<span class="code-str">"BigRiverEssence"</span>)
+
+fit &lt;- julia_call(
+  <span class="code-str">"BigRiverEssence.splsda"</span>,
+  X, as.character(y),
+  2L, c(50L, 50L),
+  scale = <span class="code-arg">TRUE</span>, levels = levels(y),
+  need_return = <span class="code-str">"Julia"</span>
+)
+
+L &lt;- julia_call(<span class="code-str">"getproperty"</span>, fit,
+  julia_eval(<span class="code-str">":loadings_X"</span>),
+  need_return = <span class="code-str">"R"</span>)
+colSums(L != 0)  <span class="code-comment"># 50  50</span></code></pre>
+</div>
+<div class="bridge-story">
+<div class="bridge-story-title">
+What crosses the bridge
+</div>
+<div class="bridge-step">
+<div class="bridge-lang r">
+R
+</div>
+<div class="bridge-step-copy">
+<strong>Prepare the analysis</strong><span>Wrangle the data, define <code>X</code> and <code>y</code>, and keep the surrounding workflow familiar.</span>
+</div>
+</div>
+<div class="bridge-step">
+<div class="bridge-lang julia">
+JL
+</div>
+<div class="bridge-step-copy">
+<strong>Run the numerical kernel</strong><span><code>splsda</code> executes inside BigRiverEssence; the fitted object can stay in Julia.</span>
+</div>
+</div>
+<div class="bridge-step">
+<div class="bridge-lang r">
+R
+</div>
+<div class="bridge-step-copy">
+<strong>Return only what R needs</strong><span>Bring back loadings, scores, or predictions for reporting and downstream analysis.</span>
+</div>
+</div>
+<div class="bridge-takeaway">
+Keep R for the workflow; move the expensive matrix computation to Julia.
+</div>
+<div class="bridge-caveat">
+Initialize once and reuse the Julia session. The first call may include Julia compilation, so compare warmed-up repeated calls.
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>This is not a rewrite of the R workflow. JuliaCall starts Julia inside the R session and performs automatic conversion for common objects.</li>
+<li><code>need_return = "Julia"</code> keeps the large fitted object on the Julia side instead of converting it immediately.</li>
+<li>The second call requests only <code>loadings_X</code> as an R matrix; the example returns 50 selected genes on each component.</li>
+<li>Emphasize the warm-up caveat: Julia’s first call can compile code, so the speed comparison should use a reused session and repeated calls.</li>
+<li>The code on the slide was executed locally against the installed BigRiverEssence package and returned a <code>3116 × 2</code> loading matrix with 50 nonzero entries per component.</li>
+<li>[Sources] JuliaCall documentation: https://juliainterop.github.io/JuliaCall/ and https://juliainterop.github.io/JuliaCall/reference/call.html</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="two-registered-packagesand-an-open-invitation" class="slide level2">
+<h2>Two registered packages—and an open invitation</h2>
+<div class="story-lead">
+During this internship, we developed and registered two focused packages in Julia’s General registry.
+</div>
+<div class="conclusion-hero">
+<div class="conclusion-count">
+<div class="conclusion-number">
+2
+</div>
+<div class="conclusion-number-label">
+packages developed<br>and registered
+</div>
+</div>
+<div class="conclusion-packages">
+<div class="conclusion-package">
+<div class="conclusion-package-name">
+BigRiverEssence.jl
+</div>
+<div class="conclusion-package-copy">
+Fast, memory-conscious multivariate methods for high-dimensional data.
+</div>
+</div>
+<div class="conclusion-package">
+<div class="conclusion-package-name">
+BigRiverPlots.jl
+</div>
+<div class="conclusion-package-copy">
+Lightweight plotting recipes that turn fitted objects into interpretable statistical views.
+</div>
+</div>
+</div>
+</div>
+<div class="conclusion-routes">
+<div class="conclusion-route">
+<p><strong>Already using Julia?</strong> <span>Install the packages directly and use them in a native Julia analysis.</span></p>
+</div>
+<div class="conclusion-or">
+or
+</div>
+<div class="conclusion-route">
+<p><strong>Prefer to stay in R?</strong> <span>Use JuliaCall to reach the same Julia implementation and bring the results back into R.</span></p>
+</div>
+</div>
+<div class="conclusion-close">
+I hope these tools serve both the Julia community and researchers who prefer other languages—because gaining speed should not require abandoning a trusted workflow.
+</div>
+<aside class="notes">
+<ul>
+<li>This internship produced two complete packages: BigRiverEssence.jl and BigRiverPlots.jl.</li>
+<li>Both packages are registered in Julia’s General registry, so Julia users can install them through the normal package workflow.</li>
+<li>The audience does not need to adopt Julia wholesale. R users can call BigRiverEssence through JuliaCall and keep data preparation, reporting, and downstream work in R.</li>
+<li>Close on accessibility: the packages are intended for both current Julia users and researchers who want Julia performance behind another language.</li>
+<li>[Sources] Registration verified in the local Julia General registry: BigRiverEssence UUID <code>2768b56d-1570-4417-9919-1aa303d8c95e</code>; BigRiverPlots UUID <code>1cf0ff84-1201-497f-a0c3-5c0b838ccaa6</code>. Package repositories: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="registration-was-the-milestone-growth-is-next" class="slide level2">
+<h2>Registration was the milestone; growth is next</h2>
+<div class="story-lead">
+The packages are usable today. The next phase is publication, broader statistical coverage, and a growing recipe ecosystem.
+</div>
+<div class="next-roadmap">
+<div class="next-step publish">
+<div class="next-num">
+01 · PUBLISH
+</div>
+<h3>
+Prepare a JOSS paper
+</h3>
+<p>
+Document the scientific motivation, implementation, validation, benchmarks, and reproducible examples for the two packages.
+</p>
+</div>
+<div class="next-arrow">
+→
+</div>
+<div class="next-step essence">
+<div class="next-num">
+02 · EXTEND
+</div>
+<h3>
+Grow BigRiverEssence
+</h3>
+<p>
+Add further multivariate methods while preserving the same priorities: <strong>speed, low allocation, and lightweight dependencies.</strong>
+</p>
+</div>
+<div class="next-arrow">
+→
+</div>
+<div class="next-step plots">
+<div class="next-num">
+03 · GENERALIZE
+</div>
+<h3>
+Expand BigRiverPlots
+</h3>
+<p>
+The package is not limited to its current recipes. Add more statistical views and support for additional packages, fitted objects, matrices, and DataFrames.
+</p>
+</div>
+</div>
+<div class="next-close">
+The goal is not a closed catalogue—it is a growing, interoperable toolkit shaped by real analysis needs.
+</div>
+<aside class="notes">
+<ul>
+<li>The first next step is scholarly communication: prepare a JOSS paper describing the packages, their motivation, validation, benchmarks, and reproducible use.</li>
+<li>BigRiverEssence is designed to grow. Additional methods should retain the same engineering constraints rather than increasing dependency weight or allocation unnecessarily.</li>
+<li>BigRiverPlots is generic by design. Its present recipes are the starting set, not the boundary of the package.</li>
+<li>Future plotting work can add more statistical views and adapters for outputs from other packages, fitted objects, matrices, and DataFrames.</li>
+<li>Close by inviting use cases and contributions from the audience; practical analysis needs should guide the roadmap.</li>
+<li>[Sources] Roadmap supplied by the presenter for BigRiverEssence.jl and BigRiverPlots.jl.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 
 </section>
     </div>
@@ -1407,7 +2343,7 @@ Faster execution preserved numerical agreement while shrinking major allocation 
       });
     </script>
     <script type="ojs-module-contents">
-    eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImVzc2VuY2VNZXRob2RGcmFtZXMgPSBbXG4gIHtzaG9ydDpcIlBDQVwiLCBuYW1lOlwiUHJpbmNpcGFsIENvbXBvbmVudCBBbmFseXNpc1wiLCBxdWVzdGlvbjpcIkNvbXByZXNzXCIsIGRldGFpbDpcIkZpbmRzIG9yZGVyZWQgZGlyZWN0aW9ucyB0aGF0IGNhcHR1cmUgdGhlIGdyZWF0ZXN0IHZhcmlhdGlvbiBpbiBvbmUgZGF0YSBtYXRyaXguXCIsIHVzZTpcIlVzZSBpdCBmb3IgdW5zdXBlcnZpc2VkIGV4cGxvcmF0aW9uLCB2aXN1YWxpemF0aW9uLCBhbmQgbG93LXJhbmsgcmVwcmVzZW50YXRpb24uXCJ9LFxuICB7c2hvcnQ6XCJTUENBXCIsIG5hbWU6XCJTcGFyc2UgUHJpbmNpcGFsIENvbXBvbmVudCBBbmFseXNpc1wiLCBxdWVzdGlvbjpcIkNvbXByZXNzICsgc2VsZWN0XCIsIGRldGFpbDpcIkJ1aWxkcyBQQ0EtbGlrZSBjb21wb25lbnRzIHdob3NlIGxvYWRpbmdzIHVzZSBvbmx5IGEgc3Vic2V0IG9mIHZhcmlhYmxlcy5cIiwgdXNlOlwiVXNlIGl0IHdoZW4gaW50ZXJwcmV0YXRpb24gYW5kIGZlYXR1cmUgc2VsZWN0aW9uIG1hdHRlciBhcyBtdWNoIGFzIGNvbXByZXNzaW9uLlwifSxcbiAge3Nob3J0OlwiUE1EXCIsIG5hbWU6XCJQZW5hbGl6ZWQgTWF0cml4IERlY29tcG9zaXRpb25cIiwgcXVlc3Rpb246XCJEZWNvbXBvc2Ugc3BhcnNlbHlcIiwgZGV0YWlsOlwiQ29uc3RydWN0cyBhIGxvdy1yYW5rIG1hdHJpeCBkZWNvbXBvc2l0aW9uIHdoaWxlIGNvbnN0cmFpbmluZyB0aGUgY29tcG9uZW50IHZlY3RvcnMgdG8gYmUgc3BhcnNlLlwiLCB1c2U6XCJVc2UgaXQgYXMgYSBmbGV4aWJsZSBzcGFyc2UgZGVjb21wb3NpdGlvbiBhbmQgYXMgYSBmb3VuZGF0aW9uIGZvciBzcGFyc2UgbGF0ZW50IG1ldGhvZHMuXCJ9LFxuICB7c2hvcnQ6XCJQTFMtREFcIiwgbmFtZTpcIlBhcnRpYWwgTGVhc3QgU3F1YXJlcyBEaXNjcmltaW5hbnQgQW5hbHlzaXNcIiwgcXVlc3Rpb246XCJDbGFzc2lmeVwiLCBkZXRhaWw6XCJGaW5kcyBsYXRlbnQgZGlyZWN0aW9ucyBpbiB0aGUgcHJlZGljdG9ycyB0aGF0IGFyZSBhc3NvY2lhdGVkIHdpdGgga25vd24gY2xhc3MgbGFiZWxzLlwiLCB1c2U6XCJVc2UgaXQgZm9yIHN1cGVydmlzZWQgZGltZW5zaW9uIHJlZHVjdGlvbiBhbmQgY2xhc3NpZmljYXRpb24uXCJ9LFxuICB7c2hvcnQ6XCJzUExTLURBXCIsIG5hbWU6XCJTcGFyc2UgUGFydGlhbCBMZWFzdCBTcXVhcmVzIERpc2NyaW1pbmFudCBBbmFseXNpc1wiLCBxdWVzdGlvbjpcIkNsYXNzaWZ5ICsgc2VsZWN0XCIsIGRldGFpbDpcIkNvbWJpbmVzIHN1cGVydmlzZWQgUExTIGNvbXBvbmVudHMgd2l0aCBzcGFyc2UgbG9hZGluZ3MgdGhhdCByZXRhaW4gc2VsZWN0ZWQgdmFyaWFibGVzLlwiLCB1c2U6XCJVc2UgaXQgd2hlbiBjbGFzc2lmaWNhdGlvbiBhbmQgYSBjb25jaXNlIGJpb21hcmtlciBzZXQgYXJlIGJvdGggZ29hbHMuXCJ9LFxuICB7c2hvcnQ6XCJQTFNrZXJuXCIsIG5hbWU6XCJQYXJ0aWFsIExlYXN0IFNxdWFyZXMgS2VybmVsIFJlZ3Jlc3Npb25cIiwgcXVlc3Rpb246XCJQcmVkaWN0XCIsIGRldGFpbDpcIkJ1aWxkcyBsYXRlbnQgdmFyaWFibGVzIHRoYXQgY29ubmVjdCBhIHByZWRpY3RvciBtYXRyaXggdG8gY29udGludW91cyBvciBtdWx0aXZhcmlhdGUgb3V0Y29tZXMuXCIsIHVzZTpcIlVzZSBpdCBmb3IgZWZmaWNpZW50IFBMUyByZWdyZXNzaW9uLCB0cmFuc2Zvcm1hdGlvbiwgYW5kIHByZWRpY3Rpb24uXCJ9LFxuICB7c2hvcnQ6XCJDQ0FcIiwgbmFtZTpcIkNhbm9uaWNhbCBDb3JyZWxhdGlvbiBBbmFseXNpc1wiLCBxdWVzdGlvbjpcIlJlbGF0ZSB0d28gYmxvY2tzXCIsIGRldGFpbDpcIkZpbmRzIHBhaXJlZCBkaXJlY3Rpb25zIHRoYXQgbWF4aW1pemUgYXNzb2NpYXRpb24gYmV0d2VlbiB0d28gZGF0YSBtYXRyaWNlcyBtZWFzdXJlZCBvbiB0aGUgc2FtZSBzYW1wbGVzLlwiLCB1c2U6XCJVc2UgaXQgdG8gc3R1ZHkgc2hhcmVkIGNyb3NzLWJsb2NrIHN0cnVjdHVyZS5cIn0sXG4gIHtzaG9ydDpcIlNDQ0FcIiwgbmFtZTpcIlNwYXJzZSBDYW5vbmljYWwgQ29ycmVsYXRpb24gQW5hbHlzaXNcIiwgcXVlc3Rpb246XCJSZWxhdGUgKyBzZWxlY3RcIiwgZGV0YWlsOlwiQWRkcyBzcGFyc2UgbG9hZGluZ3MgdG8gQ0NBIHNvIHRoZSBjcm9zcy1ibG9jayByZWxhdGlvbnNoaXAgZGVwZW5kcyBvbiBmZXdlciB2YXJpYWJsZXMuXCIsIHVzZTpcIlVzZSBpdCB0byBpZGVudGlmeSBpbnRlcnByZXRhYmxlIGZlYXR1cmVzIGNvbm5lY3RpbmcgdHdvIGRhdGEgc291cmNlcy5cIn0sXG4gIHtzaG9ydDpcIkpJVkVcIiwgbmFtZTpcIkpvaW50IGFuZCBJbmRpdmlkdWFsIFZhcmlhdGlvbiBFeHBsYWluZWRcIiwgcXVlc3Rpb246XCJJbnRlZ3JhdGUgYmxvY2tzXCIsIGRldGFpbDpcIlNlcGFyYXRlcyBtdWx0aXBsZSBtYXRjaGVkIGRhdGEgYmxvY2tzIGludG8gam9pbnQsIGJsb2NrLXNwZWNpZmljLCBhbmQgcmVzaWR1YWwgc3RydWN0dXJlLlwiLCB1c2U6XCJVc2UgaXQgd2hlbiBzZXZlcmFsIG9taWNzIGFzc2F5cyBkZXNjcmliZSB0aGUgc2FtZSBzYW1wbGVzLlwifVxuXVxuXG52aWV3b2YgZXNzZW5jZU1ldGhvZFBpY2sgPSB7XG4gIGNvbnN0IHdyYXAgPSBodG1sYDxkaXYgY2xhc3M9XCJicmUtbWV0aG9kLXNlbGVjdG9yXCI+PC9kaXY+YDtcbiAgY29uc3QgYnV0dG9ucyA9IGVzc2VuY2VNZXRob2RGcmFtZXMubWFwKChkLCBpKSA9PiB7XG4gICAgY29uc3QgYiA9IGh0bWxgPGJ1dHRvbj4ke2Quc2hvcnR9PC9idXR0b24+YDtcbiAgICBiLm9uY2xpY2sgPSAoKSA9PiBzZXQoaSk7XG4gICAgd3JhcC5hcHBlbmQoYik7XG4gICAgcmV0dXJuIGI7XG4gIH0pO1xuICBjb25zdCByZW5kZXIgPSAoKSA9PiBidXR0b25zLmZvckVhY2goKGIsIGkpID0+IGIuY2xhc3NMaXN0LnRvZ2dsZShcIm9uXCIsIGkgPT09IHdyYXAudmFsdWUpKTtcbiAgY29uc3Qgc2V0ID0gaSA9PiB7XG4gICAgd3JhcC52YWx1ZSA9IGk7XG4gICAgcmVuZGVyKCk7XG4gICAgd3JhcC5kaXNwYXRjaEV2ZW50KG5ldyBFdmVudChcImlucHV0XCIsIHtidWJibGVzOnRydWV9KSk7XG4gIH07XG4gIHdyYXAudmFsdWUgPSAwO1xuICByZW5kZXIoKTtcbiAgcmV0dXJuIHdyYXA7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJlc3NlbmNlTWV0aG9kQ2FyZCA9IHtcbiAgY29uc3QgZCA9IGVzc2VuY2VNZXRob2RGcmFtZXNbZXNzZW5jZU1ldGhvZFBpY2tdO1xuICBjb25zdCBjYXJkID0gaHRtbGA8ZGl2IGNsYXNzPVwiYnJlLW1ldGhvZC1jYXJkXCI+PC9kaXY+YDtcbiAgY29uc3QgdG9wID0gaHRtbGA8ZGl2IGNsYXNzPVwibWV0aG9kLXRvcFwiPjwvZGl2PmA7XG4gIGNvbnN0IGlkZW50aXR5ID0gaHRtbGA8ZGl2PjwvZGl2PmA7XG4gIGlkZW50aXR5LmFwcGVuZChcbiAgICBodG1sYDxkaXYgY2xhc3M9XCJtZXRob2QtbmFtZVwiPiR7ZC5zaG9ydH08L2Rpdj5gLFxuICAgIGh0bWxgPGRpdiBjbGFzcz1cIm1ldGhvZC1mdWxsXCI+JHtkLm5hbWV9PC9kaXY+YFxuICApO1xuICB0b3AuYXBwZW5kKGlkZW50aXR5LCBodG1sYDxkaXYgY2xhc3M9XCJtZXRob2QtcXVlc3Rpb25cIj5RdWVzdGlvbjogJHtkLnF1ZXN0aW9ufTwvZGl2PmApO1xuICBjYXJkLmFwcGVuZChcbiAgICB0b3AsXG4gICAgaHRtbGA8ZGl2IGNsYXNzPVwibWV0aG9kLWRldGFpbFwiPiR7ZC5kZXRhaWx9PC9kaXY+YCxcbiAgICBodG1sYDxkaXYgY2xhc3M9XCJtZXRob2QtdXNlXCI+PHN0cm9uZz5XaGVuIHRvIHVzZSBpdDo8L3N0cm9uZz4gJHtkLnVzZX08L2Rpdj5gXG4gICk7XG4gIHJldHVybiBjYXJkO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdlc3NlbmNlTWV0aG9kUGljaycpIn1dfQ==
+    eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImVzc2VuY2VNZXRob2RGcmFtZXMgPSBbXG4gIHtzaG9ydDpcIlBDQVwiLCBuYW1lOlwiUHJpbmNpcGFsIENvbXBvbmVudCBBbmFseXNpc1wiLCBxdWVzdGlvbjpcIkNvbXByZXNzXCIsIGRldGFpbDpcIkZpbmRzIG9yZGVyZWQgZGlyZWN0aW9ucyB0aGF0IGNhcHR1cmUgdGhlIGdyZWF0ZXN0IHZhcmlhdGlvbiBpbiBvbmUgZGF0YSBtYXRyaXguXCIsIHVzZTpcIlVzZSBpdCBmb3IgdW5zdXBlcnZpc2VkIGV4cGxvcmF0aW9uLCB2aXN1YWxpemF0aW9uLCBhbmQgbG93LXJhbmsgcmVwcmVzZW50YXRpb24uXCJ9LFxuICB7c2hvcnQ6XCJTUENBXCIsIG5hbWU6XCJTcGFyc2UgUHJpbmNpcGFsIENvbXBvbmVudCBBbmFseXNpc1wiLCBxdWVzdGlvbjpcIkNvbXByZXNzICsgc2VsZWN0XCIsIGRldGFpbDpcIkJ1aWxkcyBQQ0EtbGlrZSBjb21wb25lbnRzIHdob3NlIGxvYWRpbmdzIHVzZSBvbmx5IGEgc3Vic2V0IG9mIHZhcmlhYmxlcy5cIiwgdXNlOlwiVXNlIGl0IHdoZW4gaW50ZXJwcmV0YXRpb24gYW5kIGZlYXR1cmUgc2VsZWN0aW9uIG1hdHRlciBhcyBtdWNoIGFzIGNvbXByZXNzaW9uLlwifSxcbiAge3Nob3J0OlwiUE1EXCIsIG5hbWU6XCJQZW5hbGl6ZWQgTWF0cml4IERlY29tcG9zaXRpb25cIiwgcXVlc3Rpb246XCJEZWNvbXBvc2Ugc3BhcnNlbHlcIiwgZGV0YWlsOlwiQ29uc3RydWN0cyBhIGxvdy1yYW5rIG1hdHJpeCBkZWNvbXBvc2l0aW9uIHdoaWxlIGNvbnN0cmFpbmluZyB0aGUgY29tcG9uZW50IHZlY3RvcnMgdG8gYmUgc3BhcnNlLlwiLCB1c2U6XCJVc2UgaXQgYXMgYSBmbGV4aWJsZSBzcGFyc2UgZGVjb21wb3NpdGlvbiBhbmQgYXMgYSBmb3VuZGF0aW9uIGZvciBzcGFyc2UgbGF0ZW50IG1ldGhvZHMuXCJ9LFxuICB7c2hvcnQ6XCJQTFMtREFcIiwgbmFtZTpcIlBhcnRpYWwgTGVhc3QgU3F1YXJlcyBEaXNjcmltaW5hbnQgQW5hbHlzaXNcIiwgcXVlc3Rpb246XCJDbGFzc2lmeVwiLCBkZXRhaWw6XCJGaW5kcyBsYXRlbnQgZGlyZWN0aW9ucyBpbiB0aGUgcHJlZGljdG9ycyB0aGF0IGFyZSBhc3NvY2lhdGVkIHdpdGgga25vd24gY2xhc3MgbGFiZWxzLlwiLCB1c2U6XCJVc2UgaXQgZm9yIHN1cGVydmlzZWQgZGltZW5zaW9uIHJlZHVjdGlvbiBhbmQgY2xhc3NpZmljYXRpb24uXCJ9LFxuICB7c2hvcnQ6XCJzUExTLURBXCIsIG5hbWU6XCJTcGFyc2UgUGFydGlhbCBMZWFzdCBTcXVhcmVzIERpc2NyaW1pbmFudCBBbmFseXNpc1wiLCBxdWVzdGlvbjpcIkNsYXNzaWZ5ICsgc2VsZWN0XCIsIGRldGFpbDpcIkNvbWJpbmVzIHN1cGVydmlzZWQgUExTIGNvbXBvbmVudHMgd2l0aCBzcGFyc2UgbG9hZGluZ3MgdGhhdCByZXRhaW4gc2VsZWN0ZWQgdmFyaWFibGVzLlwiLCB1c2U6XCJVc2UgaXQgd2hlbiBjbGFzc2lmaWNhdGlvbiBhbmQgYSBjb25jaXNlIGJpb21hcmtlciBzZXQgYXJlIGJvdGggZ29hbHMuXCJ9LFxuICB7c2hvcnQ6XCJQTFNrZXJuXCIsIG5hbWU6XCJQYXJ0aWFsIExlYXN0IFNxdWFyZXMgS2VybmVsIFJlZ3Jlc3Npb25cIiwgcXVlc3Rpb246XCJQcmVkaWN0XCIsIGRldGFpbDpcIkJ1aWxkcyBsYXRlbnQgdmFyaWFibGVzIHRoYXQgY29ubmVjdCBhIHByZWRpY3RvciBtYXRyaXggdG8gY29udGludW91cyBvciBtdWx0aXZhcmlhdGUgb3V0Y29tZXMuXCIsIHVzZTpcIlVzZSBpdCBmb3IgZWZmaWNpZW50IFBMUyByZWdyZXNzaW9uLCB0cmFuc2Zvcm1hdGlvbiwgYW5kIHByZWRpY3Rpb24uXCJ9LFxuICB7c2hvcnQ6XCJDQ0FcIiwgbmFtZTpcIkNhbm9uaWNhbCBDb3JyZWxhdGlvbiBBbmFseXNpc1wiLCBxdWVzdGlvbjpcIlJlbGF0ZSB0d28gYmxvY2tzXCIsIGRldGFpbDpcIkZpbmRzIHBhaXJlZCBkaXJlY3Rpb25zIHRoYXQgbWF4aW1pemUgYXNzb2NpYXRpb24gYmV0d2VlbiB0d28gZGF0YSBtYXRyaWNlcyBtZWFzdXJlZCBvbiB0aGUgc2FtZSBzYW1wbGVzLlwiLCB1c2U6XCJVc2UgaXQgdG8gc3R1ZHkgc2hhcmVkIGNyb3NzLWJsb2NrIHN0cnVjdHVyZS5cIn0sXG4gIHtzaG9ydDpcIlNDQ0FcIiwgbmFtZTpcIlNwYXJzZSBDYW5vbmljYWwgQ29ycmVsYXRpb24gQW5hbHlzaXNcIiwgcXVlc3Rpb246XCJSZWxhdGUgKyBzZWxlY3RcIiwgZGV0YWlsOlwiQWRkcyBzcGFyc2UgbG9hZGluZ3MgdG8gQ0NBIHNvIHRoZSBjcm9zcy1ibG9jayByZWxhdGlvbnNoaXAgZGVwZW5kcyBvbiBmZXdlciB2YXJpYWJsZXMuXCIsIHVzZTpcIlVzZSBpdCB0byBpZGVudGlmeSBpbnRlcnByZXRhYmxlIGZlYXR1cmVzIGNvbm5lY3RpbmcgdHdvIGRhdGEgc291cmNlcy5cIn0sXG4gIHtzaG9ydDpcIkpJVkVcIiwgbmFtZTpcIkpvaW50IGFuZCBJbmRpdmlkdWFsIFZhcmlhdGlvbiBFeHBsYWluZWRcIiwgcXVlc3Rpb246XCJJbnRlZ3JhdGUgYmxvY2tzXCIsIGRldGFpbDpcIlNlcGFyYXRlcyBtdWx0aXBsZSBtYXRjaGVkIGRhdGEgYmxvY2tzIGludG8gam9pbnQsIGJsb2NrLXNwZWNpZmljLCBhbmQgcmVzaWR1YWwgc3RydWN0dXJlLlwiLCB1c2U6XCJVc2UgaXQgd2hlbiBzZXZlcmFsIG9taWNzIGFzc2F5cyBkZXNjcmliZSB0aGUgc2FtZSBzYW1wbGVzLlwifVxuXVxuXG52aWV3b2YgZXNzZW5jZU1ldGhvZFBpY2sgPSB7XG4gIGNvbnN0IHdyYXAgPSBodG1sYDxkaXYgY2xhc3M9XCJicmUtbWV0aG9kLXNlbGVjdG9yXCI+PC9kaXY+YDtcbiAgY29uc3QgYnV0dG9ucyA9IGVzc2VuY2VNZXRob2RGcmFtZXMubWFwKChkLCBpKSA9PiB7XG4gICAgY29uc3QgYiA9IGh0bWxgPGJ1dHRvbj4ke2Quc2hvcnR9PC9idXR0b24+YDtcbiAgICBiLm9uY2xpY2sgPSAoKSA9PiBzZXQoaSk7XG4gICAgd3JhcC5hcHBlbmQoYik7XG4gICAgcmV0dXJuIGI7XG4gIH0pO1xuICBjb25zdCByZW5kZXIgPSAoKSA9PiBidXR0b25zLmZvckVhY2goKGIsIGkpID0+IGIuY2xhc3NMaXN0LnRvZ2dsZShcIm9uXCIsIGkgPT09IHdyYXAudmFsdWUpKTtcbiAgY29uc3Qgc2V0ID0gaSA9PiB7XG4gICAgd3JhcC52YWx1ZSA9IGk7XG4gICAgcmVuZGVyKCk7XG4gICAgd3JhcC5kaXNwYXRjaEV2ZW50KG5ldyBFdmVudChcImlucHV0XCIsIHtidWJibGVzOnRydWV9KSk7XG4gIH07XG4gIHdyYXAudmFsdWUgPSAwO1xuICByZW5kZXIoKTtcbiAgcmV0dXJuIHdyYXA7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJlc3NlbmNlTWV0aG9kQ2FyZCA9IHtcbiAgY29uc3QgZCA9IGVzc2VuY2VNZXRob2RGcmFtZXNbZXNzZW5jZU1ldGhvZFBpY2tdO1xuICBjb25zdCBjYXJkID0gaHRtbGA8ZGl2IGNsYXNzPVwiYnJlLW1ldGhvZC1jYXJkXCI+PC9kaXY+YDtcbiAgY29uc3QgdG9wID0gaHRtbGA8ZGl2IGNsYXNzPVwibWV0aG9kLXRvcFwiPjwvZGl2PmA7XG4gIGNvbnN0IGlkZW50aXR5ID0gaHRtbGA8ZGl2PjwvZGl2PmA7XG4gIGlkZW50aXR5LmFwcGVuZChcbiAgICBodG1sYDxkaXYgY2xhc3M9XCJtZXRob2QtbmFtZVwiPiR7ZC5zaG9ydH08L2Rpdj5gLFxuICAgIGh0bWxgPGRpdiBjbGFzcz1cIm1ldGhvZC1mdWxsXCI+JHtkLm5hbWV9PC9kaXY+YFxuICApO1xuICB0b3AuYXBwZW5kKGlkZW50aXR5LCBodG1sYDxkaXYgY2xhc3M9XCJtZXRob2QtcXVlc3Rpb25cIj5RdWVzdGlvbjogJHtkLnF1ZXN0aW9ufTwvZGl2PmApO1xuICBjYXJkLmFwcGVuZChcbiAgICB0b3AsXG4gICAgaHRtbGA8ZGl2IGNsYXNzPVwibWV0aG9kLWRldGFpbFwiPiR7ZC5kZXRhaWx9PC9kaXY+YCxcbiAgICBodG1sYDxkaXYgY2xhc3M9XCJtZXRob2QtdXNlXCI+PHN0cm9uZz5XaGVuIHRvIHVzZSBpdDo8L3N0cm9uZz4gJHtkLnVzZX08L2Rpdj5gXG4gICk7XG4gIHJldHVybiBjYXJkO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoic3Bsc2RhUGxvdEZyYW1lcyA9IFtcbiAge1xuICAgIGJ1dHRvbjogXCJTY29yZXMgcGxvdFwiLFxuICAgIGxhYmVsOiBcIlNhbXBsZXNcIixcbiAgICBpbWFnZTogXCJhc3NldHMvbGl2ZXItdG94aWNpdHktc3Bsc2RhLXNjb3Jlcy5wbmdcIixcbiAgICBhbHQ6IFwiQmlnUml2ZXJQbG90cyBzY29yZXMgcGxvdCBmb3IgdGhlIGxpdmVyLXRveGljaXR5IHNQTFMtREEgZml0XCIsXG4gICAgY2FwdGlvbkxlYWQ6IFwiU2NvcmVzIHBsb3Q6XCIsXG4gICAgY2FwdGlvbjogXCJ0aGUgdHdvIHN1cGVydmlzZWQgY29tcG9uZW50cyBvcmdhbml6ZSBhbmltYWxzIGJ5IGRvc2UuXCIsXG4gICAgbm90ZTogXCJVc2VzIHRoZSBmaXR0ZWQgc2FtcGxlLXNjb3JlIG1hdHJpeCBhbmQgdGhlIG9yaWdpbmFsIGRvc2UgbGFiZWxzLlwiLFxuICAgIGNvZGU6IGBwX3Njb3JlcyA9IHBsb3Rfc2NvcmVzKFxuICAgIGZpdC52YXJpYXRlc19YO1xuICAgIGdyb3VwID0geSxcbiAgICB4bGFiZWwgPSBcInNQTFMtREEgY29tcG9uZW50IDFcIixcbiAgICB5bGFiZWwgPSBcInNQTFMtREEgY29tcG9uZW50IDJcIixcbiAgICBwYWxldHRlID0gZG9zZV9wYWxldHRlLFxuKVxuc2F2ZWZpZyhwX3Njb3JlcywgXCJsaXZlcl90b3hpY2l0eV9zY29yZXMucG5nXCIpYFxuICB9LFxuICB7XG4gICAgYnV0dG9uOiBcIkxvYWRpbmdzIGhlYXRtYXBcIixcbiAgICBsYWJlbDogXCJHZW5lc1wiLFxuICAgIGltYWdlOiBcImFzc2V0cy9saXZlci10b3hpY2l0eS1zcGxzZGEtbG9hZGluZ3MucG5nXCIsXG4gICAgYWx0OiBcIkJpZ1JpdmVyUGxvdHMgbG9hZGluZ3MgaGVhdG1hcCBmb3IgdGhlIGxpdmVyLXRveGljaXR5IHNQTFMtREEgZml0XCIsXG4gICAgY2FwdGlvbkxlYWQ6IFwiTG9hZGluZ3MgaGVhdG1hcDpcIixcbiAgICBjYXB0aW9uOiBcInNpZ25lZCBjb250cmlidXRpb25zIHNob3cgd2hpY2ggZ2VuZXMgZGVmaW5lIGVhY2ggY29tcG9uZW50LlwiLFxuICAgIG5vdGU6IFwiVGhlIDE4IHN0cm9uZ2VzdCBsb2FkaW5nIHJvd3MgYXJlIHJldGFpbmVkIGFjcm9zcyBjb21wb25lbnRzIDEgYW5kIDIuXCIsXG4gICAgY29kZTogYHBfaGVhdG1hcCA9IHBsb3RfbG9hZGluZ3NfaGVhdG1hcChcbiAgICBmaXQubG9hZGluZ3NfWDtcbiAgICBjb21wcyA9IFsxLCAyXSxcbiAgICB2YXJuYW1lcyA9IGdlbmVfbmFtZXMsXG4gICAgY29tcG5hbWVzID0gW1wiQ29tcG9uZW50IDFcIiwgXCJDb21wb25lbnQgMlwiXSxcbiAgICBudG9wID0gMTgsXG4pXG5zYXZlZmlnKHBfaGVhdG1hcCwgXCJsaXZlcl90b3hpY2l0eV9sb2FkaW5nc19oZWF0bWFwLnBuZ1wiKWBcbiAgfSxcbiAge1xuICAgIGJ1dHRvbjogXCJCaXBsb3RcIixcbiAgICBsYWJlbDogXCJTYW1wbGVzICsgZ2VuZXNcIixcbiAgICBpbWFnZTogXCJhc3NldHMvbGl2ZXItdG94aWNpdHktc3Bsc2RhLWJpcGxvdC5wbmdcIixcbiAgICBhbHQ6IFwiQmlnUml2ZXJQbG90cyBiaXBsb3QgZm9yIHRoZSBsaXZlci10b3hpY2l0eSBzUExTLURBIGZpdFwiLFxuICAgIGNhcHRpb25MZWFkOiBcIkJpcGxvdDpcIixcbiAgICBjYXB0aW9uOiBcImNvbnRyYXN0aW5nIGdlbmUgZGlyZWN0aW9ucyBhcmUgcGxhY2VkIGJhY2sgb250byB0aGUgc2FtcGxlIG1hcC5cIixcbiAgICBub3RlOiBcIkJhbGFuY2VkIHNlbGVjdGlvbjogYm90aCBzaWducyBmcm9tIGJvdGggY29tcG9uZW50cy5cIixcbiAgICBjb2RlOiBgYXJyb3dfaWR4ID0gdW5pcXVlKHZjYXQoXG4gICAgYXJnbWF4LihlYWNoY29sKGZpdC5sb2FkaW5nc19YKSksXG4gICAgYXJnbWluLihlYWNoY29sKGZpdC5sb2FkaW5nc19YKSksXG4pKVxuXG5wX2JpcGxvdCA9IHBsb3RfYmlwbG90KFxuICAgIGZpdC52YXJpYXRlc19YLFxuICAgIGZpdC5sb2FkaW5nc19YW2Fycm93X2lkeCwgOl07XG4gICAgZ3JvdXAgPSB5LFxuICAgIHZhcm5hbWVzID0gZ2VuZV9uYW1lc1thcnJvd19pZHhdLFxuICAgIGFycm93bGFiZWxzID0gdHJ1ZSxcbiAgICBwYWxldHRlID0gZG9zZV9wYWxldHRlLFxuKVxuc2F2ZWZpZyhwX2JpcGxvdCwgXCJsaXZlcl90b3hpY2l0eV9iaXBsb3QucG5nXCIpYFxuICB9XG5dXG5cbnZpZXdvZiBzcGxzZGFQbG90UGljayA9IHtcbiAgY29uc3Qgd3JhcCA9IGh0bWxgPGRpdiBjbGFzcz1cInNwbHNkYS1wbG90LXNlbGVjdG9yXCI+PC9kaXY+YDtcbiAgY29uc3QgYnV0dG9ucyA9IHNwbHNkYVBsb3RGcmFtZXMubWFwKChkLCBpKSA9PiB7XG4gICAgY29uc3QgYiA9IGh0bWxgPGJ1dHRvbj4ke2QuYnV0dG9ufTwvYnV0dG9uPmA7XG4gICAgYi5vbmNsaWNrID0gKCkgPT4gc2V0KGkpO1xuICAgIHdyYXAuYXBwZW5kKGIpO1xuICAgIHJldHVybiBiO1xuICB9KTtcbiAgY29uc3QgcmVuZGVyID0gKCkgPT4gYnV0dG9ucy5mb3JFYWNoKChiLCBpKSA9PiBiLmNsYXNzTGlzdC50b2dnbGUoXCJvblwiLCBpID09PSB3cmFwLnZhbHVlKSk7XG4gIGNvbnN0IHNldCA9IGkgPT4ge1xuICAgIHdyYXAudmFsdWUgPSBpO1xuICAgIHJlbmRlcigpO1xuICAgIHdyYXAuZGlzcGF0Y2hFdmVudChuZXcgRXZlbnQoXCJpbnB1dFwiLCB7YnViYmxlczp0cnVlfSkpO1xuICB9O1xuICB3cmFwLnZhbHVlID0gMDtcbiAgcmVuZGVyKCk7XG4gIHJldHVybiB3cmFwO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoic3Bsc2RhUGxvdERpc3BsYXkgPSB7XG4gIGNvbnN0IGQgPSBzcGxzZGFQbG90RnJhbWVzW3NwbHNkYVBsb3RQaWNrXTtcbiAgY29uc3Qgc2hlbGwgPSBodG1sYDxkaXYgY2xhc3M9XCJzcGxzZGEtaW50ZXJhY3RpdmVcIj48L2Rpdj5gO1xuXG4gIGNvbnN0IHZpc3VhbCA9IGh0bWxgPGRpdiBjbGFzcz1cInNwbHNkYS1pbnRlcmFjdGl2ZS12aXN1YWxcIj48L2Rpdj5gO1xuICBjb25zdCBpbWFnZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJpbWdcIik7XG4gIGltYWdlLnNyYyA9IGQuaW1hZ2U7XG4gIGltYWdlLmFsdCA9IGQuYWx0O1xuICB2aXN1YWwuYXBwZW5kKFxuICAgIGh0bWxgPGRpdiBjbGFzcz1cInNwbHNkYS1pbnRlcmFjdGl2ZS1sYWJlbFwiPiR7ZC5sYWJlbH08L2Rpdj5gLFxuICAgIGltYWdlLFxuICAgIGh0bWxgPGRpdiBjbGFzcz1cInNwbHNkYS1pbnRlcmFjdGl2ZS1jYXB0aW9uXCI+PHN0cm9uZz4ke2QuY2FwdGlvbkxlYWR9PC9zdHJvbmc+ICR7ZC5jYXB0aW9ufTwvZGl2PmBcbiAgKTtcblxuICBjb25zdCBjb2RlUGFuZWwgPSBodG1sYDxkaXYgY2xhc3M9XCJzcGxzZGEtaW50ZXJhY3RpdmUtY29kZVwiPjwvZGl2PmA7XG4gIGNvbnN0IHByZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJwcmVcIik7XG4gIGNvbnN0IGNvZGUgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiY29kZVwiKTtcbiAgY29kZS50ZXh0Q29udGVudCA9IGQuY29kZTtcbiAgcHJlLmFwcGVuZChjb2RlKTtcbiAgY29kZVBhbmVsLmFwcGVuZChcbiAgICBodG1sYDxkaXYgY2xhc3M9XCJzcGxzZGEtY29kZS10aXRsZVwiPkp1bGlhIHJlY2lwZSBjYWxsPC9kaXY+YCxcbiAgICBodG1sYDxkaXYgY2xhc3M9XCJzcGxzZGEtY29kZS1zdWJcIj5UaGUgc2FtZSBmaXR0ZWQgPGNvZGU+Zml0PC9jb2RlPiBvYmplY3QgZHJpdmVzIGV2ZXJ5IHZpZXcuPC9kaXY+YCxcbiAgICBwcmUsXG4gICAgaHRtbGA8ZGl2IGNsYXNzPVwic3Bsc2RhLWNvZGUtbm90ZVwiPiR7ZC5ub3RlfTwvZGl2PmBcbiAgKTtcblxuICBzaGVsbC5hcHBlbmQodmlzdWFsLCBjb2RlUGFuZWwpO1xuICByZXR1cm4gc2hlbGw7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2Vzc2VuY2VNZXRob2RQaWNrJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3NwbHNkYVBsb3RQaWNrJykifV19
     </script>
     <script type="module">
     if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
