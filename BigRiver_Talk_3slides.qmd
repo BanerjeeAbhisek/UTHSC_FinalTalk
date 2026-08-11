@@ -1,0 +1,561 @@
+---
+pagetitle: "BigRiverEssence.jl + BigRiverPlots.jl"
+
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    css: styles.css
+    width: 1280
+    height: 720
+    margin: 0.05
+    center: false
+    transition: slide
+    background-transition: fade
+    slide-number: true
+    progress: true
+    controls: true
+    hash: true
+    preview-links: true
+    incremental: false
+    html-math-method: katex
+    include-in-header:
+      text: |
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+        <style>
+        .reveal .slides section { box-sizing: border-box; }
+        .reveal .slides section .story-kicker { color:#4D701F; font-size:17px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; margin:4px 0 16px; }
+        .reveal .slides section .story-lead { font-size:24px; line-height:1.38; max-width:1120px; margin:8px 0 22px; }
+        .reveal .slides section .story-grid { display:grid; grid-template-columns:.82fr 1.55fr; gap:28px; align-items:stretch; }
+        .reveal .slides section .story-card { box-sizing:border-box; background:rgba(255,255,255,.94); border-radius:16px; padding:22px 24px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .story-card.orange { border-top:6px solid #E78824; }
+        .reveal .slides section .story-card.green { border-top:6px solid #4D701F; }
+        .reveal .slides section .story-card h3 { font-size:25px !important; margin:0 0 12px; }
+        .reveal .slides section .story-card p { font-size:18px; line-height:1.4; margin:7px 0; }
+        .reveal .slides section .name { font-size:23px; font-weight:900; color:#C14C23; margin:10px 0 3px; }
+        .reveal .slides section .role { font-size:16px; color:#555; margin:0 0 14px; }
+        .reveal .slides section .analysis-flow { display:grid; grid-template-columns:1fr auto .72fr auto 1fr; gap:13px; align-items:center; min-height:210px; }
+        .reveal .slides section .example-label { color:#4D701F; font-size:17px; font-weight:900; text-transform:uppercase; letter-spacing:.05em; margin:0 0 3px; text-align:center; }
+        .reveal .slides section .story-card.green .analysis-flow { min-height:174px; }
+        .reveal .slides section .flow-node { box-sizing:border-box; text-align:center; background:#fff; border:2px solid rgba(77,112,31,.28); border-radius:14px; padding:20px 13px; min-height:126px; display:flex; flex-direction:column; justify-content:center; }
+        .reveal .slides section .flow-node strong { color:#C14C23; font-size:25px; }
+        .reveal .slides section .flow-node span { display:block; font-size:16px; line-height:1.35; margin-top:8px; }
+        .reveal .slides section .flow-arrow { color:#E78824; font-size:36px; font-weight:900; }
+        .reveal .slides section .takeaway { margin-top:20px; padding:14px 18px; background:rgba(77,112,31,.10); border-left:6px solid #4D701F; border-radius:10px; font-size:19px; font-weight:700; }
+        .reveal .slides section .engineering { display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:22px; align-items:stretch; margin-top:18px; width:100%; }
+        .reveal .slides section .goal-list { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+        .reveal .slides section .goal { background:rgba(255,255,255,.94); border-left:5px solid #E78824; border-radius:10px; padding:17px 16px; box-shadow:0 6px 16px rgba(0,0,0,.08); }
+        .reveal .slides section .goal strong { display:block; color:#C14C23; font-size:21px; margin-bottom:5px; }
+        .reveal .slides section .goal span { font-size:15px; line-height:1.3; }
+        .reveal .slides section .julia-box { box-sizing:border-box; min-width:0; background:rgba(255,255,255,.95); border-top:6px solid #4D701F; border-radius:16px; padding:20px 22px; box-shadow:0 8px 24px rgba(0,0,0,.11); }
+        .reveal .slides section .julia-box .julia-word { color:#C14C23; font-size:38px; font-weight:900; margin-bottom:15px; }
+        .reveal .slides section .compile-flow { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1.18fr) auto minmax(0,.8fr); align-items:center; gap:7px; margin:14px 0; }
+        .reveal .slides section .compile-flow .flow-arrow { font-size:27px; }
+        .reveal .slides section .compile-step { box-sizing:border-box; text-align:center; background:rgba(231,136,36,.13); border-radius:9px; padding:10px 8px; font-size:14px; font-weight:800; white-space:normal; }
+        .reveal .slides section .julia-box p { font-size:17px; line-height:1.35; margin:9px 0; }
+        .reveal .slides section .package-flow { display:grid; grid-template-columns:minmax(0,1fr) 34px minmax(135px,.58fr) 34px minmax(0,1fr); gap:10px; align-items:center; margin-top:28px; width:100%; }
+        .reveal .slides section .package { box-sizing:border-box; min-width:0; min-height:255px; background:rgba(255,255,255,.95); border-radius:17px; padding:25px 22px; box-shadow:0 9px 26px rgba(0,0,0,.11); }
+        .reveal .slides section .package.essence { border-top:7px solid #E78824; }
+        .reveal .slides section .package.plots { border-top:7px solid #4D701F; }
+        .reveal .slides section .package h3 { font-size:25px !important; margin:0 0 15px; overflow-wrap:anywhere; }
+        .reveal .slides section .package p { font-size:17px; line-height:1.42; }
+        .reveal .slides section .handoff { text-align:center; font-size:15px; line-height:1.35; color:#555; font-weight:700; }
+        .reveal .slides section .package-arrow { color:#E78824; font-size:34px; font-weight:900; text-align:center; }
+        .reveal .slides section .essence-equation { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.18fr); gap:15px; align-items:center; margin-top:28px; }
+        .reveal .slides section .essence-word { box-sizing:border-box; min-height:210px; display:flex; flex-direction:column; justify-content:center; text-align:center; background:rgba(255,255,255,.95); border-radius:16px; padding:24px 20px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .essence-word.big { border-top:7px solid #E78824; }
+        .reveal .slides section .essence-word.core { border-top:7px solid #4D701F; }
+        .reveal .slides section .essence-word.result { border-top:7px solid #C14C23; }
+        .reveal .slides section .essence-word .word { color:#C14C23; font-size:32px; font-weight:900; margin-bottom:12px; }
+        .reveal .slides section .essence-word p { font-size:17px; line-height:1.4; margin:0; }
+        .reveal .slides section .essence-operator { color:#E78824; font-size:38px; font-weight:900; text-align:center; }
+        .reveal .slides section .bre-method-selector { display:flex; flex-wrap:wrap; gap:9px; margin:13px 0 18px; }
+        .reveal .slides section .bre-method-selector button { font:800 14px Montserrat, sans-serif; padding:8px 14px; border-radius:20px; border:2px solid rgba(193,76,35,.24); background:#fff; color:#555; cursor:pointer; transition:background .18s ease,color .18s ease,border-color .18s ease; }
+        .reveal .slides section .bre-method-selector button.on { background:#E78824; border-color:#E78824; color:#fff; }
+        .reveal .slides section .bre-method-card { box-sizing:border-box; min-height:260px; background:rgba(255,255,255,.96); border-top:7px solid #4D701F; border-radius:17px; padding:24px 28px; box-shadow:0 9px 26px rgba(0,0,0,.11); }
+        .reveal .slides section .bre-method-card .method-top { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:17px; }
+        .reveal .slides section .bre-method-card .method-name { color:#C14C23; font-size:29px; font-weight:900; }
+        .reveal .slides section .bre-method-card .method-full { color:#333; font-size:18px; font-weight:700; margin-top:3px; }
+        .reveal .slides section .bre-method-card .method-question { color:#4D701F; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:.05em; text-align:right; }
+        .reveal .slides section .bre-method-card .method-detail { font-size:21px; line-height:1.4; margin-bottom:18px; }
+        .reveal .slides section .bre-method-card .method-use { font-size:17px; line-height:1.4; padding-top:15px; border-top:2px solid rgba(77,112,31,.16); }
+        .reveal .slides section .friction-layout { display:grid; grid-template-columns:minmax(0,.72fr) minmax(0,1.55fr); gap:28px; align-items:stretch; margin-top:20px; }
+        .reveal .slides section .omics-scale { box-sizing:border-box; background:rgba(255,255,255,.94); border-top:7px solid #E78824; border-radius:16px; padding:23px 24px; box-shadow:0 8px 24px rgba(0,0,0,.10); display:flex; flex-direction:column; justify-content:center; }
+        .reveal .slides section .omics-scale .shape { color:#C14C23; font-size:46px; font-weight:900; margin-bottom:10px; }
+        .reveal .slides section .omics-scale .shape-label { color:#4D701F; font-size:18px; font-weight:900; margin-bottom:18px; }
+        .reveal .slides section .omics-scale p { font-size:17px; line-height:1.4; margin:5px 0; }
+        .reveal .slides section .friction-list { box-sizing:border-box; background:rgba(255,255,255,.95); border-top:7px solid #4D701F; border-radius:16px; padding:10px 26px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .friction-item { display:grid; grid-template-columns:52px 205px minmax(0,1fr); gap:13px; align-items:start; padding:14px 0; border-bottom:2px solid rgba(77,112,31,.13); }
+        .reveal .slides section .friction-item:last-child { border-bottom:0; }
+        .reveal .slides section .friction-num { color:#E78824; font-size:27px; font-weight:900; }
+        .reveal .slides section .friction-title { color:#C14C23; font-size:20px; font-weight:900; line-height:1.2; }
+        .reveal .slides section .friction-copy { font-size:16px; line-height:1.38; }
+        .reveal .slides section .speed-priority { display:grid; grid-template-columns:235px minmax(0,1fr); gap:26px; align-items:center; margin-top:22px; background:rgba(255,255,255,.96); border-top:8px solid #E78824; border-radius:17px; padding:24px 28px; box-shadow:0 9px 26px rgba(0,0,0,.11); }
+        .reveal .slides section .speed-word { color:#C14C23; font-size:50px; font-weight:900; letter-spacing:.01em; text-align:center; }
+        .reveal .slides section .speed-copy .speed-title { color:#4D701F; font-size:23px; font-weight:900; margin-bottom:8px; }
+        .reveal .slides section .speed-copy p { font-size:18px; line-height:1.42; margin:0; }
+        .reveal .slides section .secondary-frictions { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:18px; }
+        .reveal .slides section .secondary-friction { padding:13px 18px 14px; border-left:6px solid #4D701F; background:rgba(255,255,255,.83); border-radius:10px; }
+        .reveal .slides section .secondary-friction strong { display:block; color:#C14C23; font-size:20px; margin-bottom:5px; }
+        .reveal .slides section .secondary-friction span { font-size:16px; line-height:1.38; }
+        .reveal .slides section .solution-layout { display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); gap:24px; align-items:stretch; margin-top:16px; }
+        .reveal .slides section .solution-list { box-sizing:border-box; background:rgba(255,255,255,.96); border-top:7px solid #4D701F; border-radius:16px; padding:6px 24px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .solution-item { display:grid; grid-template-columns:42px 190px minmax(0,1fr); gap:12px; align-items:start; padding:12px 0; border-bottom:2px solid rgba(77,112,31,.13); }
+        .reveal .slides section .solution-item:last-child { border-bottom:0; }
+        .reveal .slides section .solution-num { color:#E78824; font-size:25px; font-weight:900; line-height:1.1; }
+        .reveal .slides section .solution-name { color:#C14C23; font-size:18px; font-weight:900; line-height:1.2; }
+        .reveal .slides section .solution-detail { font-size:14px; line-height:1.38; }
+        .reveal .slides section .code-evidence { box-sizing:border-box; background:#18211a; color:#f5f4ec; border-top:7px solid #E78824; border-radius:16px; padding:20px 22px; box-shadow:0 8px 24px rgba(0,0,0,.14); }
+        .reveal .slides section .code-evidence .code-title { color:#fff; font-size:20px; font-weight:900; margin-bottom:14px; }
+        .reveal .slides section .code-example { padding:12px 0 14px; border-bottom:1px solid rgba(255,255,255,.18); }
+        .reveal .slides section .code-example:last-child { border-bottom:0; }
+        .reveal .slides section .code-label { color:#f2a34f; font-size:13px; font-weight:900; text-transform:uppercase; letter-spacing:.06em; margin-bottom:7px; }
+        .reveal .slides section .code-before { color:#d0d3d0; font:600 14px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace; margin:3px 0; }
+        .reveal .slides section .code-after { color:#a7d46f; font:700 14px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace; margin:3px 0; }
+        .reveal .slides section .code-caption { color:#d9ded8; font-size:13px; line-height:1.35; margin-top:7px; }
+        .reveal .slides section .gains-layout { display:grid; grid-template-columns:minmax(0,1.18fr) minmax(0,.98fr) minmax(0,.78fr); gap:16px; align-items:stretch; margin-top:13px; }
+        .reveal .slides section .gain-speed-panel, .reveal .slides section .gain-accuracy-panel, .reveal .slides section .gain-memory-panel { box-sizing:border-box; background:rgba(255,255,255,.96); border-radius:16px; padding:14px 16px 13px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .gain-speed-panel { border-top:7px solid #E78824; }
+        .reveal .slides section .gain-accuracy-panel { border-top:7px solid #4D701F; }
+        .reveal .slides section .gain-memory-panel { border-top:7px solid #C14C23; }
+        .reveal .slides section .gain-panel-title { color:#C14C23; font-size:21px; font-weight:900; margin-bottom:2px; }
+        .reveal .slides section .gain-panel-sub { color:#666; font-size:13px; margin-bottom:9px; }
+        .reveal .slides section .speed-result-row { display:grid; grid-template-columns:69px minmax(0,1fr) 43px; gap:7px; align-items:center; margin:5px 0; }
+        .reveal .slides section .speed-result-name { color:#174f3d; font-size:14px; line-height:1.05; font-weight:900; text-align:right; }
+        .reveal .slides section .speed-track { height:16px; background:rgba(30,81,61,.09); border-radius:3px; overflow:visible; }
+        .reveal .slides section .speed-result-bar { height:16px; min-width:4px; border-radius:3px; transform-origin:left center; }
+        .reveal .slides section.present .speed-result-bar { animation:gainGrow .8s cubic-bezier(.2,.75,.25,1) both; }
+        .reveal .slides section .speed-result-bar.r { background:#ff7a00; }
+        .reveal .slides section .speed-result-bar.j { background:#075d42; }
+        .reveal .slides section .speed-result-value { font-size:14px; line-height:1.05; font-weight:900; }
+        .reveal .slides section .speed-result-value.r { color:#C94720; }
+        .reveal .slides section .speed-result-value.j { color:#075d42; }
+        .reveal .slides section .gain-legend { display:flex; justify-content:center; gap:15px; margin:10px 0 0; color:#666; font-size:10px; }
+        .reveal .slides section .gain-legend span::before { content:""; display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:-1px; }
+        .reveal .slides section .gain-legend .r::before { background:#ff7a00; }
+        .reveal .slides section .gain-legend .j::before { background:#075d42; }
+        .reveal .slides section .gain-side { display:grid; grid-template-rows:auto auto; gap:14px; }
+        .reveal .slides section .gain-claim { box-sizing:border-box; background:rgba(255,255,255,.96); border-radius:16px; padding:17px 20px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .gain-claim.accuracy { border-top:7px solid #4D701F; }
+        .reveal .slides section .gain-claim.memory { border-top:7px solid #C14C23; }
+        .reveal .slides section .gain-claim-label { color:#174f3d; font-size:15px; font-weight:900; text-transform:uppercase; letter-spacing:.05em; }
+        .reveal .slides section .gain-claim-main { display:flex; align-items:baseline; gap:12px; margin:5px 0 7px; }
+        .reveal .slides section .gain-number { color:#E78824; font-size:42px; line-height:1; font-weight:900; }
+        .reveal .slides section .gain-number.green { color:#4D701F; }
+        .reveal .slides section .gain-number-copy { font-size:16px; line-height:1.25; font-weight:800; }
+        .reveal .slides section .gain-claim p { font-size:13px; line-height:1.35; margin:5px 0 0; }
+        .reveal .slides section .gain-mini { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; padding-top:8px; border-top:2px solid rgba(77,112,31,.13); }
+        .reveal .slides section .gain-mini span { font-size:12px; line-height:1.3; }
+        .reveal .slides section .gain-mini strong { color:#C14C23; }
+        .reveal .slides section .acc-plot { position:relative; height:244px; margin:3px 0 0; }
+        .reveal .slides section .acc-grid { position:absolute; left:29px; right:2px; border-top:1px solid rgba(77,112,31,.18); }
+        .reveal .slides section .acc-grid span { position:absolute; right:calc(100% + 5px); top:-7px; color:#777; font:9px/1 Montserrat,sans-serif; }
+        .reveal .slides section .acc-dot { position:absolute; width:12px; height:12px; border-radius:50%; transform:translate(-50%,-50%); box-shadow:0 0 0 5px rgba(231,136,36,.18); }
+        .reveal .slides section .acc-dot.r { background:#ff7a00; }
+        .reveal .slides section .acc-dot.j { background:#075d42; box-shadow:0 0 0 5px rgba(7,93,66,.16); }
+        .reveal .slides section.present .acc-dot { animation:dotIn .42s ease both; }
+        .reveal .slides section .acc-method { position:absolute; top:82%; width:48px; color:#174f3d; font-size:8.5px; line-height:1; font-weight:800; transform:translateX(-5px) rotate(42deg); transform-origin:left top; }
+        .reveal .slides section .memory-plot { position:relative; height:244px; display:flex; justify-content:space-around; align-items:flex-end; padding:17px 4px 30px; box-sizing:border-box; margin-top:3px; border-bottom:2px solid rgba(23,79,61,.35); }
+        .reveal .slides section .memory-grid { position:absolute; left:2px; right:2px; border-top:1px solid rgba(77,112,31,.14); }
+        .reveal .slides section .memory-grid span { position:absolute; left:0; top:-12px; color:#777; font-size:8px; }
+        .reveal .slides section .memory-group { position:relative; z-index:2; height:188px; display:flex; align-items:flex-end; gap:6px; }
+        .reveal .slides section .memory-bar { position:relative; width:22px; border-radius:4px 4px 0 0; transform-origin:bottom center; }
+        .reveal .slides section .memory-bar.alloc { background:#075d42; }
+        .reveal .slides section .memory-bar.mem { background:#C94720; }
+        .reveal .slides section.present .memory-bar { animation:gainRise .72s cubic-bezier(.2,.75,.25,1) both; }
+        .reveal .slides section .memory-bar span { position:absolute; left:50%; bottom:calc(100% + 4px); transform:translateX(-50%); font-size:10px; font-weight:900; white-space:nowrap; }
+        .reveal .slides section .memory-group-name { position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%); color:#174f3d; font-size:10px; font-weight:900; white-space:nowrap; }
+        @keyframes gainGrow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+        @keyframes gainRise { from { transform:scaleY(0); } to { transform:scaleY(1); } }
+        @keyframes dotIn { from { opacity:0; transform:translate(-50%,-50%) scale(.3); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
+        .reveal .slides section .source-note { font-size:11px; color:#777; }
+        </style>
+    include-after-body:
+      text: |
+        <div class="uthsc-footer-bar">
+          <div class="uthsc-left"><img src="assets/uthsc-logo-horizontal.png" alt="University of Tennessee Health Sciences"></div>
+          <div class="uthsc-right">Department of Preventive Medicine / Biostatistics</div>
+        </div>
+        <div class="uthsc-seal-badge"><img src="assets/uthsc-seal.png" alt="UTHSC College of Medicine seal"></div>
+
+resources:
+  - styles.css
+  - assets
+---
+
+## {.titlepage data-background-image="assets/uthsc-building-faded.png" data-background-size="cover" data-background-position="center" data-background-color="#ffffff"}
+
+<div class="titlepage-slide">
+<div class="titlepage-content">
+
+<img class="tp-logo" src="assets/uthsc-logo-centered.png" alt="University of Tennessee Health Sciences">
+
+<p class="tp-title">Extract the signal.<br>Make it visible.</p>
+<p class="tp-author">BigRiverEssence.jl + BigRiverPlots.jl</p>
+<p class="tp-institute">Abhisek Banerjee · UT Health Science Center</p>
+
+</div>
+</div>
+
+::: {.notes}
+- Open with the problem, not the package list: high-dimensional analyses are only useful when structure can be extracted and then understood.
+- [Sources] Package scope and names: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl
+:::
+
+## The collaboration exposed an omics bottleneck
+
+<p class="story-kicker">The scientific setting</p>
+<p class="story-lead">Working with <strong>Dr. Gregory Farage</strong> and <strong>Dr. Saunak Sen</strong> brought us to a recurring challenge: omics studies measure far more features than we can inspect directly.</p>
+
+<div class="story-grid">
+<div class="story-card orange">
+<h3>What is omics data?</h3>
+<p>Omics data measure large collections of biological molecules across many samples.</p>
+<p><strong>Examples:</strong> DNA, RNA, proteins, and metabolites.</p>
+<p>A single sample may contain thousands of correlated measurements.</p>
+</div>
+
+<div class="story-card green">
+<div class="example-label">One example of dimension reduction: PCA</div>
+<div class="analysis-flow">
+<div class="flow-node"><strong>Omics data</strong><span>samples × thousands of correlated measurements</span></div>
+<div class="flow-arrow">→</div>
+<div class="flow-node"><strong>PCA</strong><span>compress the dominant structure</span></div>
+<div class="flow-arrow">→</div>
+<div class="flow-node"><strong>Interpretable outputs</strong><span>scores, loadings, and reduced dimensions</span></div>
+</div>
+</div>
+</div>
+
+<div class="takeaway">Dimension reduction is the first bridge from a large omics matrix to an analysis that can be explored and explained.</div>
+
+::: {.notes}
+- Introduce the work as a collaboration, not as a package demonstration.
+- Explain that PCA is one representative dimension-reduction method; later slides can broaden the method family.
+- [Sources] Collaboration context supplied by the presenter; omics definition and examples: https://www.ncbi.nlm.nih.gov/books/NBK202158/
+:::
+
+## The engineering goal was speed without weight
+
+<p class="story-kicker">The ecosystem we wanted</p>
+<p class="story-lead">The analytical methods had to remain practical as matrices grew: fast execution, careful memory use, fewer allocations, and a small dependency surface.</p>
+
+<div class="engineering">
+<div class="goal-list">
+<div class="goal"><strong>Fast</strong><span>Numerical kernels should not become the bottleneck.</span></div>
+<div class="goal"><strong>Memory-aware</strong><span>Large intermediate matrices must be handled carefully.</span></div>
+<div class="goal"><strong>Low allocation</strong><span>Reuse storage and avoid unnecessary temporary objects.</span></div>
+<div class="goal"><strong>Lightweight</strong><span>Keep the package focused and the dependency graph small.</span></div>
+</div>
+
+<div class="julia-box">
+<div class="julia-word">Why Julia?</div>
+<div class="compile-flow">
+<div class="compile-step">high-level code</div><div class="flow-arrow">→</div>
+<div class="compile-step">type inference + LLVM</div><div class="flow-arrow">→</div>
+<div class="compile-step">native code</div>
+</div>
+<p>Julia lets us express numerical algorithms directly while compiling type-stable kernels to optimized machine code.</p>
+<p><strong>Result:</strong> for suitable numerical workloads, performance can be in the same class as C—without maintaining a separate low-level implementation.</p>
+</div>
+</div>
+
+<div class="takeaway">One language can support both the statistical idea and the performance-sensitive implementation.</div>
+
+::: {.notes}
+- Avoid claiming that every Julia program is automatically as fast as C; type stability and implementation choices still matter.
+- Emphasize that allocations and memory behavior are explicit engineering targets, not automatic guarantees.
+- [Sources] Julia JIT/LLVM design: https://docs.julialang.org/en/v1/devdocs/jit/ ; Julia micro-benchmarks and limitations: https://julialang.org/benchmarks/ ; Julia performance guidance: https://docs.julialang.org/en/v1/manual/performance-tips/
+:::
+
+## That need became two focused Julia packages
+
+<p class="story-kicker">The team-owned solution</p>
+<p class="story-lead">We wanted our own lightweight numerical methods and plotting recipes—with exactly the functionality needed for the omics workflow.</p>
+
+<div class="package-flow">
+<div class="package essence">
+<h3>BigRiverEssence.jl</h3>
+<p><strong>The numerical layer</strong></p>
+<p>Dimension reduction and multivariate methods implemented around speed, memory awareness, and reusable outputs.</p>
+</div>
+<div class="package-arrow">→</div>
+<div class="handoff">ordinary arrays<br>scores · loadings<br>model outputs</div>
+<div class="package-arrow">→</div>
+<div class="package plots">
+<h3>BigRiverPlots.jl</h3>
+<p><strong>The visual layer</strong></p>
+<p>Lightweight recipes that turn analytical outputs into the plots our team needs to inspect and communicate results.</p>
+</div>
+</div>
+
+<div class="takeaway">A lean modeling package and a lean plotting package—separate by design, connected by simple outputs.</div>
+
+::: {.notes}
+- Present the packages as the consequence of the collaboration and engineering requirements.
+- BigRiverEssence owns the statistical computation; BigRiverPlots owns the visual recipes.
+- This separation keeps both packages focused and lets plotting evolve independently from model fitting.
+- [Sources] https://github.com/senresearch/BigRiverEssence.jl ; https://github.com/senresearch/BigRiverPlots.jl
+:::
+
+## BigRiverEssence keeps the structure that matters
+
+<p class="story-kicker">What the package is—and why the name</p>
+<p class="story-lead"><strong>BigRiverEssence.jl</strong> is a focused Julia package for matrix decomposition and dimension reduction in high-dimensional data, especially biological and omics matrices.</p>
+
+<div class="essence-equation">
+<div class="essence-word big">
+<div class="word">BigRiver</div>
+<p>The wider Julia ecosystem developed for our statistical workflow.</p>
+</div>
+<div class="essence-operator">+</div>
+<div class="essence-word core">
+<div class="word">Essence</div>
+<p>Keep the low-dimensional structure that carries the useful signal.</p>
+</div>
+<div class="essence-operator">=</div>
+<div class="essence-word result">
+<div class="word">BigRiverEssence</div>
+<p>Dense, sparse, supervised, and multi-block methods behind one small analytical layer.</p>
+</div>
+</div>
+
+<div class="takeaway">Large data matrices go in; compact scores, loadings, predictions, and shared structure come out.</div>
+
+::: {.notes}
+- “Essence” describes the package's purpose: retain the essential structure of a high-dimensional matrix.
+- “BigRiver” connects the package to the larger BigRiver Julia ecosystem.
+- The package emphasizes optimized matrix operations and reduced memory use.
+- [Sources] Package description and name origin: https://github.com/senresearch/BigRiverEssence.jl
+:::
+
+## Nine methods answer five statistical questions
+
+<p class="story-kicker">A compact tour of the implemented methods</p>
+<p class="story-lead" style="margin-bottom:8px;">Select a method to see the question it answers. Every button corresponds to a method currently implemented in <strong>BigRiverEssence.jl</strong>.</p>
+
+```{ojs}
+essenceMethodFrames = [
+  {short:"PCA", name:"Principal Component Analysis", question:"Compress", detail:"Finds ordered directions that capture the greatest variation in one data matrix.", use:"Use it for unsupervised exploration, visualization, and low-rank representation."},
+  {short:"SPCA", name:"Sparse Principal Component Analysis", question:"Compress + select", detail:"Builds PCA-like components whose loadings use only a subset of variables.", use:"Use it when interpretation and feature selection matter as much as compression."},
+  {short:"PMD", name:"Penalized Matrix Decomposition", question:"Decompose sparsely", detail:"Constructs a low-rank matrix decomposition while constraining the component vectors to be sparse.", use:"Use it as a flexible sparse decomposition and as a foundation for sparse latent methods."},
+  {short:"PLS-DA", name:"Partial Least Squares Discriminant Analysis", question:"Classify", detail:"Finds latent directions in the predictors that are associated with known class labels.", use:"Use it for supervised dimension reduction and classification."},
+  {short:"sPLS-DA", name:"Sparse Partial Least Squares Discriminant Analysis", question:"Classify + select", detail:"Combines supervised PLS components with sparse loadings that retain selected variables.", use:"Use it when classification and a concise biomarker set are both goals."},
+  {short:"PLSkern", name:"Partial Least Squares Kernel Regression", question:"Predict", detail:"Builds latent variables that connect a predictor matrix to continuous or multivariate outcomes.", use:"Use it for efficient PLS regression, transformation, and prediction."},
+  {short:"CCA", name:"Canonical Correlation Analysis", question:"Relate two blocks", detail:"Finds paired directions that maximize association between two data matrices measured on the same samples.", use:"Use it to study shared cross-block structure."},
+  {short:"SCCA", name:"Sparse Canonical Correlation Analysis", question:"Relate + select", detail:"Adds sparse loadings to CCA so the cross-block relationship depends on fewer variables.", use:"Use it to identify interpretable features connecting two data sources."},
+  {short:"JIVE", name:"Joint and Individual Variation Explained", question:"Integrate blocks", detail:"Separates multiple matched data blocks into joint, block-specific, and residual structure.", use:"Use it when several omics assays describe the same samples."}
+]
+
+viewof essenceMethodPick = {
+  const wrap = html`<div class="bre-method-selector"></div>`;
+  const buttons = essenceMethodFrames.map((d, i) => {
+    const b = html`<button>${d.short}</button>`;
+    b.onclick = () => set(i);
+    wrap.append(b);
+    return b;
+  });
+  const render = () => buttons.forEach((b, i) => b.classList.toggle("on", i === wrap.value));
+  const set = i => {
+    wrap.value = i;
+    render();
+    wrap.dispatchEvent(new Event("input", {bubbles:true}));
+  };
+  wrap.value = 0;
+  render();
+  return wrap;
+}
+```
+
+```{ojs}
+essenceMethodCard = {
+  const d = essenceMethodFrames[essenceMethodPick];
+  const card = html`<div class="bre-method-card"></div>`;
+  const top = html`<div class="method-top"></div>`;
+  const identity = html`<div></div>`;
+  identity.append(
+    html`<div class="method-name">${d.short}</div>`,
+    html`<div class="method-full">${d.name}</div>`
+  );
+  top.append(identity, html`<div class="method-question">Question: ${d.question}</div>`);
+  card.append(
+    top,
+    html`<div class="method-detail">${d.detail}</div>`,
+    html`<div class="method-use"><strong>When to use it:</strong> ${d.use}</div>`
+  );
+  return card;
+}
+```
+
+::: {.notes}
+- Click the buttons rather than reading all nine method descriptions aloud.
+- The methods span unsupervised compression, sparsity, supervision, two-block association, and multi-block integration.
+- SPCA is exposed through the package's `spc` and `spc_orth` functions.
+- [Sources] Current method list and exported API: https://github.com/senresearch/BigRiverEssence.jl ; local source module `src/BigRiverEssence.jl`.
+:::
+
+## Speed is the main bottleneck
+
+<p class="story-kicker">The challenge with existing implementations</p>
+<p class="story-lead">The methods already exist in R, Python, and other ecosystems. For our omics workflow, the critical question is how quickly we can fit them again and again on matrices with thousands of variables.</p>
+
+<div class="speed-priority">
+<div class="speed-word">SPEED</div>
+<div class="speed-copy">
+<div class="speed-title">One analysis requires many repeated fits</div>
+<p>Decompositions and iterative algorithms are rerun across components, sparsity penalties, validation folds, and permutations. When each fit is slow, exploration and model tuning become the bottleneck.</p>
+</div>
+</div>
+
+<div class="secondary-frictions">
+<div class="secondary-friction"><strong>Package weight</strong><span>Broad packages and long dependency chains add installation, loading, and environment-management overhead.</span></div>
+<div class="secondary-friction"><strong>Memory allocation</strong><span>Copies and temporary matrices raise peak memory use and add memory-management overhead during repeated fits.</span></div>
+</div>
+
+<div class="takeaway">For high-dimensional omics, performance is part of usability: the method must be fast enough to explore, tune, and repeat.</div>
+
+::: {.notes}
+- Make this a motivation slide, not a claim that every R or Python implementation is slow.
+- Existing ecosystems prove that the statistical concepts are mature; our design question is how to make the needed subset lighter and more efficient for this workflow.
+- Scikit-learn documents batch PCA's main-memory requirement and provides incremental and randomized alternatives, illustrating that algorithm and memory choices matter at scale.
+- The Bioconductor page for mixOmics documents both its broad omics method coverage and its dependency list.
+- [Sources] R implementation and dependencies: https://bioconductor.org/packages/release/bioc/html/mixOmics.html ; Python PCA, sparse PCA, PLS, and CCA implementations and scaling considerations: https://scikit-learn.org/stable/modules/decomposition.html and https://scikit-learn.org/stable/modules/cross_decomposition.html ; BigRiverEssence efficiency motivation: https://github.com/senresearch/BigRiverEssence.jl
+:::
+
+## We changed the execution—not the mathematics
+
+<p class="story-kicker">How BigRiverEssence solves the bottleneck</p>
+<p class="story-lead">We preserved the statistical objectives and outputs, then rebuilt the hot loops to move less data, create fewer temporary arrays, and compute only what each method needs.</p>
+
+<div class="solution-layout">
+<div class="solution-list">
+<div class="solution-item"><div class="solution-num">01</div><div class="solution-name">Reuse storage</div><div class="solution-detail">Preallocate work buffers once; use <code>@view</code>, in-place broadcasts, reusable index vectors, and allocation-free convergence checks.</div></div>
+<div class="solution-item"><div class="solution-num">02</div><div class="solution-name">Write results in place</div><div class="solution-detail">Use <code>mul!</code>, fused <code>mul!</code>, <code>BLAS.ger!</code>, and <code>BLAS.syrk!</code> instead of repeatedly creating new matrices.</div></div>
+<div class="solution-item"><div class="solution-num">03</div><div class="solution-name">Compute only what is needed</div><div class="solution-detail">Prefer in-place or thin SVDs and retain only the component vectors required by the algorithm.</div></div>
+<div class="solution-item"><div class="solution-num">04</div><div class="solution-name">Rewrite expensive algebra</div><div class="solution-detail">Use equivalent factorizations with small intermediates—especially in JIVE—rather than materializing large projection matrices.</div></div>
+</div>
+
+<div class="code-evidence">
+<div class="code-title">Same operation. Less work.</div>
+<div class="code-example">
+<div class="code-label">Fused matrix update</div>
+<div class="code-before">before: C = C - A * B</div>
+<div class="code-after">after: &nbsp;mul!(C, A, B, -1, 1)</div>
+<div class="code-caption">The product is accumulated directly into <code>C</code>; no full-sized temporary result is needed.</div>
+</div>
+<div class="code-example">
+<div class="code-label">JIVE projection</div>
+<div class="code-before">before: tmp = tmp * (I - V * V')</div>
+<div class="code-after">after: &nbsp;tmp .-= (tmp * V) * V'</div>
+<div class="code-caption">Associativity replaces a large projector with much smaller intermediate matrices.</div>
+</div>
+</div>
+</div>
+
+<div class="takeaway">Preallocate once, mutate in place, and never materialize a matrix that the mathematics lets us avoid.</div>
+
+::: {.notes}
+- The important message is that the optimization does not redefine PCA, PMD, PLS, sPLS-DA, or JIVE; it changes how the same updates are executed.
+- Preallocation removes repeated buffer creation inside iterative algorithms.
+- Julia's in-place BLAS interface writes directly into existing storage and exposes fused matrix updates.
+- For JIVE, the algebraic projector rewrite was especially important because it avoids constructing a large identity-minus-projector matrix.
+- The benchmark results belong on the following slide; this slide explains the engineering choices that produced them.
+- [Sources] Optimization design and code examples: presenter-supplied `pasted-text.txt`; Julia in-place linear algebra interface: https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/
+:::
+
+## The optimizations paid off across all three goals
+
+<p class="story-kicker">Measured gains</p>
+<p class="story-lead" style="margin-bottom:8px;">Across the reference comparisons, every method ran faster, numerical agreement remained strong, and selected Julia-to-Julia comparisons required less memory.</p>
+
+<div class="gains-layout">
+<div class="gain-speed-panel">
+<div class="gain-panel-title">Every comparison was faster</div>
+<div class="gain-panel-sub">Speed-up over the named reference · logarithmic visual scale</div>
+
+<div class="speed-result-row"><div class="speed-result-name">SPC</div><div class="speed-track"><div class="speed-result-bar r" style="width:96%;"></div></div><div class="speed-result-value r">160×</div></div>
+<div class="speed-result-row"><div class="speed-result-name">JIVE</div><div class="speed-track"><div class="speed-result-bar r" style="width:79%;"></div></div><div class="speed-result-value r">64×</div></div>
+<div class="speed-result-row"><div class="speed-result-name">sPLS-DA</div><div class="speed-track"><div class="speed-result-bar r" style="width:64%;"></div></div><div class="speed-result-value r">29×</div></div>
+<div class="speed-result-row"><div class="speed-result-name">PLS-DA</div><div class="speed-track"><div class="speed-result-bar r" style="width:40%;"></div></div><div class="speed-result-value r">8.2×</div></div>
+<div class="speed-result-row"><div class="speed-result-name">PMD</div><div class="speed-track"><div class="speed-result-bar r" style="width:39%;"></div></div><div class="speed-result-value r">8×</div></div>
+<div class="speed-result-row"><div class="speed-result-name">SCCA</div><div class="speed-track"><div class="speed-result-bar r" style="width:34%;"></div></div><div class="speed-result-value r">6×</div></div>
+<div class="speed-result-row"><div class="speed-result-name">PLSkern</div><div class="speed-track"><div class="speed-result-bar j" style="width:29%;"></div></div><div class="speed-result-value j">4.7×</div></div>
+<div class="speed-result-row"><div class="speed-result-name">PCA</div><div class="speed-track"><div class="speed-result-bar j" style="width:13%;"></div></div><div class="speed-result-value j">2×</div></div>
+<div class="speed-result-row"><div class="speed-result-name">CCA</div><div class="speed-track"><div class="speed-result-bar j" style="width:4%;"></div></div><div class="speed-result-value j">1.1×</div></div>
+
+<div class="gain-legend"><span class="r">versus R package</span><span class="j">versus Julia package</span></div>
+</div>
+
+<div class="gain-accuracy-panel">
+<div class="gain-panel-title">Reference agreement</div>
+<div class="gain-panel-sub">Maximum misalignment · lower is more exact</div>
+<div class="acc-plot">
+<div class="acc-grid" style="top:4%;"><span>10<sup>−5</sup></span></div>
+<div class="acc-grid" style="top:22%;"><span>10<sup>−8</sup></span></div>
+<div class="acc-grid" style="top:40%;"><span>10<sup>−11</sup></span></div>
+<div class="acc-grid" style="top:58%;"><span>10<sup>−14</sup></span></div>
+<div class="acc-grid" style="top:76%;"><span>10<sup>−17</sup></span></div>
+
+<div class="acc-dot r" style="left:14%;top:74%;animation-delay:.05s;"></div>
+<div class="acc-dot r" style="left:24%;top:72%;animation-delay:.10s;"></div>
+<div class="acc-dot j" style="left:34%;top:71%;animation-delay:.15s;"></div>
+<div class="acc-dot r" style="left:44%;top:68%;animation-delay:.20s;"></div>
+<div class="acc-dot j" style="left:54%;top:63%;animation-delay:.25s;"></div>
+<div class="acc-dot j" style="left:64%;top:62%;animation-delay:.30s;"></div>
+<div class="acc-dot r" style="left:74%;top:57%;animation-delay:.35s;"></div>
+<div class="acc-dot r" style="left:84%;top:57%;animation-delay:.40s;"></div>
+<div class="acc-dot r" style="left:94%;top:10%;animation-delay:.45s;"></div>
+
+<div class="acc-method" style="left:14%;">sPLS-DA</div>
+<div class="acc-method" style="left:24%;">SCCA</div>
+<div class="acc-method" style="left:34%;">PLSkern</div>
+<div class="acc-method" style="left:44%;">PMD</div>
+<div class="acc-method" style="left:54%;">PCA</div>
+<div class="acc-method" style="left:64%;">CCA</div>
+<div class="acc-method" style="left:74%;">SPC</div>
+<div class="acc-method" style="left:84%;">PLS-DA</div>
+<div class="acc-method" style="left:94%;">JIVE</div>
+</div>
+<div class="gain-legend"><span class="r">versus R package</span><span class="j">versus Julia package</span></div>
+</div>
+
+<div class="gain-memory-panel">
+<div class="gain-panel-title">And leaner</div>
+<div class="gain-panel-sub">Reduction versus Julia references</div>
+<div class="memory-plot">
+<div class="memory-grid" style="bottom:91%;"><span>12×</span></div>
+<div class="memory-grid" style="bottom:61%;"><span>8×</span></div>
+<div class="memory-grid" style="bottom:31%;"><span>4×</span></div>
+
+<div class="memory-group">
+<div class="memory-bar alloc" style="height:92%;animation-delay:.08s;"><span>11×</span></div>
+<div class="memory-bar mem" style="height:42%;animation-delay:.14s;"><span>5×</span></div>
+<div class="memory-group-name">PLSkern</div>
+</div>
+<div class="memory-group">
+<div class="memory-bar alloc" style="height:8.5%;animation-delay:.20s;"><span>1×</span></div>
+<div class="memory-bar mem" style="height:14%;animation-delay:.26s;"><span>1.7×</span></div>
+<div class="memory-group-name">PCA</div>
+</div>
+<div class="memory-group">
+<div class="memory-bar alloc" style="height:10%;animation-delay:.32s;"><span>1.2×</span></div>
+<div class="memory-bar mem" style="height:17%;animation-delay:.38s;"><span>2×</span></div>
+<div class="memory-group-name">CCA</div>
+</div>
+ </div>
+<div class="gain-legend"><span class="j">allocations</span><span style="color:#666;"><i style="display:inline-block;width:10px;height:10px;background:#C94720;border-radius:2px;margin-right:6px;"></i>memory</span></div>
+</div>
+</div>
+
+<div class="takeaway">Faster execution preserved numerical agreement while shrinking major allocation bottlenecks.</div>
+
+::: {.notes}
+- Read the slide from left to right: speed first, then numerical agreement, then memory behavior.
+- Orange bars compare against R reference packages; green bars compare against Julia reference packages.
+- The speed-up chart uses a logarithmic visual scale so that both the 1.1× and 160× results remain visible.
+- Avoid saying that every method used dramatically less memory: the memory panel contains the selected Julia-to-Julia comparisons reported in the benchmark figure.
+- Benchmark values depend on the matrices, package versions, hardware, and benchmark protocol used for this experiment.
+- [Sources] Benchmark values and reference comparisons: presenter-supplied screenshot `Screenshot 2026-08-10 at 21.34.35.png` and accompanying optimization notes in `pasted-text.txt`.
+:::
