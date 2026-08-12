@@ -312,6 +312,14 @@ format:
         .reveal .slides section .next-step strong { color:#174f3d; }
         .reveal .slides section .next-arrow { color:#E78824; font-size:34px; font-weight:900; text-align:center; }
         .reveal .slides section .next-close { margin-top:22px; padding:13px 18px; background:rgba(77,112,31,.10); border-left:6px solid #4D701F; border-radius:10px; color:#174f3d; font-size:19px; line-height:1.32; font-weight:900; text-align:center; }
+        .reveal .slides section.questions-slide { height:100%; }
+        .reveal .slides section.questions-slide > h2:empty { display:none; }
+        .reveal .slides section .questions-shell { box-sizing:border-box; width:min(880px,84%); min-height:365px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; margin:72px auto 0; padding:30px 70px 40px; background:rgba(255,255,255,.91); border-top:7px solid #4D701F; border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.13); }
+        .reveal .slides section .questions-kicker { color:#4D701F; font-size:25px; line-height:1; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
+        .reveal .slides section .questions-title { color:#C14C23; font-size:82px; line-height:1.02; font-weight:900; margin:18px 0 15px; }
+        .reveal .slides section .questions-rule { width:92px; height:7px; border-radius:7px; background:#E78824; margin-bottom:22px; }
+        .reveal .slides section .questions-subtitle { color:#222; font-size:23px; line-height:1.35; font-weight:600; }
+        .reveal .slides section .questions-packages { margin-top:25px; color:#174f3d; font-size:19px; line-height:1.3; font-weight:900; }
         @keyframes gainGrow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
         @keyframes gainRise { from { transform:scaleY(0); } to { transform:scaleY(1); } }
         @keyframes dotIn { from { opacity:0; transform:translate(-50%,-50%) scale(.3); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
@@ -1033,27 +1041,23 @@ splsdaPlotDisplay = {
 
 ## Julia speed does not require leaving R
 
-<div class="story-lead"><strong>BigRiverEssence is written in Julia, but people who are comfortable working in R can still use it directly.</strong> JuliaCall connects the two languages while the familiar R workflow stays in place.</div>
+<div class="story-lead"><strong>BigRiverEssence is written in Julia, but people who are comfortable working in R can still use it directly.</strong> JuliaConnectoR connects the two languages while the familiar R workflow stays in place.</div>
 
 <div class="bridge-layout">
 <div class="bridge-code">
 <div class="bridge-code-title">R calls BigRiverEssence</div>
 <div class="bridge-code-sub">The same liver-toxicity sPLS-DA fit, launched from an R session.</div>
-<pre><code><span class="code-fn">library</span>(JuliaCall)
-julia_setup(install = <span class="code-arg">FALSE</span>)
-julia_library(<span class="code-str">"BigRiverEssence"</span>)
+<pre><code><span class="code-fn">library</span>(JuliaConnectoR)
+BigRiver &lt;- juliaImport(<span class="code-str">"BigRiverEssence"</span>)
 
-fit &lt;- julia_call(
-  <span class="code-str">"BigRiverEssence.splsda"</span>,
+fit &lt;- BigRiver$splsda(
   X, as.character(y),
   2L, c(50L, 50L),
-  scale = <span class="code-arg">TRUE</span>, levels = levels(y),
-  need_return = <span class="code-str">"Julia"</span>
+  scale = <span class="code-arg">TRUE</span>,
+  levels = levels(y)
 )
 
-L &lt;- julia_call(<span class="code-str">"getproperty"</span>, fit,
-  julia_eval(<span class="code-str">":loadings_X"</span>),
-  need_return = <span class="code-str">"R"</span>)
+L &lt;- fit$loadings_X
 colSums(L != 0)  <span class="code-comment"># 50  50</span></code></pre>
 </div>
 
@@ -1076,17 +1080,18 @@ colSums(L != 0)  <span class="code-comment"># 50  50</span></code></pre>
 </div>
 
 <div class="bridge-takeaway">Keep R for the workflow; move the expensive matrix computation to Julia.</div>
-<div class="bridge-caveat">Initialize once and reuse the Julia session. The first call may include Julia compilation, so compare warmed-up repeated calls.</div>
+<div class="bridge-caveat">Reuse the Julia connection. Startup and first-call compilation should not be included in warmed-up timing comparisons.</div>
 </div>
 </div>
 
 ::: {.notes}
-- This is not a rewrite of the R workflow. JuliaCall starts Julia inside the R session and performs automatic conversion for common objects.
-- `need_return = "Julia"` keeps the large fitted object on the Julia side instead of converting it immediately.
-- The second call requests only `loadings_X` as an R matrix; the example returns 50 selected genes on each component.
+- This is not a rewrite of the R workflow. JuliaConnectoR connects R to a local Julia process and translates common data structures between the languages.
+- `juliaImport("BigRiverEssence")` exposes exported Julia functions as ordinary R functions.
+- The fitted object stays in Julia through an R proxy; accessing `fit$loadings_X` returns the loading matrix to R.
+- The example returns 50 selected genes on each component.
 - Emphasize the warm-up caveat: Julia's first call can compile code, so the speed comparison should use a reused session and repeated calls.
-- The code on the slide was executed locally against the installed BigRiverEssence package and returned a `3116 × 2` loading matrix with 50 nonzero entries per component.
-- [Sources] JuliaCall documentation: https://juliainterop.github.io/JuliaCall/ and https://juliainterop.github.io/JuliaCall/reference/call.html
+- The code shown was executed locally against BigRiverEssence through JuliaConnectoR and returned a `3116 × 2` loading matrix with 50 nonzero entries per component.
+- [Sources] JuliaConnectoR package documentation and examples: https://github.com/stefan-m-lenz/JuliaConnectoR and https://search.r-project.org/CRAN/refmans/JuliaConnectoR/help/JuliaConnectoR-package.html ; Lenz, Hackenberg, and Binder (2022), Journal of Statistical Software, https://doi.org/10.18637/jss.v101.i06
 :::
 
 ## Two registered packages—and an open invitation
@@ -1119,7 +1124,7 @@ colSums(L != 0)  <span class="code-comment"># 50  50</span></code></pre>
 <div class="conclusion-or">or</div>
 <div class="conclusion-route">
 <strong>Prefer to stay in R?</strong>
-<span>Use JuliaCall to reach the same Julia implementation and bring the results back into R.</span>
+<span>Use JuliaConnectoR to call BigRiverEssence from your familiar R workflow.</span>
 </div>
 </div>
 
@@ -1128,7 +1133,7 @@ colSums(L != 0)  <span class="code-comment"># 50  50</span></code></pre>
 ::: {.notes}
 - This internship produced two complete packages: BigRiverEssence.jl and BigRiverPlots.jl.
 - Both packages are registered in Julia's General registry, so Julia users can install them through the normal package workflow.
-- The audience does not need to adopt Julia wholesale. R users can call BigRiverEssence through JuliaCall and keep data preparation, reporting, and downstream work in R.
+- The audience does not need to adopt Julia wholesale. R users can call BigRiverEssence through JuliaConnectoR and keep data preparation, reporting, and downstream work in R.
 - Close on accessibility: the packages are intended for both current Julia users and researchers who want Julia performance behind another language.
 - [Sources] Registration verified in the local Julia General registry: BigRiverEssence UUID `2768b56d-1570-4417-9919-1aa303d8c95e`; BigRiverPlots UUID `1cf0ff84-1201-497f-a0c3-5c0b838ccaa6`. Package repositories: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl
 :::
@@ -1170,4 +1175,19 @@ colSums(L != 0)  <span class="code-comment"># 50  50</span></code></pre>
 - Future plotting work can add more statistical views and adapters for outputs from other packages, fitted objects, matrices, and DataFrames.
 - Close by inviting use cases and contributions from the audience; practical analysis needs should guide the roadmap.
 - [Sources] Roadmap supplied by the presenter for BigRiverEssence.jl and BigRiverPlots.jl.
+:::
+
+## {.questions-slide data-background-image="assets/uthsc-building-faded.png" data-background-size="cover" data-background-position="center" data-background-color="#ffffff"}
+
+<div class="questions-shell">
+<div class="questions-kicker">Thank you</div>
+<div class="questions-title">Questions?</div>
+<div class="questions-rule"></div>
+<div class="questions-subtitle">Fast and Lean: Julia Tools for High-Dimensional Omics</div>
+<div class="questions-packages">BigRiverEssence &nbsp;·&nbsp; BigRiverPlots</div>
+</div>
+
+::: {.notes}
+- Thank the audience and invite questions.
+- Keep this slide visible during discussion so the talk title and package names remain on screen.
 :::
