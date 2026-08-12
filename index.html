@@ -485,6 +485,7 @@
   .reveal .slides section .next-arrow { color:#E78824; font-size:34px; font-weight:900; text-align:center; }
   .reveal .slides section .next-close { margin-top:22px; padding:13px 18px; background:rgba(77,112,31,.10); border-left:6px solid #4D701F; border-radius:10px; color:#174f3d; font-size:19px; line-height:1.32; font-weight:900; text-align:center; }
   .reveal .slides section.questions-slide { height:100%; }
+  .reveal .slides section.questions-slide > h2:empty { display:none; }
   .reveal .slides section .questions-shell { box-sizing:border-box; width:min(880px,84%); min-height:365px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; margin:72px auto 0; padding:30px 70px 40px; background:rgba(255,255,255,.91); border-top:7px solid #4D701F; border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.13); }
   .reveal .slides section .questions-kicker { color:#4D701F; font-size:25px; line-height:1; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
   .reveal .slides section .questions-title { color:#C14C23; font-size:82px; line-height:1.02; font-weight:900; margin:18px 0 15px; }
@@ -809,36 +810,36 @@ A compact tour of the implemented methods
 Select a method to see the question it answers. Every button corresponds to a method currently implemented in <strong>BigRiverEssence.jl</strong>.
 </p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="492" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 491;"><span id="cb1-492"><a href=""></a>essenceMethodFrames <span class="op">=</span> [</span>
-<span id="cb1-493"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Principal Component Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Compress"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds ordered directions that capture the greatest variation in one data matrix."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for unsupervised exploration, visualization, and low-rank representation."</span>}<span class="op">,</span></span>
-<span id="cb1-494"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"SPCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Principal Component Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Compress + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Builds PCA-like components whose loadings use only a subset of variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when interpretation and feature selection matter as much as compression."</span>}<span class="op">,</span></span>
-<span id="cb1-495"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PMD"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Penalized Matrix Decomposition"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Decompose sparsely"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Constructs a low-rank matrix decomposition while constraining the component vectors to be sparse."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it as a flexible sparse decomposition and as a foundation for sparse latent methods."</span>}<span class="op">,</span></span>
-<span id="cb1-496"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PLS-DA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Partial Least Squares Discriminant Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Classify"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds latent directions in the predictors that are associated with known class labels."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for supervised dimension reduction and classification."</span>}<span class="op">,</span></span>
-<span id="cb1-497"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"sPLS-DA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Partial Least Squares Discriminant Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Classify + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Combines supervised PLS components with sparse loadings that retain selected variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when classification and a concise biomarker set are both goals."</span>}<span class="op">,</span></span>
-<span id="cb1-498"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PLSkern"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Partial Least Squares Kernel Regression"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Predict"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Builds latent variables that connect a predictor matrix to continuous or multivariate outcomes."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for efficient PLS regression, transformation, and prediction."</span>}<span class="op">,</span></span>
-<span id="cb1-499"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"CCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Canonical Correlation Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Relate two blocks"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds paired directions that maximize association between two data matrices measured on the same samples."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it to study shared cross-block structure."</span>}<span class="op">,</span></span>
-<span id="cb1-500"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"SCCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Canonical Correlation Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Relate + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Adds sparse loadings to CCA so the cross-block relationship depends on fewer variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it to identify interpretable features connecting two data sources."</span>}<span class="op">,</span></span>
-<span id="cb1-501"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"JIVE"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Joint and Individual Variation Explained"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Integrate blocks"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Separates multiple matched data blocks into joint, block-specific, and residual structure."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when several omics assays describe the same samples."</span>}</span>
-<span id="cb1-502"><a href=""></a>]</span>
-<span id="cb1-503"><a href=""></a></span>
-<span id="cb1-504"><a href=""></a>viewof essenceMethodPick <span class="op">=</span> {</span>
-<span id="cb1-505"><a href=""></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="bre-method-selector"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb1-506"><a href=""></a>  <span class="kw">const</span> buttons <span class="op">=</span> essenceMethodFrames<span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
-<span id="cb1-507"><a href=""></a>    <span class="kw">const</span> b <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;button&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">short</span><span class="sc">}</span><span class="vs">&lt;/button&gt;`</span><span class="op">;</span></span>
-<span id="cb1-508"><a href=""></a>    b<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="kw">set</span>(i)<span class="op">;</span></span>
-<span id="cb1-509"><a href=""></a>    wrap<span class="op">.</span><span class="fu">append</span>(b)<span class="op">;</span></span>
-<span id="cb1-510"><a href=""></a>    <span class="cf">return</span> b<span class="op">;</span></span>
-<span id="cb1-511"><a href=""></a>  })<span class="op">;</span></span>
-<span id="cb1-512"><a href=""></a>  <span class="kw">const</span> render <span class="op">=</span> () <span class="kw">=&gt;</span> buttons<span class="op">.</span><span class="fu">forEach</span>((b<span class="op">,</span> i) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">toggle</span>(<span class="st">"on"</span><span class="op">,</span> i <span class="op">===</span> wrap<span class="op">.</span><span class="at">value</span>))<span class="op">;</span></span>
-<span id="cb1-513"><a href=""></a>  <span class="kw">const</span> <span class="kw">set</span> <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
-<span id="cb1-514"><a href=""></a>    wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb1-515"><a href=""></a>    <span class="fu">render</span>()<span class="op">;</span></span>
-<span id="cb1-516"><a href=""></a>    wrap<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">"input"</span><span class="op">,</span> {<span class="dt">bubbles</span><span class="op">:</span><span class="kw">true</span>}))<span class="op">;</span></span>
-<span id="cb1-517"><a href=""></a>  }<span class="op">;</span></span>
-<span id="cb1-518"><a href=""></a>  wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-519"><a href=""></a>  <span class="fu">render</span>()<span class="op">;</span></span>
-<span id="cb1-520"><a href=""></a>  <span class="cf">return</span> wrap<span class="op">;</span></span>
-<span id="cb1-521"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="493" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 492;"><span id="cb1-493"><a href=""></a>essenceMethodFrames <span class="op">=</span> [</span>
+<span id="cb1-494"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Principal Component Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Compress"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds ordered directions that capture the greatest variation in one data matrix."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for unsupervised exploration, visualization, and low-rank representation."</span>}<span class="op">,</span></span>
+<span id="cb1-495"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"SPCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Principal Component Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Compress + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Builds PCA-like components whose loadings use only a subset of variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when interpretation and feature selection matter as much as compression."</span>}<span class="op">,</span></span>
+<span id="cb1-496"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PMD"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Penalized Matrix Decomposition"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Decompose sparsely"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Constructs a low-rank matrix decomposition while constraining the component vectors to be sparse."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it as a flexible sparse decomposition and as a foundation for sparse latent methods."</span>}<span class="op">,</span></span>
+<span id="cb1-497"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PLS-DA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Partial Least Squares Discriminant Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Classify"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds latent directions in the predictors that are associated with known class labels."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for supervised dimension reduction and classification."</span>}<span class="op">,</span></span>
+<span id="cb1-498"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"sPLS-DA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Partial Least Squares Discriminant Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Classify + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Combines supervised PLS components with sparse loadings that retain selected variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when classification and a concise biomarker set are both goals."</span>}<span class="op">,</span></span>
+<span id="cb1-499"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"PLSkern"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Partial Least Squares Kernel Regression"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Predict"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Builds latent variables that connect a predictor matrix to continuous or multivariate outcomes."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it for efficient PLS regression, transformation, and prediction."</span>}<span class="op">,</span></span>
+<span id="cb1-500"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"CCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Canonical Correlation Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Relate two blocks"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Finds paired directions that maximize association between two data matrices measured on the same samples."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it to study shared cross-block structure."</span>}<span class="op">,</span></span>
+<span id="cb1-501"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"SCCA"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Sparse Canonical Correlation Analysis"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Relate + select"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Adds sparse loadings to CCA so the cross-block relationship depends on fewer variables."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it to identify interpretable features connecting two data sources."</span>}<span class="op">,</span></span>
+<span id="cb1-502"><a href=""></a>  {<span class="dt">short</span><span class="op">:</span><span class="st">"JIVE"</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span><span class="st">"Joint and Individual Variation Explained"</span><span class="op">,</span> <span class="dt">question</span><span class="op">:</span><span class="st">"Integrate blocks"</span><span class="op">,</span> <span class="dt">detail</span><span class="op">:</span><span class="st">"Separates multiple matched data blocks into joint, block-specific, and residual structure."</span><span class="op">,</span> <span class="dt">use</span><span class="op">:</span><span class="st">"Use it when several omics assays describe the same samples."</span>}</span>
+<span id="cb1-503"><a href=""></a>]</span>
+<span id="cb1-504"><a href=""></a></span>
+<span id="cb1-505"><a href=""></a>viewof essenceMethodPick <span class="op">=</span> {</span>
+<span id="cb1-506"><a href=""></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="bre-method-selector"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb1-507"><a href=""></a>  <span class="kw">const</span> buttons <span class="op">=</span> essenceMethodFrames<span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-508"><a href=""></a>    <span class="kw">const</span> b <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;button&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">short</span><span class="sc">}</span><span class="vs">&lt;/button&gt;`</span><span class="op">;</span></span>
+<span id="cb1-509"><a href=""></a>    b<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="kw">set</span>(i)<span class="op">;</span></span>
+<span id="cb1-510"><a href=""></a>    wrap<span class="op">.</span><span class="fu">append</span>(b)<span class="op">;</span></span>
+<span id="cb1-511"><a href=""></a>    <span class="cf">return</span> b<span class="op">;</span></span>
+<span id="cb1-512"><a href=""></a>  })<span class="op">;</span></span>
+<span id="cb1-513"><a href=""></a>  <span class="kw">const</span> render <span class="op">=</span> () <span class="kw">=&gt;</span> buttons<span class="op">.</span><span class="fu">forEach</span>((b<span class="op">,</span> i) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">toggle</span>(<span class="st">"on"</span><span class="op">,</span> i <span class="op">===</span> wrap<span class="op">.</span><span class="at">value</span>))<span class="op">;</span></span>
+<span id="cb1-514"><a href=""></a>  <span class="kw">const</span> <span class="kw">set</span> <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
+<span id="cb1-515"><a href=""></a>    wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb1-516"><a href=""></a>    <span class="fu">render</span>()<span class="op">;</span></span>
+<span id="cb1-517"><a href=""></a>    wrap<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">"input"</span><span class="op">,</span> {<span class="dt">bubbles</span><span class="op">:</span><span class="kw">true</span>}))<span class="op">;</span></span>
+<span id="cb1-518"><a href=""></a>  }<span class="op">;</span></span>
+<span id="cb1-519"><a href=""></a>  wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-520"><a href=""></a>  <span class="fu">render</span>()<span class="op">;</span></span>
+<span id="cb1-521"><a href=""></a>  <span class="cf">return</span> wrap<span class="op">;</span></span>
+<span id="cb1-522"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -855,23 +856,23 @@ Select a method to see the question it answers. Every button corresponds to a me
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="524" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 523;"><span id="cb2-524"><a href=""></a>essenceMethodCard <span class="op">=</span> {</span>
-<span id="cb2-525"><a href=""></a>  <span class="kw">const</span> d <span class="op">=</span> essenceMethodFrames[essenceMethodPick]<span class="op">;</span></span>
-<span id="cb2-526"><a href=""></a>  <span class="kw">const</span> card <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="bre-method-card"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb2-527"><a href=""></a>  <span class="kw">const</span> top <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="method-top"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb2-528"><a href=""></a>  <span class="kw">const</span> identity <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb2-529"><a href=""></a>  identity<span class="op">.</span><span class="fu">append</span>(</span>
-<span id="cb2-530"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-name"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">short</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
-<span id="cb2-531"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-full"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
-<span id="cb2-532"><a href=""></a>  )<span class="op">;</span></span>
-<span id="cb2-533"><a href=""></a>  top<span class="op">.</span><span class="fu">append</span>(identity<span class="op">,</span> <span class="fu">html</span><span class="vs">`&lt;div class="method-question"&gt;Question: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">question</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span>)<span class="op">;</span></span>
-<span id="cb2-534"><a href=""></a>  card<span class="op">.</span><span class="fu">append</span>(</span>
-<span id="cb2-535"><a href=""></a>    top<span class="op">,</span></span>
-<span id="cb2-536"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-detail"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">detail</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
-<span id="cb2-537"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-use"&gt;&lt;strong&gt;When to use it:&lt;/strong&gt; </span><span class="sc">${</span>d<span class="op">.</span><span class="at">use</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
-<span id="cb2-538"><a href=""></a>  )<span class="op">;</span></span>
-<span id="cb2-539"><a href=""></a>  <span class="cf">return</span> card<span class="op">;</span></span>
-<span id="cb2-540"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="525" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 524;"><span id="cb2-525"><a href=""></a>essenceMethodCard <span class="op">=</span> {</span>
+<span id="cb2-526"><a href=""></a>  <span class="kw">const</span> d <span class="op">=</span> essenceMethodFrames[essenceMethodPick]<span class="op">;</span></span>
+<span id="cb2-527"><a href=""></a>  <span class="kw">const</span> card <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="bre-method-card"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb2-528"><a href=""></a>  <span class="kw">const</span> top <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="method-top"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb2-529"><a href=""></a>  <span class="kw">const</span> identity <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb2-530"><a href=""></a>  identity<span class="op">.</span><span class="fu">append</span>(</span>
+<span id="cb2-531"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-name"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">short</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb2-532"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-full"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
+<span id="cb2-533"><a href=""></a>  )<span class="op">;</span></span>
+<span id="cb2-534"><a href=""></a>  top<span class="op">.</span><span class="fu">append</span>(identity<span class="op">,</span> <span class="fu">html</span><span class="vs">`&lt;div class="method-question"&gt;Question: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">question</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span>)<span class="op">;</span></span>
+<span id="cb2-535"><a href=""></a>  card<span class="op">.</span><span class="fu">append</span>(</span>
+<span id="cb2-536"><a href=""></a>    top<span class="op">,</span></span>
+<span id="cb2-537"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-detail"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">detail</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb2-538"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="method-use"&gt;&lt;strong&gt;When to use it:&lt;/strong&gt; </span><span class="sc">${</span>d<span class="op">.</span><span class="at">use</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
+<span id="cb2-539"><a href=""></a>  )<span class="op">;</span></span>
+<span id="cb2-540"><a href=""></a>  <span class="cf">return</span> card<span class="op">;</span></span>
+<span id="cb2-541"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -1776,84 +1777,84 @@ BigRiverEssence → BigRiverPlots
 Choose a view to place the authentic package output beside the Julia recipe call that generated it.
 </p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="918" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 917;"><span id="cb3-918"><a href=""></a>splsdaPlotFrames <span class="op">=</span> [</span>
-<span id="cb3-919"><a href=""></a>  {</span>
-<span id="cb3-920"><a href=""></a>    <span class="dt">button</span><span class="op">:</span> <span class="st">"Scores plot"</span><span class="op">,</span></span>
-<span id="cb3-921"><a href=""></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Samples"</span><span class="op">,</span></span>
-<span id="cb3-922"><a href=""></a>    <span class="dt">image</span><span class="op">:</span> <span class="st">"assets/liver-toxicity-splsda-scores.png"</span><span class="op">,</span></span>
-<span id="cb3-923"><a href=""></a>    <span class="dt">alt</span><span class="op">:</span> <span class="st">"BigRiverPlots scores plot for the liver-toxicity sPLS-DA fit"</span><span class="op">,</span></span>
-<span id="cb3-924"><a href=""></a>    <span class="dt">captionLead</span><span class="op">:</span> <span class="st">"Scores plot:"</span><span class="op">,</span></span>
-<span id="cb3-925"><a href=""></a>    <span class="dt">caption</span><span class="op">:</span> <span class="st">"the two supervised components organize animals by dose."</span><span class="op">,</span></span>
-<span id="cb3-926"><a href=""></a>    <span class="dt">note</span><span class="op">:</span> <span class="st">"Uses the fitted sample-score matrix and the original dose labels."</span><span class="op">,</span></span>
-<span id="cb3-927"><a href=""></a>    <span class="dt">code</span><span class="op">:</span> <span class="vs">`p_scores = plot_scores(</span></span>
-<span id="cb3-928"><a href=""></a><span class="vs">    fit.variates_X;</span></span>
-<span id="cb3-929"><a href=""></a><span class="vs">    group = y,</span></span>
-<span id="cb3-930"><a href=""></a><span class="vs">    xlabel = "sPLS-DA component 1",</span></span>
-<span id="cb3-931"><a href=""></a><span class="vs">    ylabel = "sPLS-DA component 2",</span></span>
-<span id="cb3-932"><a href=""></a><span class="vs">    palette = dose_palette,</span></span>
-<span id="cb3-933"><a href=""></a><span class="vs">)</span></span>
-<span id="cb3-934"><a href=""></a><span class="vs">savefig(p_scores, "liver_toxicity_scores.png")`</span></span>
-<span id="cb3-935"><a href=""></a>  }<span class="op">,</span></span>
-<span id="cb3-936"><a href=""></a>  {</span>
-<span id="cb3-937"><a href=""></a>    <span class="dt">button</span><span class="op">:</span> <span class="st">"Loadings heatmap"</span><span class="op">,</span></span>
-<span id="cb3-938"><a href=""></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Genes"</span><span class="op">,</span></span>
-<span id="cb3-939"><a href=""></a>    <span class="dt">image</span><span class="op">:</span> <span class="st">"assets/liver-toxicity-splsda-loadings.png"</span><span class="op">,</span></span>
-<span id="cb3-940"><a href=""></a>    <span class="dt">alt</span><span class="op">:</span> <span class="st">"BigRiverPlots loadings heatmap for the liver-toxicity sPLS-DA fit"</span><span class="op">,</span></span>
-<span id="cb3-941"><a href=""></a>    <span class="dt">captionLead</span><span class="op">:</span> <span class="st">"Loadings heatmap:"</span><span class="op">,</span></span>
-<span id="cb3-942"><a href=""></a>    <span class="dt">caption</span><span class="op">:</span> <span class="st">"signed contributions show which genes define each component."</span><span class="op">,</span></span>
-<span id="cb3-943"><a href=""></a>    <span class="dt">note</span><span class="op">:</span> <span class="st">"The 18 strongest loading rows are retained across components 1 and 2."</span><span class="op">,</span></span>
-<span id="cb3-944"><a href=""></a>    <span class="dt">code</span><span class="op">:</span> <span class="vs">`p_heatmap = plot_loadings_heatmap(</span></span>
-<span id="cb3-945"><a href=""></a><span class="vs">    fit.loadings_X;</span></span>
-<span id="cb3-946"><a href=""></a><span class="vs">    comps = [1, 2],</span></span>
-<span id="cb3-947"><a href=""></a><span class="vs">    varnames = gene_names,</span></span>
-<span id="cb3-948"><a href=""></a><span class="vs">    compnames = ["Component 1", "Component 2"],</span></span>
-<span id="cb3-949"><a href=""></a><span class="vs">    ntop = 18,</span></span>
-<span id="cb3-950"><a href=""></a><span class="vs">)</span></span>
-<span id="cb3-951"><a href=""></a><span class="vs">savefig(p_heatmap, "liver_toxicity_loadings_heatmap.png")`</span></span>
-<span id="cb3-952"><a href=""></a>  }<span class="op">,</span></span>
-<span id="cb3-953"><a href=""></a>  {</span>
-<span id="cb3-954"><a href=""></a>    <span class="dt">button</span><span class="op">:</span> <span class="st">"Biplot"</span><span class="op">,</span></span>
-<span id="cb3-955"><a href=""></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Samples + genes"</span><span class="op">,</span></span>
-<span id="cb3-956"><a href=""></a>    <span class="dt">image</span><span class="op">:</span> <span class="st">"assets/liver-toxicity-splsda-biplot.png"</span><span class="op">,</span></span>
-<span id="cb3-957"><a href=""></a>    <span class="dt">alt</span><span class="op">:</span> <span class="st">"BigRiverPlots biplot for the liver-toxicity sPLS-DA fit"</span><span class="op">,</span></span>
-<span id="cb3-958"><a href=""></a>    <span class="dt">captionLead</span><span class="op">:</span> <span class="st">"Biplot:"</span><span class="op">,</span></span>
-<span id="cb3-959"><a href=""></a>    <span class="dt">caption</span><span class="op">:</span> <span class="st">"contrasting gene directions are placed back onto the sample map."</span><span class="op">,</span></span>
-<span id="cb3-960"><a href=""></a>    <span class="dt">note</span><span class="op">:</span> <span class="st">"Balanced selection: both signs from both components."</span><span class="op">,</span></span>
-<span id="cb3-961"><a href=""></a>    <span class="dt">code</span><span class="op">:</span> <span class="vs">`arrow_idx = unique(vcat(</span></span>
-<span id="cb3-962"><a href=""></a><span class="vs">    argmax.(eachcol(fit.loadings_X)),</span></span>
-<span id="cb3-963"><a href=""></a><span class="vs">    argmin.(eachcol(fit.loadings_X)),</span></span>
-<span id="cb3-964"><a href=""></a><span class="vs">))</span></span>
-<span id="cb3-965"><a href=""></a></span>
-<span id="cb3-966"><a href=""></a><span class="vs">p_biplot = plot_biplot(</span></span>
-<span id="cb3-967"><a href=""></a><span class="vs">    fit.variates_X,</span></span>
-<span id="cb3-968"><a href=""></a><span class="vs">    fit.loadings_X[arrow_idx, :];</span></span>
-<span id="cb3-969"><a href=""></a><span class="vs">    group = y,</span></span>
-<span id="cb3-970"><a href=""></a><span class="vs">    varnames = gene_names[arrow_idx],</span></span>
-<span id="cb3-971"><a href=""></a><span class="vs">    arrowlabels = true,</span></span>
-<span id="cb3-972"><a href=""></a><span class="vs">    palette = dose_palette,</span></span>
-<span id="cb3-973"><a href=""></a><span class="vs">)</span></span>
-<span id="cb3-974"><a href=""></a><span class="vs">savefig(p_biplot, "liver_toxicity_biplot.png")`</span></span>
-<span id="cb3-975"><a href=""></a>  }</span>
-<span id="cb3-976"><a href=""></a>]</span>
-<span id="cb3-977"><a href=""></a></span>
-<span id="cb3-978"><a href=""></a>viewof splsdaPlotPick <span class="op">=</span> {</span>
-<span id="cb3-979"><a href=""></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-plot-selector"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb3-980"><a href=""></a>  <span class="kw">const</span> buttons <span class="op">=</span> splsdaPlotFrames<span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
-<span id="cb3-981"><a href=""></a>    <span class="kw">const</span> b <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;button&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">button</span><span class="sc">}</span><span class="vs">&lt;/button&gt;`</span><span class="op">;</span></span>
-<span id="cb3-982"><a href=""></a>    b<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="kw">set</span>(i)<span class="op">;</span></span>
-<span id="cb3-983"><a href=""></a>    wrap<span class="op">.</span><span class="fu">append</span>(b)<span class="op">;</span></span>
-<span id="cb3-984"><a href=""></a>    <span class="cf">return</span> b<span class="op">;</span></span>
-<span id="cb3-985"><a href=""></a>  })<span class="op">;</span></span>
-<span id="cb3-986"><a href=""></a>  <span class="kw">const</span> render <span class="op">=</span> () <span class="kw">=&gt;</span> buttons<span class="op">.</span><span class="fu">forEach</span>((b<span class="op">,</span> i) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">toggle</span>(<span class="st">"on"</span><span class="op">,</span> i <span class="op">===</span> wrap<span class="op">.</span><span class="at">value</span>))<span class="op">;</span></span>
-<span id="cb3-987"><a href=""></a>  <span class="kw">const</span> <span class="kw">set</span> <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
-<span id="cb3-988"><a href=""></a>    wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb3-989"><a href=""></a>    <span class="fu">render</span>()<span class="op">;</span></span>
-<span id="cb3-990"><a href=""></a>    wrap<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">"input"</span><span class="op">,</span> {<span class="dt">bubbles</span><span class="op">:</span><span class="kw">true</span>}))<span class="op">;</span></span>
-<span id="cb3-991"><a href=""></a>  }<span class="op">;</span></span>
-<span id="cb3-992"><a href=""></a>  wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-993"><a href=""></a>  <span class="fu">render</span>()<span class="op">;</span></span>
-<span id="cb3-994"><a href=""></a>  <span class="cf">return</span> wrap<span class="op">;</span></span>
-<span id="cb3-995"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="919" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 918;"><span id="cb3-919"><a href=""></a>splsdaPlotFrames <span class="op">=</span> [</span>
+<span id="cb3-920"><a href=""></a>  {</span>
+<span id="cb3-921"><a href=""></a>    <span class="dt">button</span><span class="op">:</span> <span class="st">"Scores plot"</span><span class="op">,</span></span>
+<span id="cb3-922"><a href=""></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Samples"</span><span class="op">,</span></span>
+<span id="cb3-923"><a href=""></a>    <span class="dt">image</span><span class="op">:</span> <span class="st">"assets/liver-toxicity-splsda-scores.png"</span><span class="op">,</span></span>
+<span id="cb3-924"><a href=""></a>    <span class="dt">alt</span><span class="op">:</span> <span class="st">"BigRiverPlots scores plot for the liver-toxicity sPLS-DA fit"</span><span class="op">,</span></span>
+<span id="cb3-925"><a href=""></a>    <span class="dt">captionLead</span><span class="op">:</span> <span class="st">"Scores plot:"</span><span class="op">,</span></span>
+<span id="cb3-926"><a href=""></a>    <span class="dt">caption</span><span class="op">:</span> <span class="st">"the two supervised components organize animals by dose."</span><span class="op">,</span></span>
+<span id="cb3-927"><a href=""></a>    <span class="dt">note</span><span class="op">:</span> <span class="st">"Uses the fitted sample-score matrix and the original dose labels."</span><span class="op">,</span></span>
+<span id="cb3-928"><a href=""></a>    <span class="dt">code</span><span class="op">:</span> <span class="vs">`p_scores = plot_scores(</span></span>
+<span id="cb3-929"><a href=""></a><span class="vs">    fit.variates_X;</span></span>
+<span id="cb3-930"><a href=""></a><span class="vs">    group = y,</span></span>
+<span id="cb3-931"><a href=""></a><span class="vs">    xlabel = "sPLS-DA component 1",</span></span>
+<span id="cb3-932"><a href=""></a><span class="vs">    ylabel = "sPLS-DA component 2",</span></span>
+<span id="cb3-933"><a href=""></a><span class="vs">    palette = dose_palette,</span></span>
+<span id="cb3-934"><a href=""></a><span class="vs">)</span></span>
+<span id="cb3-935"><a href=""></a><span class="vs">savefig(p_scores, "liver_toxicity_scores.png")`</span></span>
+<span id="cb3-936"><a href=""></a>  }<span class="op">,</span></span>
+<span id="cb3-937"><a href=""></a>  {</span>
+<span id="cb3-938"><a href=""></a>    <span class="dt">button</span><span class="op">:</span> <span class="st">"Loadings heatmap"</span><span class="op">,</span></span>
+<span id="cb3-939"><a href=""></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Genes"</span><span class="op">,</span></span>
+<span id="cb3-940"><a href=""></a>    <span class="dt">image</span><span class="op">:</span> <span class="st">"assets/liver-toxicity-splsda-loadings.png"</span><span class="op">,</span></span>
+<span id="cb3-941"><a href=""></a>    <span class="dt">alt</span><span class="op">:</span> <span class="st">"BigRiverPlots loadings heatmap for the liver-toxicity sPLS-DA fit"</span><span class="op">,</span></span>
+<span id="cb3-942"><a href=""></a>    <span class="dt">captionLead</span><span class="op">:</span> <span class="st">"Loadings heatmap:"</span><span class="op">,</span></span>
+<span id="cb3-943"><a href=""></a>    <span class="dt">caption</span><span class="op">:</span> <span class="st">"signed contributions show which genes define each component."</span><span class="op">,</span></span>
+<span id="cb3-944"><a href=""></a>    <span class="dt">note</span><span class="op">:</span> <span class="st">"The 18 strongest loading rows are retained across components 1 and 2."</span><span class="op">,</span></span>
+<span id="cb3-945"><a href=""></a>    <span class="dt">code</span><span class="op">:</span> <span class="vs">`p_heatmap = plot_loadings_heatmap(</span></span>
+<span id="cb3-946"><a href=""></a><span class="vs">    fit.loadings_X;</span></span>
+<span id="cb3-947"><a href=""></a><span class="vs">    comps = [1, 2],</span></span>
+<span id="cb3-948"><a href=""></a><span class="vs">    varnames = gene_names,</span></span>
+<span id="cb3-949"><a href=""></a><span class="vs">    compnames = ["Component 1", "Component 2"],</span></span>
+<span id="cb3-950"><a href=""></a><span class="vs">    ntop = 18,</span></span>
+<span id="cb3-951"><a href=""></a><span class="vs">)</span></span>
+<span id="cb3-952"><a href=""></a><span class="vs">savefig(p_heatmap, "liver_toxicity_loadings_heatmap.png")`</span></span>
+<span id="cb3-953"><a href=""></a>  }<span class="op">,</span></span>
+<span id="cb3-954"><a href=""></a>  {</span>
+<span id="cb3-955"><a href=""></a>    <span class="dt">button</span><span class="op">:</span> <span class="st">"Biplot"</span><span class="op">,</span></span>
+<span id="cb3-956"><a href=""></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Samples + genes"</span><span class="op">,</span></span>
+<span id="cb3-957"><a href=""></a>    <span class="dt">image</span><span class="op">:</span> <span class="st">"assets/liver-toxicity-splsda-biplot.png"</span><span class="op">,</span></span>
+<span id="cb3-958"><a href=""></a>    <span class="dt">alt</span><span class="op">:</span> <span class="st">"BigRiverPlots biplot for the liver-toxicity sPLS-DA fit"</span><span class="op">,</span></span>
+<span id="cb3-959"><a href=""></a>    <span class="dt">captionLead</span><span class="op">:</span> <span class="st">"Biplot:"</span><span class="op">,</span></span>
+<span id="cb3-960"><a href=""></a>    <span class="dt">caption</span><span class="op">:</span> <span class="st">"contrasting gene directions are placed back onto the sample map."</span><span class="op">,</span></span>
+<span id="cb3-961"><a href=""></a>    <span class="dt">note</span><span class="op">:</span> <span class="st">"Balanced selection: both signs from both components."</span><span class="op">,</span></span>
+<span id="cb3-962"><a href=""></a>    <span class="dt">code</span><span class="op">:</span> <span class="vs">`arrow_idx = unique(vcat(</span></span>
+<span id="cb3-963"><a href=""></a><span class="vs">    argmax.(eachcol(fit.loadings_X)),</span></span>
+<span id="cb3-964"><a href=""></a><span class="vs">    argmin.(eachcol(fit.loadings_X)),</span></span>
+<span id="cb3-965"><a href=""></a><span class="vs">))</span></span>
+<span id="cb3-966"><a href=""></a></span>
+<span id="cb3-967"><a href=""></a><span class="vs">p_biplot = plot_biplot(</span></span>
+<span id="cb3-968"><a href=""></a><span class="vs">    fit.variates_X,</span></span>
+<span id="cb3-969"><a href=""></a><span class="vs">    fit.loadings_X[arrow_idx, :];</span></span>
+<span id="cb3-970"><a href=""></a><span class="vs">    group = y,</span></span>
+<span id="cb3-971"><a href=""></a><span class="vs">    varnames = gene_names[arrow_idx],</span></span>
+<span id="cb3-972"><a href=""></a><span class="vs">    arrowlabels = true,</span></span>
+<span id="cb3-973"><a href=""></a><span class="vs">    palette = dose_palette,</span></span>
+<span id="cb3-974"><a href=""></a><span class="vs">)</span></span>
+<span id="cb3-975"><a href=""></a><span class="vs">savefig(p_biplot, "liver_toxicity_biplot.png")`</span></span>
+<span id="cb3-976"><a href=""></a>  }</span>
+<span id="cb3-977"><a href=""></a>]</span>
+<span id="cb3-978"><a href=""></a></span>
+<span id="cb3-979"><a href=""></a>viewof splsdaPlotPick <span class="op">=</span> {</span>
+<span id="cb3-980"><a href=""></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-plot-selector"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb3-981"><a href=""></a>  <span class="kw">const</span> buttons <span class="op">=</span> splsdaPlotFrames<span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-982"><a href=""></a>    <span class="kw">const</span> b <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;button&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">button</span><span class="sc">}</span><span class="vs">&lt;/button&gt;`</span><span class="op">;</span></span>
+<span id="cb3-983"><a href=""></a>    b<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="kw">set</span>(i)<span class="op">;</span></span>
+<span id="cb3-984"><a href=""></a>    wrap<span class="op">.</span><span class="fu">append</span>(b)<span class="op">;</span></span>
+<span id="cb3-985"><a href=""></a>    <span class="cf">return</span> b<span class="op">;</span></span>
+<span id="cb3-986"><a href=""></a>  })<span class="op">;</span></span>
+<span id="cb3-987"><a href=""></a>  <span class="kw">const</span> render <span class="op">=</span> () <span class="kw">=&gt;</span> buttons<span class="op">.</span><span class="fu">forEach</span>((b<span class="op">,</span> i) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">toggle</span>(<span class="st">"on"</span><span class="op">,</span> i <span class="op">===</span> wrap<span class="op">.</span><span class="at">value</span>))<span class="op">;</span></span>
+<span id="cb3-988"><a href=""></a>  <span class="kw">const</span> <span class="kw">set</span> <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
+<span id="cb3-989"><a href=""></a>    wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb3-990"><a href=""></a>    <span class="fu">render</span>()<span class="op">;</span></span>
+<span id="cb3-991"><a href=""></a>    wrap<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">"input"</span><span class="op">,</span> {<span class="dt">bubbles</span><span class="op">:</span><span class="kw">true</span>}))<span class="op">;</span></span>
+<span id="cb3-992"><a href=""></a>  }<span class="op">;</span></span>
+<span id="cb3-993"><a href=""></a>  wrap<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-994"><a href=""></a>  <span class="fu">render</span>()<span class="op">;</span></span>
+<span id="cb3-995"><a href=""></a>  <span class="cf">return</span> wrap<span class="op">;</span></span>
+<span id="cb3-996"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-3-1" data-nodetype="declaration">
@@ -1870,35 +1871,35 @@ Choose a view to place the authentic package output beside the Julia recipe call
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="998" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 997;"><span id="cb4-998"><a href=""></a>splsdaPlotDisplay <span class="op">=</span> {</span>
-<span id="cb4-999"><a href=""></a>  <span class="kw">const</span> d <span class="op">=</span> splsdaPlotFrames[splsdaPlotPick]<span class="op">;</span></span>
-<span id="cb4-1000"><a href=""></a>  <span class="kw">const</span> shell <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb4-1001"><a href=""></a></span>
-<span id="cb4-1002"><a href=""></a>  <span class="kw">const</span> visual <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-visual"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb4-1003"><a href=""></a>  <span class="kw">const</span> image <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">"img"</span>)<span class="op">;</span></span>
-<span id="cb4-1004"><a href=""></a>  image<span class="op">.</span><span class="at">src</span> <span class="op">=</span> d<span class="op">.</span><span class="at">image</span><span class="op">;</span></span>
-<span id="cb4-1005"><a href=""></a>  image<span class="op">.</span><span class="at">alt</span> <span class="op">=</span> d<span class="op">.</span><span class="at">alt</span><span class="op">;</span></span>
-<span id="cb4-1006"><a href=""></a>  visual<span class="op">.</span><span class="fu">append</span>(</span>
-<span id="cb4-1007"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-label"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">label</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
-<span id="cb4-1008"><a href=""></a>    image<span class="op">,</span></span>
-<span id="cb4-1009"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-caption"&gt;&lt;strong&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">captionLead</span><span class="sc">}</span><span class="vs">&lt;/strong&gt; </span><span class="sc">${</span>d<span class="op">.</span><span class="at">caption</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
-<span id="cb4-1010"><a href=""></a>  )<span class="op">;</span></span>
-<span id="cb4-1011"><a href=""></a></span>
-<span id="cb4-1012"><a href=""></a>  <span class="kw">const</span> codePanel <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-code"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb4-1013"><a href=""></a>  <span class="kw">const</span> pre <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">"pre"</span>)<span class="op">;</span></span>
-<span id="cb4-1014"><a href=""></a>  <span class="kw">const</span> code <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">"code"</span>)<span class="op">;</span></span>
-<span id="cb4-1015"><a href=""></a>  code<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> d<span class="op">.</span><span class="at">code</span><span class="op">;</span></span>
-<span id="cb4-1016"><a href=""></a>  pre<span class="op">.</span><span class="fu">append</span>(code)<span class="op">;</span></span>
-<span id="cb4-1017"><a href=""></a>  codePanel<span class="op">.</span><span class="fu">append</span>(</span>
-<span id="cb4-1018"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-code-title"&gt;Julia recipe call&lt;/div&gt;`</span><span class="op">,</span></span>
-<span id="cb4-1019"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-code-sub"&gt;The same fitted &lt;code&gt;fit&lt;/code&gt; object drives every view.&lt;/div&gt;`</span><span class="op">,</span></span>
-<span id="cb4-1020"><a href=""></a>    pre<span class="op">,</span></span>
-<span id="cb4-1021"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-code-note"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">note</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
-<span id="cb4-1022"><a href=""></a>  )<span class="op">;</span></span>
-<span id="cb4-1023"><a href=""></a></span>
-<span id="cb4-1024"><a href=""></a>  shell<span class="op">.</span><span class="fu">append</span>(visual<span class="op">,</span> codePanel)<span class="op">;</span></span>
-<span id="cb4-1025"><a href=""></a>  <span class="cf">return</span> shell<span class="op">;</span></span>
-<span id="cb4-1026"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="999" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 998;"><span id="cb4-999"><a href=""></a>splsdaPlotDisplay <span class="op">=</span> {</span>
+<span id="cb4-1000"><a href=""></a>  <span class="kw">const</span> d <span class="op">=</span> splsdaPlotFrames[splsdaPlotPick]<span class="op">;</span></span>
+<span id="cb4-1001"><a href=""></a>  <span class="kw">const</span> shell <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb4-1002"><a href=""></a></span>
+<span id="cb4-1003"><a href=""></a>  <span class="kw">const</span> visual <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-visual"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb4-1004"><a href=""></a>  <span class="kw">const</span> image <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">"img"</span>)<span class="op">;</span></span>
+<span id="cb4-1005"><a href=""></a>  image<span class="op">.</span><span class="at">src</span> <span class="op">=</span> d<span class="op">.</span><span class="at">image</span><span class="op">;</span></span>
+<span id="cb4-1006"><a href=""></a>  image<span class="op">.</span><span class="at">alt</span> <span class="op">=</span> d<span class="op">.</span><span class="at">alt</span><span class="op">;</span></span>
+<span id="cb4-1007"><a href=""></a>  visual<span class="op">.</span><span class="fu">append</span>(</span>
+<span id="cb4-1008"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-label"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">label</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb4-1009"><a href=""></a>    image<span class="op">,</span></span>
+<span id="cb4-1010"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-caption"&gt;&lt;strong&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">captionLead</span><span class="sc">}</span><span class="vs">&lt;/strong&gt; </span><span class="sc">${</span>d<span class="op">.</span><span class="at">caption</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
+<span id="cb4-1011"><a href=""></a>  )<span class="op">;</span></span>
+<span id="cb4-1012"><a href=""></a></span>
+<span id="cb4-1013"><a href=""></a>  <span class="kw">const</span> codePanel <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="splsda-interactive-code"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb4-1014"><a href=""></a>  <span class="kw">const</span> pre <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">"pre"</span>)<span class="op">;</span></span>
+<span id="cb4-1015"><a href=""></a>  <span class="kw">const</span> code <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">"code"</span>)<span class="op">;</span></span>
+<span id="cb4-1016"><a href=""></a>  code<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> d<span class="op">.</span><span class="at">code</span><span class="op">;</span></span>
+<span id="cb4-1017"><a href=""></a>  pre<span class="op">.</span><span class="fu">append</span>(code)<span class="op">;</span></span>
+<span id="cb4-1018"><a href=""></a>  codePanel<span class="op">.</span><span class="fu">append</span>(</span>
+<span id="cb4-1019"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-code-title"&gt;Julia recipe call&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb4-1020"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-code-sub"&gt;The same fitted &lt;code&gt;fit&lt;/code&gt; object drives every view.&lt;/div&gt;`</span><span class="op">,</span></span>
+<span id="cb4-1021"><a href=""></a>    pre<span class="op">,</span></span>
+<span id="cb4-1022"><a href=""></a>    <span class="fu">html</span><span class="vs">`&lt;div class="splsda-code-note"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">note</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
+<span id="cb4-1023"><a href=""></a>  )<span class="op">;</span></span>
+<span id="cb4-1024"><a href=""></a></span>
+<span id="cb4-1025"><a href=""></a>  shell<span class="op">.</span><span class="fu">append</span>(visual<span class="op">,</span> codePanel)<span class="op">;</span></span>
+<span id="cb4-1026"><a href=""></a>  <span class="cf">return</span> shell<span class="op">;</span></span>
+<span id="cb4-1027"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
