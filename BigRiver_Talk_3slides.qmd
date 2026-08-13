@@ -74,13 +74,16 @@ format:
         .reveal .slides section .bre-method-selector { display:flex; flex-wrap:wrap; gap:9px; margin:13px 0 18px; }
         .reveal .slides section .bre-method-selector button { font:800 14px Montserrat, sans-serif; padding:8px 14px; border-radius:20px; border:2px solid rgba(193,76,35,.24); background:#fff; color:#555; cursor:pointer; transition:background .18s ease,color .18s ease,border-color .18s ease; }
         .reveal .slides section .bre-method-selector button.on { background:#E78824; border-color:#E78824; color:#fff; }
-        .reveal .slides section .bre-method-card { box-sizing:border-box; min-height:260px; background:rgba(255,255,255,.96); border-top:7px solid #4D701F; border-radius:17px; padding:24px 28px; box-shadow:0 9px 26px rgba(0,0,0,.11); }
-        .reveal .slides section .bre-method-card .method-top { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:17px; }
+        .reveal .slides section .bre-method-card { box-sizing:border-box; min-height:260px; background:rgba(255,255,255,.96); border-top:7px solid #4D701F; border-radius:17px; padding:20px 26px; box-shadow:0 9px 26px rgba(0,0,0,.11); }
+        .reveal .slides section .bre-method-card .method-top { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:13px; }
         .reveal .slides section .bre-method-card .method-name { color:#C14C23; font-size:29px; font-weight:900; }
         .reveal .slides section .bre-method-card .method-full { color:#333; font-size:18px; font-weight:700; margin-top:3px; }
         .reveal .slides section .bre-method-card .method-question { color:#4D701F; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:.05em; text-align:right; }
-        .reveal .slides section .bre-method-card .method-detail { font-size:21px; line-height:1.4; margin-bottom:18px; }
-        .reveal .slides section .bre-method-card .method-use { font-size:17px; line-height:1.4; padding-top:15px; border-top:2px solid rgba(77,112,31,.16); }
+        .reveal .slides section .bre-method-card .method-detail { font-size:20px; line-height:1.35; margin-bottom:13px; }
+        .reveal .slides section .bre-method-card .method-use { font-size:16px; line-height:1.35; padding-top:12px; border-top:2px solid rgba(77,112,31,.16); }
+        .reveal .slides section .bre-method-card .method-meta { display:grid; grid-template-columns:minmax(0,.58fr) minmax(0,1.42fr); gap:18px; margin-top:11px; padding-top:10px; border-top:2px solid rgba(77,112,31,.16); }
+        .reveal .slides section .bre-method-card .method-meta-item { color:#444; font-size:13.5px; line-height:1.28; }
+        .reveal .slides section .bre-method-card .method-meta-item strong { display:block; color:#C14C23; font-size:12px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:3px; }
         .reveal .slides section .friction-layout { display:grid; grid-template-columns:minmax(0,.72fr) minmax(0,1.55fr); gap:28px; align-items:stretch; margin-top:20px; }
         .reveal .slides section .omics-scale { box-sizing:border-box; background:rgba(255,255,255,.94); border-top:7px solid #E78824; border-radius:16px; padding:23px 24px; box-shadow:0 8px 24px rgba(0,0,0,.10); display:flex; flex-direction:column; justify-content:center; }
         .reveal .slides section .omics-scale .shape { color:#C14C23; font-size:46px; font-weight:900; margin-bottom:10px; }
@@ -287,6 +290,30 @@ format:
         .reveal .slides section .bridge-step-copy span { display:block; color:#444; font-size:12.5px; line-height:1.27; }
         .reveal .slides section .bridge-takeaway { margin-top:8px; padding:8px 11px; background:rgba(231,136,36,.12); border-left:5px solid #E78824; border-radius:8px; color:#333; font-size:13px; line-height:1.3; font-weight:800; }
         .reveal .slides section .bridge-caveat { margin-top:6px; color:#666; font-size:10.5px; line-height:1.25; }
+        .reveal .slides section .jive-data-strip { display:grid; grid-template-columns:1.1fr 1fr 1fr; gap:11px; margin:8px 0 13px; }
+        .reveal .slides section .jive-data-block { box-sizing:border-box; display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:9px 14px; background:rgba(255,255,255,.92); border-left:5px solid #4D701F; border-radius:9px; box-shadow:0 4px 12px rgba(0,0,0,.07); }
+        .reveal .slides section .jive-data-block strong { color:#174f3d; font-size:14px; }
+        .reveal .slides section .jive-data-block span { color:#555; font-size:12px; font-weight:700; white-space:nowrap; }
+        .reveal .slides section .jive-route-layout { display:grid; grid-template-columns:minmax(0,.93fr) minmax(0,1.07fr); gap:19px; align-items:stretch; }
+        .reveal .slides section .jive-route-layout .bridge-code { padding:12px 16px 13px; }
+        .reveal .slides section .jive-route-layout .bridge-code pre { padding:9px 11px !important; }
+        .reveal .slides section .jive-route-layout .bridge-code pre code { font-size:11.2px; line-height:1.25; }
+        .reveal .slides section .jive-benchmark { box-sizing:border-box; min-width:0; background:rgba(255,255,255,.96); border-top:7px solid #4D701F; border-radius:16px; padding:13px 17px 12px; box-shadow:0 8px 24px rgba(0,0,0,.10); }
+        .reveal .slides section .jive-bench-title { color:#C14C23; font-size:20px; font-weight:900; margin-bottom:2px; }
+        .reveal .slides section .jive-bench-sub { color:#666; font-size:11.5px; line-height:1.3; margin-bottom:12px; }
+        .reveal .slides section .jive-time-row { display:grid; grid-template-columns:172px minmax(0,1fr) 58px; gap:9px; align-items:center; margin:10px 0; }
+        .reveal .slides section .jive-route-name { color:#174f3d; font-size:12.5px; line-height:1.15; font-weight:900; }
+        .reveal .slides section .jive-route-name span { display:block; color:#777; font-size:9.5px; font-weight:700; margin-top:2px; }
+        .reveal .slides section .jive-time-track { height:20px; background:rgba(30,81,61,.09); border-radius:4px; overflow:hidden; }
+        .reveal .slides section .jive-time-bar { height:100%; min-width:6px; border-radius:4px; transform-origin:left center; }
+        .reveal .slides section.present .jive-time-bar { animation:gainGrow .8s cubic-bezier(.2,.75,.25,1) both; }
+        .reveal .slides section .jive-time-bar.r { background:#E78824; }
+        .reveal .slides section .jive-time-bar.julia { background:#4D701F; }
+        .reveal .slides section .jive-time-bar.bridge { background:#C14C23; }
+        .reveal .slides section .jive-time-value { color:#333; font-size:13px; font-weight:900; text-align:right; }
+        .reveal .slides section .jive-speed-callout { display:grid; grid-template-columns:auto minmax(0,1fr); gap:12px; align-items:center; margin-top:13px; padding:10px 12px; background:rgba(77,112,31,.10); border-left:5px solid #4D701F; border-radius:9px; }
+        .reveal .slides section .jive-speed-number { color:#4D701F; font-size:35px; line-height:1; font-weight:900; }
+        .reveal .slides section .jive-speed-copy { color:#333; font-size:12px; line-height:1.3; font-weight:800; }
         .reveal .slides section .conclusion-hero { display:grid; grid-template-columns:205px minmax(0,1fr); gap:28px; align-items:center; margin-top:17px; }
         .reveal .slides section .conclusion-count { text-align:center; padding-right:26px; border-right:3px solid rgba(77,112,31,.22); }
         .reveal .slides section .conclusion-number { color:#E78824; font-size:116px; line-height:.88; font-weight:900; }
@@ -320,6 +347,13 @@ format:
         .reveal .slides section .questions-rule { width:92px; height:7px; border-radius:7px; background:#E78824; margin-bottom:22px; }
         .reveal .slides section .questions-subtitle { color:#222; font-size:23px; line-height:1.35; font-weight:600; }
         .reveal .slides section .questions-packages { margin-top:25px; color:#174f3d; font-size:19px; line-height:1.3; font-weight:900; }
+        .reveal .slides section .thanks-shell { box-sizing:border-box; width:min(930px,88%); min-height:390px; display:grid; grid-template-columns:minmax(0,1.25fr) minmax(230px,.75fr); gap:48px; align-items:center; margin:64px auto 0; padding:34px 54px; background:rgba(255,255,255,.93); border-top:7px solid #4D701F; border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.13); }
+        .reveal .slides section .thanks-kicker { color:#4D701F; font-size:21px; line-height:1; font-weight:900; letter-spacing:.14em; text-transform:uppercase; margin-bottom:15px; }
+        .reveal .slides section .thanks-title { color:#C14C23; font-size:48px; line-height:1.06; font-weight:900; margin-bottom:20px; }
+        .reveal .slides section .thanks-names { color:#222; font-size:22px; line-height:1.62; font-weight:700; }
+        .reveal .slides section .thanks-qr { text-align:center; }
+        .reveal .slides section .thanks-qr img { display:block; width:220px; height:220px; margin:0 auto 12px; background:#fff; border:10px solid #fff; border-radius:10px; box-shadow:0 5px 18px rgba(0,0,0,.13); }
+        .reveal .slides section .thanks-qr-label { color:#174f3d; font-size:13px; line-height:1.32; font-weight:900; }
         @keyframes gainGrow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
         @keyframes gainRise { from { transform:scaleY(0); } to { transform:scaleY(1); } }
         @keyframes dotIn { from { opacity:0; transform:translate(-50%,-50%) scale(.3); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
@@ -329,7 +363,7 @@ format:
       text: |
         <div class="uthsc-footer-bar">
           <div class="uthsc-left"><img src="assets/uthsc-logo-horizontal.png" alt="University of Tennessee Health Sciences"></div>
-          <div class="uthsc-right">Department of Preventive Medicine / Biostatistics</div>
+          <div class="uthsc-right">Department of Preventive Medicine / Division of Biostatistics</div>
         </div>
         <div class="uthsc-seal-badge"><img src="assets/uthsc-seal.png" alt="UTHSC College of Medicine seal"></div>
 
@@ -343,11 +377,9 @@ resources:
 <div class="titlepage-slide">
 <div class="titlepage-content">
 
-<img class="tp-logo" src="assets/uthsc-logo-centered.png" alt="University of Tennessee Health Sciences">
-
 <p class="tp-title">Fast and Lean:<br>Julia Tools for<br>High-Dimensional Omics</p>
 <p class="tp-author">BigRiverEssence + BigRiverPlots</p>
-<p class="tp-institute">Abhisek Banerjee · University of Tennessee Health Sciences</p>
+<p class="tp-institute"><strong>Abhisek Banerjee</strong><br>University of Missouri–Columbia &nbsp;·&nbsp; University of Tennessee Health Sciences</p>
 
 </div>
 </div>
@@ -357,10 +389,10 @@ resources:
 - [Sources] Package scope and names: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl
 :::
 
-## The collaboration exposed an omics bottleneck
+## Recurring challenge in omics data analysis
 
 <p class="story-kicker">The scientific setting</p>
-<p class="story-lead">Working with <strong>Dr. Gregory Farage</strong> and <strong>Dr. Saunak Sen</strong> brought us to a recurring challenge: omics studies measure far more features than we can inspect directly.</p>
+<p class="story-lead">Omics studies measure far more features than we can inspect directly.</p>
 
 <div class="story-grid">
 <div class="story-card orange">
@@ -397,7 +429,7 @@ resources:
 
 <div class="engineering">
 <div class="goal-list">
-<div class="goal"><strong>Fast</strong><span>Numerical kernels should not become the bottleneck.</span></div>
+<div class="goal"><strong>Fast</strong><span>Numerical engines should not become the bottleneck.</span></div>
 <div class="goal"><strong>Memory-aware</strong><span>Large intermediate matrices must be handled carefully.</span></div>
 <div class="goal"><strong>Low allocation</strong><span>Reuse storage and avoid unnecessary temporary objects.</span></div>
 <div class="goal"><strong>Lightweight</strong><span>Keep the package focused and the dependency graph small.</span></div>
@@ -461,7 +493,7 @@ resources:
 <div class="essence-equation">
 <div class="essence-word big">
 <div class="word">BigRiver</div>
-<p>The wider Julia ecosystem developed for our statistical workflow.</p>
+<p>The Mississippi—the “Big River”—evokes large streams of data flowing through our Julia ecosystem.</p>
 </div>
 <div class="essence-operator">+</div>
 <div class="essence-word core">
@@ -479,9 +511,9 @@ resources:
 
 ::: {.notes}
 - “Essence” describes the package's purpose: retain the essential structure of a high-dimensional matrix.
-- “BigRiver” connects the package to the larger BigRiver Julia ecosystem.
+- “BigRiver” connects the Mississippi River—the great or “Big River”—with the idea of large data streams flowing through an analysis and the wider Julia ecosystem.
 - The package emphasizes optimized matrix operations and reduced memory use.
-- [Sources] Package description and name origin: https://github.com/senresearch/BigRiverEssence.jl
+- [Sources] Package description: https://github.com/senresearch/BigRiverEssence.jl ; Mississippi as “great river” and NPS usage of “Big River Mississippi”: https://www.nps.gov/miss/learn/historyculture/river-of-history-chapter-3.htm and https://www.nps.gov/miss/learn/education/songs-of-the-mississippi-river.htm
 :::
 
 ## Nine methods answer five statistical questions
@@ -491,15 +523,15 @@ resources:
 
 ```{ojs}
 essenceMethodFrames = [
-  {short:"PCA", name:"Principal Component Analysis", question:"Compress", detail:"Finds ordered directions that capture the greatest variation in one data matrix.", use:"Use it for unsupervised exploration, visualization, and low-rank representation."},
-  {short:"SPCA", name:"Sparse Principal Component Analysis", question:"Compress + select", detail:"Builds PCA-like components whose loadings use only a subset of variables.", use:"Use it when interpretation and feature selection matter as much as compression."},
-  {short:"PMD", name:"Penalized Matrix Decomposition", question:"Decompose sparsely", detail:"Constructs a low-rank matrix decomposition while constraining the component vectors to be sparse.", use:"Use it as a flexible sparse decomposition and as a foundation for sparse latent methods."},
-  {short:"PLS-DA", name:"Partial Least Squares Discriminant Analysis", question:"Classify", detail:"Finds latent directions in the predictors that are associated with known class labels.", use:"Use it for supervised dimension reduction and classification."},
-  {short:"sPLS-DA", name:"Sparse Partial Least Squares Discriminant Analysis", question:"Classify + select", detail:"Combines supervised PLS components with sparse loadings that retain selected variables.", use:"Use it when classification and a concise biomarker set are both goals."},
-  {short:"PLSkern", name:"Partial Least Squares Kernel Regression", question:"Predict", detail:"Builds latent variables that connect a predictor matrix to continuous or multivariate outcomes.", use:"Use it for efficient PLS regression, transformation, and prediction."},
-  {short:"CCA", name:"Canonical Correlation Analysis", question:"Relate two blocks", detail:"Finds paired directions that maximize association between two data matrices measured on the same samples.", use:"Use it to study shared cross-block structure."},
-  {short:"SCCA", name:"Sparse Canonical Correlation Analysis", question:"Relate + select", detail:"Adds sparse loadings to CCA so the cross-block relationship depends on fewer variables.", use:"Use it to identify interpretable features connecting two data sources."},
-  {short:"JIVE", name:"Joint and Individual Variation Explained", question:"Integrate blocks", detail:"Separates multiple matched data blocks into joint, block-specific, and residual structure.", use:"Use it when several omics assays describe the same samples."}
+  {short:"PCA", name:"Principal Component Analysis", question:"Compress", detail:"Finds ordered directions that capture the greatest variation in one data matrix.", use:"Use it for unsupervised exploration, visualization, and low-rank representation.", pkg:"Julia · MultivariateStats.jl", cite:"[1] Pearson, K. (1901). On Lines and Planes of Closest Fit to Systems of Points in Space. Philosophical Magazine, 2(11), 559–572."},
+  {short:"SPCA", name:"Sparse Principal Component Analysis", question:"Compress + select", detail:"Builds PCA-like components whose loadings use only a subset of variables.", use:"Use it when interpretation and feature selection matter as much as compression.", pkg:"R · PMA::SPC", cite:"[2] Witten, D. M., Tibshirani, R., & Hastie, T. (2009). A Penalized Matrix Decomposition, with Applications to Sparse Principal Components and Canonical Correlation Analysis. Biostatistics, 10(3), 515–534."},
+  {short:"PMD", name:"Penalized Matrix Decomposition", question:"Decompose sparsely", detail:"Constructs a low-rank matrix decomposition while constraining the component vectors to be sparse.", use:"Use it as a flexible sparse decomposition and as a foundation for sparse latent methods.", pkg:"R · PMA::PMD", cite:"[2] Witten, D. M., Tibshirani, R., & Hastie, T. (2009). A Penalized Matrix Decomposition, with Applications to Sparse Principal Components and Canonical Correlation Analysis. Biostatistics, 10(3), 515–534."},
+  {short:"PLS-DA", name:"Partial Least Squares Discriminant Analysis", question:"Classify", detail:"Finds latent directions in the predictors that are associated with known class labels.", use:"Use it for supervised dimension reduction and classification.", pkg:"R · mixOmics::plsda", cite:"[6] Pérez-Enciso, M., & Tenenhaus, M. (2003). Prediction of clinical outcome with microarray data: a partial least squares discriminant analysis (PLS-DA) approach. Human Genetics, 112, 581–592. doi:10.1007/s00439-003-0921-9."},
+  {short:"sPLS-DA", name:"Sparse Partial Least Squares Discriminant Analysis", question:"Classify + select", detail:"Combines supervised PLS components with sparse loadings that retain selected variables.", use:"Use it when classification and a concise biomarker set are both goals.", pkg:"R · mixOmics::splsda", cite:"[7] Lê Cao, K.-A., Boitard, S., & Besse, P. (2011). Sparse PLS Discriminant Analysis: Biologically Relevant Feature Selection and Graphical Displays for Multiclass Problems. BMC Bioinformatics, 12, 253. [8] Lê Cao, K.-A., Rossouw, D., Robert-Granié, C., & Besse, P. (2008). A Sparse PLS for Variable Selection when Integrating Omics Data. Statistical Applications in Genetics and Molecular Biology, 7(1), Article 35."},
+  {short:"PLSkern", name:"Partial Least Squares Kernel Regression", question:"Predict", detail:"Builds latent variables that connect a predictor matrix to continuous or multivariate outcomes.", use:"Use it for efficient PLS regression, transformation, and prediction.", pkg:"Julia · Jchemo.plskern", cite:"[9] Dayal, B. S., & MacGregor, J. F. (1997). Improved PLS Algorithms. Journal of Chemometrics, 11(1), 73–85."},
+  {short:"CCA", name:"Canonical Correlation Analysis", question:"Relate two blocks", detail:"Finds paired directions that maximize association between two data matrices measured on the same samples.", use:"Use it to study shared cross-block structure.", pkg:"Julia · MultivariateStats.CCA", cite:"[3] Weenink, D. (2003). Canonical Correlation Analysis. Institute of Phonetic Sciences, University of Amsterdam, Proceedings 25, 81–99."},
+  {short:"SCCA", name:"Sparse Canonical Correlation Analysis", question:"Relate + select", detail:"Adds sparse loadings to CCA so the cross-block relationship depends on fewer variables.", use:"Use it to identify interpretable features connecting two data sources.", pkg:"R · PMA::CCA", cite:"[4] Witten, D. M., & Tibshirani, R. (2009). Extensions of Sparse Canonical Correlation Analysis with Applications to Genomic Data. Statistical Applications in Genetics and Molecular Biology, 8(1), Article 28."},
+  {short:"JIVE", name:"Joint and Individual Variation Explained", question:"Integrate blocks", detail:"Separates multiple matched data blocks into joint, block-specific, and residual structure.", use:"Use it when several omics assays describe the same samples.", pkg:"R · r.jive::jive", cite:"[5] Lock, E. F., Hoadley, K. A., Marron, J. S., & Nobel, A. B. (2013). Joint and Individual Variation Explained (JIVE) for Integrated Analysis of Multiple Data Types. Annals of Applied Statistics, 7(1), 523–542."}
 ]
 
 viewof essenceMethodPick = {
@@ -536,7 +568,11 @@ essenceMethodCard = {
   card.append(
     top,
     html`<div class="method-detail">${d.detail}</div>`,
-    html`<div class="method-use"><strong>When to use it:</strong> ${d.use}</div>`
+    html`<div class="method-use"><strong>When to use it:</strong> ${d.use}</div>`,
+    html`<div class="method-meta">
+      <div class="method-meta-item"><strong>Existing package</strong>${d.pkg}</div>
+      <div class="method-meta-item"><strong>Method citation</strong>${d.cite}</div>
+    </div>`
   );
   return card;
 }
@@ -546,10 +582,11 @@ essenceMethodCard = {
 - Click the buttons rather than reading all nine method descriptions aloud.
 - The methods span unsupervised compression, sparsity, supervision, two-block association, and multi-block integration.
 - SPCA is exposed through the package's `spc` and `spc_orth` functions.
-- [Sources] Current method list and exported API: https://github.com/senresearch/BigRiverEssence.jl ; local source module `src/BigRiverEssence.jl`.
+- The comparison-package labels summarize the repository's validation targets: PMA (`SPC`, `PMD`, `CCA`), mixOmics (`plsda`, `splsda`), Jchemo (`plskern`), r.jive (`jive`), and MultivariateStats (`CCA`; also the Julia PCA comparator).
+- [Sources] Method citations: https://github.com/senresearch/BigRiverEssence.jl/blob/main/README.md ; validation packages and fixture generators: https://github.com/senresearch/BigRiverEssence.jl/tree/main/test ; current exported API: https://github.com/senresearch/BigRiverEssence.jl/blob/main/src/BigRiverEssence.jl
 :::
 
-## Speed is the main bottleneck
+## Importance of Speed
 
 <p class="story-kicker">The challenge with existing implementations</p>
 <p class="story-lead">The methods already exist in R, Python, and other ecosystems. For our omics workflow, the critical question is how quickly we can fit them again and again on matrices with thousands of variables.</p>
@@ -563,7 +600,7 @@ essenceMethodCard = {
 </div>
 
 <div class="secondary-frictions">
-<div class="secondary-friction"><strong>Package weight</strong><span>Broad packages and long dependency chains add installation, loading, and environment-management overhead.</span></div>
+<div class="secondary-friction"><strong>Package size &amp; dependencies</strong><span>Keep the package size in megabytes and its dependency graph as small as possible, making it easier to load and maintain.</span></div>
 <div class="secondary-friction"><strong>Memory allocation</strong><span>Copies and temporary matrices raise peak memory use and add memory-management overhead during repeated fits.</span></div>
 </div>
 
@@ -573,7 +610,7 @@ essenceMethodCard = {
 - Make this a motivation slide, not a claim that every R or Python implementation is slow.
 - Existing ecosystems prove that the statistical concepts are mature; our design question is how to make the needed subset lighter and more efficient for this workflow.
 - Scikit-learn documents batch PCA's main-memory requirement and provides incremental and randomized alternatives, illustrating that algorithm and memory choices matter at scale.
-- The Bioconductor page for mixOmics documents both its broad omics method coverage and its dependency list.
+- Package size and dependency count affect installation, loading, and long-term maintenance, so the goal is to keep both as small as the required functionality allows.
 - [Sources] R implementation and dependencies: https://bioconductor.org/packages/release/bioc/html/mixOmics.html ; Python PCA, sparse PCA, PLS, and CCA implementations and scaling considerations: https://scikit-learn.org/stable/modules/decomposition.html and https://scikit-learn.org/stable/modules/cross_decomposition.html ; BigRiverEssence efficiency motivation: https://github.com/senresearch/BigRiverEssence.jl
 :::
 
@@ -584,7 +621,7 @@ essenceMethodCard = {
 
 <div class="solution-layout">
 <div class="solution-list">
-<div class="solution-item"><div class="solution-num">01</div><div class="solution-name">Reuse storage</div><div class="solution-detail">Preallocate work buffers once; use <code>@view</code>, in-place broadcasts, reusable index vectors, and allocation-free convergence checks.</div></div>
+<div class="solution-item"><div class="solution-num">01</div><div class="solution-name">Reuse storage</div><div class="solution-detail">Preallocate work buffers once; use <code>@view</code>, in-place broadcasts, reusable index vectors, and allocation-free convergence checks <strong>(pass by reference, not pass by value)</strong>.</div></div>
 <div class="solution-item"><div class="solution-num">02</div><div class="solution-name">Write results in place</div><div class="solution-detail">Use <code>mul!</code>, fused <code>mul!</code>, <code>BLAS.ger!</code>, and <code>BLAS.syrk!</code> instead of repeatedly creating new matrices.</div></div>
 <div class="solution-item"><div class="solution-num">03</div><div class="solution-name">Compute only what is needed</div><div class="solution-detail">Prefer in-place or thin SVDs and retain only the component vectors required by the algorithm.</div></div>
 <div class="solution-item"><div class="solution-num">04</div><div class="solution-name">Rewrite expensive algebra</div><div class="solution-detail">Use equivalent factorizations with small intermediates—especially in JIVE—rather than materializing large projection matrices.</div></div>
@@ -841,6 +878,56 @@ fit_J = <span class="code-fn">splsda</span>(X, y, ncomp, keepX;
 - [Sources] Presenter-supplied benchmark outputs from R `microbenchmark` and Julia `BenchmarkTools.@btime`.
 :::
 
+## R users can keep R—and still get Julia-speed JIVE
+
+<p class="story-kicker" style="margin-bottom:4px;">One BRCA analysis · three routes</p>
+<p class="story-lead" style="font-size:18px; margin:2px 0 7px;">Expression, methylation, and miRNA measurements share the same 348 breast-tumor samples. The ranks are held fixed so the comparison measures the JIVE fit—not rank selection.</p>
+
+<div class="jive-data-strip">
+<div class="jive-data-block"><strong>Gene expression</strong><span>645 × 348</span></div>
+<div class="jive-data-block"><strong>DNA methylation</strong><span>574 × 348</span></div>
+<div class="jive-data-block"><strong>miRNA</strong><span>423 × 348</span></div>
+</div>
+
+<div class="jive-route-layout">
+<div class="bridge-code">
+<div class="bridge-code-title">Call BigRiverEssence from R</div>
+<div class="bridge-code-sub">Only the bridge code is shown; <code>X1</code>, <code>X2</code>, and <code>X3</code> are ordinary R matrices.</div>
+<pre><code><span class="code-fn">library</span>(JuliaConnectoR)
+
+juliaEval(<span class="code-str">"using BigRiverEssence"</span>)
+juliaEval(<span class="code-str">"brca_jive(X1,X2,X3) =
+  BigRiverEssence.jive(
+    Matrix{Float64}[X1,X2,X3],
+    2, Int[27,26,25])"</span>)
+
+Julia &lt;- juliaImport(<span class="code-str">"Main"</span>)
+fit &lt;- Julia$brca_jive(X1, X2, X3)</code></pre>
+</div>
+
+<div class="jive-benchmark">
+<div class="jive-bench-title">The bridge preserves Julia's speed</div>
+<div class="jive-bench-sub">Fit time on the same matrices · joint rank 2 · individual ranks 27, 26, 25</div>
+
+<div class="jive-time-row"><div class="jive-route-name">R · r.jive<span>native R package</span></div><div class="jive-time-track"><div class="jive-time-bar r" style="width:100%;"></div></div><div class="jive-time-value">96.316 s</div></div>
+<div class="jive-time-row"><div class="jive-route-name">Julia · BigRiverEssence<span>native Julia call</span></div><div class="jive-time-track"><div class="jive-time-bar julia" style="width:14.4%;"></div></div><div class="jive-time-value">13.847 s</div></div>
+<div class="jive-time-row"><div class="jive-route-name">R → Julia<span>JuliaConnectoR</span></div><div class="jive-time-track"><div class="jive-time-bar bridge" style="width:13.9%;"></div></div><div class="jive-time-value">13.429 s</div></div>
+
+<div class="jive-speed-callout"><div class="jive-speed-number">≈7×</div><div class="jive-speed-copy">faster than <code>r.jive</code>, whether BigRiverEssence is called directly from Julia or through an already-running R–Julia connection.</div></div>
+</div>
+</div>
+
+<div class="result-footnote">Same local machine and fixed ranks. Medians: R, 3 fits; Julia, 5 fits; JuliaConnectoR, 3 warmed fits. Data loading, Julia startup, and first-call compilation are excluded.</div>
+
+::: {.notes}
+- JIVE integrates multiple data blocks measured on the same samples and separates joint structure from block-specific structure.
+- The BRCA example contains 645 gene-expression features, 574 methylation features, and 423 miRNAs across the same 348 tumor samples.
+- Use the published example ranks—joint rank 2 and individual ranks 27, 26, and 25—so every route solves the same numerical problem. Permutation-based rank selection is intentionally outside the timed region.
+- Presenter-verified medians on August 13, 2026: `r.jive` 96.316 s (3 fits); native BigRiverEssence 13.847 s (5 warmed fits); JuliaConnectoR 13.429 s (3 warmed fits). This is 7.17× for the connector and 6.96× for native Julia, so the visible claim is rounded to approximately 7×.
+- The connector code was executed locally. R matrices are converted at the function boundary; the returned fit remains represented through JuliaConnectoR.
+- [Sources] BRCA data and published JIVE ranks: https://cran.r-project.org/web/packages/r.jive/vignettes/BRCA_Example.html ; BigRiverEssence JIVE implementation and bundled BRCA data: https://github.com/senresearch/BigRiverEssence.jl ; JuliaConnectoR: https://github.com/stefan-m-lenz/JuliaConnectoR and https://doi.org/10.18637/jss.v101.i06
+:::
+
 ## BigRiverPlots encodes statistical plots as reusable recipes
 
 <p class="story-kicker">Introducing BigRiverPlots.jl</p>
@@ -1039,61 +1126,6 @@ splsdaPlotDisplay = {
 - [Sources] Figures generated with the presenter’s reproducible script `liver_toxicity_splsda_plots.jl` using local BigRiverEssence and BigRiverPlots packages and `mixOmics::liver.toxicity`.
 :::
 
-## Julia speed does not require leaving R
-
-<div class="story-lead"><strong>BigRiverEssence is written in Julia, but people who are comfortable working in R can still use it directly.</strong> JuliaConnectoR connects the two languages while the familiar R workflow stays in place.</div>
-
-<div class="bridge-layout">
-<div class="bridge-code">
-<div class="bridge-code-title">R calls BigRiverEssence</div>
-<div class="bridge-code-sub">The same liver-toxicity sPLS-DA fit, launched from an R session.</div>
-<pre><code><span class="code-fn">library</span>(JuliaConnectoR)
-BigRiver &lt;- juliaImport(<span class="code-str">"BigRiverEssence"</span>)
-
-fit &lt;- BigRiver$splsda(
-  X, as.character(y),
-  2L, c(50L, 50L),
-  scale = <span class="code-arg">TRUE</span>,
-  levels = levels(y)
-)
-
-L &lt;- fit$loadings_X
-colSums(L != 0)  <span class="code-comment"># 50  50</span></code></pre>
-</div>
-
-<div class="bridge-story">
-<div class="bridge-story-title">What crosses the bridge</div>
-
-<div class="bridge-step">
-<div class="bridge-lang r">R</div>
-<div class="bridge-step-copy"><strong>Prepare the analysis</strong><span>Wrangle the data, define <code>X</code> and <code>y</code>, and keep the surrounding workflow familiar.</span></div>
-</div>
-
-<div class="bridge-step">
-<div class="bridge-lang julia">JL</div>
-<div class="bridge-step-copy"><strong>Run the numerical kernel</strong><span><code>splsda</code> executes inside BigRiverEssence; the fitted object can stay in Julia.</span></div>
-</div>
-
-<div class="bridge-step">
-<div class="bridge-lang r">R</div>
-<div class="bridge-step-copy"><strong>Return only what R needs</strong><span>Bring back loadings, scores, or predictions for reporting and downstream analysis.</span></div>
-</div>
-
-<div class="bridge-takeaway">Keep R for the workflow; move the expensive matrix computation to Julia.</div>
-<div class="bridge-caveat">Reuse the Julia connection. Startup and first-call compilation should not be included in warmed-up timing comparisons.</div>
-</div>
-</div>
-
-::: {.notes}
-- This is not a rewrite of the R workflow. JuliaConnectoR connects R to a local Julia process and translates common data structures between the languages.
-- `juliaImport("BigRiverEssence")` exposes exported Julia functions as ordinary R functions.
-- The fitted object stays in Julia through an R proxy; accessing `fit$loadings_X` returns the loading matrix to R.
-- The example returns 50 selected genes on each component.
-- Emphasize the warm-up caveat: Julia's first call can compile code, so the speed comparison should use a reused session and repeated calls.
-- The code shown was executed locally against BigRiverEssence through JuliaConnectoR and returned a `3116 × 2` loading matrix with 50 nonzero entries per component.
-- [Sources] JuliaConnectoR package documentation and examples: https://github.com/stefan-m-lenz/JuliaConnectoR and https://search.r-project.org/CRAN/refmans/JuliaConnectoR/help/JuliaConnectoR-package.html ; Lenz, Hackenberg, and Binder (2022), Journal of Statistical Software, https://doi.org/10.18637/jss.v101.i06
-:::
-
 ## Two registered packages—and an open invitation
 
 <div class="story-lead">During this internship, we developed and registered two focused packages in Julia’s General registry.</div>
@@ -1179,15 +1211,20 @@ colSums(L != 0)  <span class="code-comment"># 50  50</span></code></pre>
 
 ## {.questions-slide data-background-image="assets/uthsc-building-faded.png" data-background-size="cover" data-background-position="center" data-background-color="#ffffff"}
 
-<div class="questions-shell">
-<div class="questions-kicker">Thank you</div>
-<div class="questions-title">Questions?</div>
-<div class="questions-rule"></div>
-<div class="questions-subtitle">Fast and Lean: Julia Tools for High-Dimensional Omics</div>
-<div class="questions-packages">BigRiverEssence &nbsp;·&nbsp; BigRiverPlots</div>
+<div class="thanks-shell">
+<div>
+<div class="thanks-kicker">Thank you</div>
+<div class="thanks-title">With sincere thanks to</div>
+<div class="thanks-names">Dr. Gregory Farage<br>Dr. Saunak Sen<br>Shandra Robertson<br>Miracle Wiggins</div>
+</div>
+<div class="thanks-qr">
+<img src="assets/bigriver-packages-qr.png" alt="QR code opening a link list for BigRiverEssence and BigRiverPlots">
+<div class="thanks-qr-label">Scan once—choose either<br>BigRiver package on GitHub</div>
+</div>
 </div>
 
 ::: {.notes}
-- Thank the audience and invite questions.
-- Keep this slide visible during discussion so the talk title and package names remain on screen.
+- Thank Dr. Gregory Farage, Dr. Saunak Sen, Shandra Robertson, and Miracle Wiggins for their support and collaboration.
+- The QR code opens an ME-QR link list with two explicit choices: BigRiverEssence and BigRiverPlots.
+- [Sources] Acknowledgments supplied by the presenter. QR link-list entries: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl ; QR generated with https://me-qr.com/qr-code-generator/link-list
 :::
