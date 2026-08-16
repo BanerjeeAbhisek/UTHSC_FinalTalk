@@ -1710,7 +1710,7 @@ R · r.jive<span>native R package</span>
 </div>
 </div>
 <div class="jive-time-value">
-96.316 s
+111.516 s
 </div>
 </div>
 <div class="jive-time-row">
@@ -1718,12 +1718,12 @@ R · r.jive<span>native R package</span>
 Julia · BigRiverEssence<span>native Julia call</span>
 </div>
 <div class="jive-time-track">
-<div class="jive-time-bar julia" style="width:14.4%;">
+<div class="jive-time-bar julia" style="width:17.0%;">
 
 </div>
 </div>
 <div class="jive-time-value">
-13.847 s
+18.973 s
 </div>
 </div>
 <div class="jive-time-row">
@@ -1731,33 +1731,33 @@ Julia · BigRiverEssence<span>native Julia call</span>
 R → Julia<span>JuliaConnectoR</span>
 </div>
 <div class="jive-time-track">
-<div class="jive-time-bar bridge" style="width:13.9%;">
+<div class="jive-time-bar bridge" style="width:20.7%;">
 
 </div>
 </div>
 <div class="jive-time-value">
-13.429 s
+23.035 s
 </div>
 </div>
 <div class="jive-speed-callout">
 <div class="jive-speed-number">
-≈7×
+≈5–6×
 </div>
 <div class="jive-speed-copy">
-faster than <code>r.jive</code>, whether BigRiverEssence is called directly from Julia or through an already-running R–Julia connection.
+faster than <code>r.jive</code>: 4.8× through JuliaConnectoR and 5.9× through native Julia.
 </div>
 </div>
 </div>
 </div>
 <div class="result-footnote">
-Same local machine and fixed ranks. Medians: R, 3 fits; Julia, 5 fits; JuliaConnectoR, 3 warmed fits. Data loading, Julia startup, and first-call compilation are excluded.
+Same local machine and fixed ranks. R and JuliaConnectoR: medians of 3 warmed fits. Native Julia: BenchmarkTools minimum from 5 samples. Data loading, Julia startup, and first-call compilation are excluded.
 </div>
 <aside class="notes">
 <ul>
 <li>JIVE integrates multiple data blocks measured on the same samples and separates joint structure from block-specific structure.</li>
 <li>The BRCA example contains 645 gene-expression features, 574 methylation features, and 423 miRNAs across the same 348 tumor samples.</li>
 <li>Use the published example ranks—joint rank 2 and individual ranks 27, 26, and 25—so every route solves the same numerical problem. Permutation-based rank selection is intentionally outside the timed region.</li>
-<li>Presenter-verified medians on August 13, 2026: <code>r.jive</code> 96.316 s (3 fits); native BigRiverEssence 13.847 s (5 warmed fits); JuliaConnectoR 13.429 s (3 warmed fits). This is 7.17× for the connector and 6.96× for native Julia, so the visible claim is rounded to approximately 7×.</li>
+<li>Presenter-verified results on August 16, 2026: <code>r.jive</code> median 111.516 s from 108.954, 114.276, and 111.516 s; JuliaConnectoR median 23.035 s from 25.579, 23.035, and 20.583 s; native BigRiverEssence <code>@btime</code> minimum 18.973 s. This is 4.84× for the connector and 5.88× for native Julia, so the visible claim is rounded to approximately 5–6×.</li>
 <li>The connector code was executed locally. R matrices are converted at the function boundary; the returned fit remains represented through JuliaConnectoR.</li>
 <li>[Sources] BRCA data and published JIVE ranks: https://cran.r-project.org/web/packages/r.jive/vignettes/BRCA_Example.html ; BigRiverEssence JIVE implementation and bundled BRCA data: https://github.com/senresearch/BigRiverEssence.jl ; JuliaConnectoR: https://github.com/stefan-m-lenz/JuliaConnectoR and https://doi.org/10.18637/jss.v101.i06</li>
 </ul>
@@ -2233,7 +2233,7 @@ Thank you
 With sincere thanks to
 </div>
 <div class="thanks-names">
-Dr.&nbsp;Gregory Farage<br>Dr.&nbsp;Saunak Sen<br>Shandra Robertson<br>Miracle Wiggins
+Dr.&nbsp;Gregory Farage<br>Dr.&nbsp;Saunak Sen<br>Dr.&nbsp;Harsh Dubey<br>Dr.&nbsp;Yuru Huang<br>Dr.&nbsp;Sounak Chakraborty<br>Shandra Robertson<br>Miracle Wiggins
 </div>
 </div>
 <div class="thanks-qr">
@@ -2245,7 +2245,7 @@ Scan once—choose either<br>BigRiver package on GitHub
 </div>
 <aside class="notes">
 <ul>
-<li>Thank Dr.&nbsp;Gregory Farage, Dr.&nbsp;Saunak Sen, Shandra Robertson, and Miracle Wiggins for their support and collaboration.</li>
+<li>Thank Dr.&nbsp;Gregory Farage, Dr.&nbsp;Saunak Sen, Dr.&nbsp;Harsh Dubey, Dr.&nbsp;Yuru Huang, Dr.&nbsp;Sounak Chakraborty, Shandra Robertson, and Miracle Wiggins for their support and collaboration.</li>
 <li>The QR code opens an ME-QR link list with two explicit choices: BigRiverEssence and BigRiverPlots.</li>
 <li>[Sources] Acknowledgments supplied by the presenter. QR link-list entries: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl ; QR generated with https://me-qr.com/qr-code-generator/link-list</li>
 </ul>

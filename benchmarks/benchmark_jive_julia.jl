@@ -1,6 +1,6 @@
 using BigRiverEssence
+using BenchmarkTools
 using DelimitedFiles
-using Statistics
 
 # The same BRCA matrices distributed with r.jive and used in the slide.
 datadir = joinpath(pkgdir(BigRiverEssence), "reference_Data", "brcadata")
@@ -18,21 +18,11 @@ joint_rank = 2
 individual_ranks = [27, 26, 25]
 repetitions = parse(Int, get(ENV, "JIVE_REPS", "5"))
 
-println("Compiling and warming up BigRiverEssence.jive ...")
-warm_fit = BigRiverEssence.jive(blocks, joint_rank, individual_ranks)
-@assert warm_fit.r == joint_rank
-@assert warm_fit.ri == individual_ranks
-
-times = Vector{Float64}(undef, repetitions)
-for i in eachindex(times)
-    times[i] = @elapsed BigRiverEssence.jive(
-        blocks, joint_rank, individual_ranks
-    )
-    println("Julia fit $i: $(round(times[i], digits=3)) s")
-end
-
-println("\nNative Julia summary")
+println("\nNative Julia benchmark")
 println("  dimensions: ", size.(blocks))
 println("  ranks: joint = $joint_rank, individual = $individual_ranks")
-println("  median fit time: $(round(median(times), digits=3)) s")
+println("  @btime warms up first, then reports the minimum time and allocations:")
 
+@btime BigRiverEssence.jive(
+    $blocks, $joint_rank, $individual_ranks
+) samples = repetitions evals = 1

@@ -909,21 +909,21 @@ fit &lt;- Julia$brca_jive(X1, X2, X3)</code></pre>
 <div class="jive-bench-title">The bridge preserves Julia's speed</div>
 <div class="jive-bench-sub">Fit time on the same matrices · joint rank 2 · individual ranks 27, 26, 25</div>
 
-<div class="jive-time-row"><div class="jive-route-name">R · r.jive<span>native R package</span></div><div class="jive-time-track"><div class="jive-time-bar r" style="width:100%;"></div></div><div class="jive-time-value">96.316 s</div></div>
-<div class="jive-time-row"><div class="jive-route-name">Julia · BigRiverEssence<span>native Julia call</span></div><div class="jive-time-track"><div class="jive-time-bar julia" style="width:14.4%;"></div></div><div class="jive-time-value">13.847 s</div></div>
-<div class="jive-time-row"><div class="jive-route-name">R → Julia<span>JuliaConnectoR</span></div><div class="jive-time-track"><div class="jive-time-bar bridge" style="width:13.9%;"></div></div><div class="jive-time-value">13.429 s</div></div>
+<div class="jive-time-row"><div class="jive-route-name">R · r.jive<span>native R package</span></div><div class="jive-time-track"><div class="jive-time-bar r" style="width:100%;"></div></div><div class="jive-time-value">111.516 s</div></div>
+<div class="jive-time-row"><div class="jive-route-name">Julia · BigRiverEssence<span>native Julia call</span></div><div class="jive-time-track"><div class="jive-time-bar julia" style="width:17.0%;"></div></div><div class="jive-time-value">18.973 s</div></div>
+<div class="jive-time-row"><div class="jive-route-name">R → Julia<span>JuliaConnectoR</span></div><div class="jive-time-track"><div class="jive-time-bar bridge" style="width:20.7%;"></div></div><div class="jive-time-value">23.035 s</div></div>
 
-<div class="jive-speed-callout"><div class="jive-speed-number">≈7×</div><div class="jive-speed-copy">faster than <code>r.jive</code>, whether BigRiverEssence is called directly from Julia or through an already-running R–Julia connection.</div></div>
+<div class="jive-speed-callout"><div class="jive-speed-number">≈5–6×</div><div class="jive-speed-copy">faster than <code>r.jive</code>: 4.8× through JuliaConnectoR and 5.9× through native Julia.</div></div>
 </div>
 </div>
 
-<div class="result-footnote">Same local machine and fixed ranks. Medians: R, 3 fits; Julia, 5 fits; JuliaConnectoR, 3 warmed fits. Data loading, Julia startup, and first-call compilation are excluded.</div>
+<div class="result-footnote">Same local machine and fixed ranks. R and JuliaConnectoR: medians of 3 warmed fits. Native Julia: BenchmarkTools minimum from 5 samples. Data loading, Julia startup, and first-call compilation are excluded.</div>
 
 ::: {.notes}
 - JIVE integrates multiple data blocks measured on the same samples and separates joint structure from block-specific structure.
 - The BRCA example contains 645 gene-expression features, 574 methylation features, and 423 miRNAs across the same 348 tumor samples.
 - Use the published example ranks—joint rank 2 and individual ranks 27, 26, and 25—so every route solves the same numerical problem. Permutation-based rank selection is intentionally outside the timed region.
-- Presenter-verified medians on August 13, 2026: `r.jive` 96.316 s (3 fits); native BigRiverEssence 13.847 s (5 warmed fits); JuliaConnectoR 13.429 s (3 warmed fits). This is 7.17× for the connector and 6.96× for native Julia, so the visible claim is rounded to approximately 7×.
+- Presenter-verified results on August 16, 2026: `r.jive` median 111.516 s from 108.954, 114.276, and 111.516 s; JuliaConnectoR median 23.035 s from 25.579, 23.035, and 20.583 s; native BigRiverEssence `@btime` minimum 18.973 s. This is 4.84× for the connector and 5.88× for native Julia, so the visible claim is rounded to approximately 5–6×.
 - The connector code was executed locally. R matrices are converted at the function boundary; the returned fit remains represented through JuliaConnectoR.
 - [Sources] BRCA data and published JIVE ranks: https://cran.r-project.org/web/packages/r.jive/vignettes/BRCA_Example.html ; BigRiverEssence JIVE implementation and bundled BRCA data: https://github.com/senresearch/BigRiverEssence.jl ; JuliaConnectoR: https://github.com/stefan-m-lenz/JuliaConnectoR and https://doi.org/10.18637/jss.v101.i06
 :::
@@ -1215,7 +1215,7 @@ splsdaPlotDisplay = {
 <div>
 <div class="thanks-kicker">Thank you</div>
 <div class="thanks-title">With sincere thanks to</div>
-<div class="thanks-names">Dr. Gregory Farage<br>Dr. Saunak Sen<br>Shandra Robertson<br>Miracle Wiggins</div>
+<div class="thanks-names">Dr. Gregory Farage<br>Dr. Saunak Sen<br>Dr. Harsh Dubey<br>Dr. Yuru Huang<br>Dr. Sounak Chakraborty<br>Shandra Robertson<br>Miracle Wiggins</div>
 </div>
 <div class="thanks-qr">
 <img src="assets/bigriver-packages-qr.png" alt="QR code opening a link list for BigRiverEssence and BigRiverPlots">
@@ -1224,7 +1224,7 @@ splsdaPlotDisplay = {
 </div>
 
 ::: {.notes}
-- Thank Dr. Gregory Farage, Dr. Saunak Sen, Shandra Robertson, and Miracle Wiggins for their support and collaboration.
+- Thank Dr. Gregory Farage, Dr. Saunak Sen, Dr. Harsh Dubey, Dr. Yuru Huang, Dr. Sounak Chakraborty, Shandra Robertson, and Miracle Wiggins for their support and collaboration.
 - The QR code opens an ME-QR link list with two explicit choices: BigRiverEssence and BigRiverPlots.
 - [Sources] Acknowledgments supplied by the presenter. QR link-list entries: https://github.com/senresearch/BigRiverEssence.jl and https://github.com/senresearch/BigRiverPlots.jl ; QR generated with https://me-qr.com/qr-code-generator/link-list
 :::
